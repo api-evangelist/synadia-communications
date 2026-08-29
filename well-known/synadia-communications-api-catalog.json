@@ -1,0 +1,34 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://cloud.synadia.com",
+      "service-doc": [
+        {
+          "href": "https://docs.synadia.com",
+          "type": "text/html"
+        }
+      ],
+      "describedby": [
+        {
+          "href": "https://www.synadia.com/llms.txt",
+          "type": "text/plain"
+        }
+      ]
+    },
+    {
+      "anchor": "https://www.synadia.com",
+      "describedby": [
+        {
+          "href": "https://www.synadia.com/llms.txt",
+          "type": "text/plain"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://docs.synadia.com",
+          "type": "text/html"
+        }
+      ]
+    }
+  ]
+}

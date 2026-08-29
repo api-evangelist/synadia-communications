@@ -1,0 +1,59 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.synadia.com/platform/control-plane/cli, https://github.com/synadia-io/control-plane-cli,
+  https://github.com/synadia-io/connect, https://github.com/nats-io/natscli, and the provider's own
+  nats-server-quickstart Agent Skill.
+name: Synadia Communications command line tooling
+description: >-
+  Three distinct CLIs matter for a Synadia deployment, and they belong to different layers. `syn` is
+  the first-party Control Plane CLI, driving the same REST API this profile catalogs. `connect` is the
+  first-party CLI for Synadia's managed connector runtime. `nats` is the CNCF NATS.io project CLI for
+  the messaging fabric itself - it is what Synadia's own onboarding Agent Skill instructs a user to
+  install, but it is a NATS.io project artifact, not a Synadia product.
+clis:
+- name: syn
+  official: true
+  vendor: Synadia
+  repository: https://github.com/synadia-io/control-plane-cli
+  docs: https://docs.synadia.com/platform/control-plane/cli
+  setup_docs: https://docs.synadia.com/platform/control-plane/cli/setup
+  drives: synadia-communications-control-plane
+  auth: Personal Access Token, the same bearer credential the REST API uses
+  note: >-
+    The Control Plane CLI is a client of the documented REST API rather than a separate protocol, so
+    its command surface tracks the API resource tree - systems, accounts, users, streams, consumers.
+- name: connect
+  official: true
+  vendor: Synadia
+  repository: https://github.com/synadia-io/connect
+  package: github.com/synadia-io/connect
+  version: v1.0.8
+  published: '2025-10-09'
+  purpose: Manage Synadia Connect managed connectors between NATS and external data systems.
+- name: nats
+  official: false
+  vendor: NATS.io (CNCF project, primary maintainer Synadia)
+  repository: https://github.com/nats-io/natscli
+  version: v0.4.0
+  published: '2026-05-01'
+  install:
+  - brew install nats-io/nats-tools/nats
+  - https://github.com/nats-io/natscli/releases
+  purpose: >-
+    Publish/subscribe, request/reply, JetStream stream and consumer management, KV and object store
+    operations, and context management against any NATS server including Synadia Cloud.
+  note: >-
+    Install commands recorded verbatim from Synadia's own synadia-cloud-onboarding and
+    nats-server-quickstart Agent Skills.
+- name: nex
+  official: true
+  vendor: Synadia
+  repository: https://github.com/synadia-io/nex
+  purpose: NATS execution engine CLI for deploying and managing workloads on a NATS fabric.
+  note: Untagged; consumers pin a commit pseudo-version.
+credentials:
+  note: >-
+    Synadia Cloud clients authenticate with a downloaded `.creds` file containing a JWT and nkey seed,
+    per the provider's onboarding skill. The Control Plane CLI and REST API instead use a Personal
+    Access Token. These are two different credential systems for two different planes.

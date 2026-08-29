@@ -1,0 +1,139 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from openapi/synadia-communications-control-plane-openapi.yaml (245 operations) and
+  openapi/synadia-communications-http-gateway-openapi.json (30 operations), cross-checked against
+  docs.synadia.com. Where the specs declare nothing, that is recorded as an absence, not guessed.
+name: Synadia Communications API conventions
+description: >-
+  Cross-cutting runtime semantics for the two Synadia HTTP APIs. Both are thin, resource-shaped REST
+  surfaces with very little cross-cutting machinery declared: no idempotency keys, no pagination
+  convention, no request-id header, no rate-limit headers, and no error envelope schema. The contracts
+  are large and well-typed at the resource level and sparse at the protocol level.
+authentication:
+  control_plane:
+    style: HTTP bearer
+    header: 'Authorization: Bearer <Personal Access Token>'
+    alternate: session cookie `control_plane_session` for the browser console
+    scheme_names: [bearerAuth, sessionAuth]
+  http_gateway:
+    style: apiKey in header
+    header: 'Authorization: Bearer <API_TOKEN>'
+    scope: token is scoped to a User within an Account
+    scheme_names: [ApiKeyAuth]
+  see: authentication/synadia-communications-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Neither spec declares an idempotency key header, and neither docs surface documents one. Creates
+    are plain POSTs. An agent retrying a POST /core/beta/accounts or a KV create after a timeout has
+    no protocol-level protection against duplication; the only natural safety comes from the several
+    PUT-shaped KV and object operations, which are idempotent by HTTP method rather than by design.
+pagination:
+  style: none-declared
+  params_observed:
+    limit: 3 operations
+    sort: 3 operations
+  note: >-
+    There is no repo-wide pagination convention. Across 245 Control Plane operations only 3 accept
+    `limit` and 3 accept `sort`; list endpoints otherwise return whole collections in an `items` array
+    with no cursor, offset, page or link header. Consumers of large accounts cannot page.
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_id_tracing:
+  supported: false
+  note: No X-Request-Id / traceparent / correlation header is declared in either spec.
+versioning:
+  style: path
+  control_plane: >-
+    Version is a path segment tied to a maturity stage rather than a number - /core/beta/... for the
+    main surface and /workloads/alpha/... for workloads. info.version is the literal string "beta".
+  http_gateway: >-
+    /v1 path prefix, declared in servers[] as https://api.ngs.global/v1. info.version 1.0.0.
+  note: >-
+    The Control Plane API is self-declared beta at 245 operations and GA product status, and the
+    workloads subtree is alpha. An agent should treat /workloads/alpha/* as the least stable surface.
+error_envelope:
+  shape: undeclared
+  note: >-
+    Every one of the 245 Control Plane operations declares exactly 400/401/403/404 with bare
+    descriptions ("Bad Request", "Unauthorized", "Forbidden", "Not Found") and NO content block, so
+    no media type and no body schema. The HTTP Gateway is better - 15 of its error responses carry
+    application/json bound to a real `Error` schema. Neither uses RFC 9457 application/problem+json.
+  see: errors/synadia-communications-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  note: >-
+    No X-RateLimit-*, RateLimit-* or Retry-After header is declared in either spec, and no 429 status
+    appears anywhere in either contract. See rate-limits/synadia-communications-rate-limits.yml.
+dry_run_mode:
+  supported: false
+  note: >-
+    One near-miss - GET /core/beta/... accepts a `test_connection` query parameter on a single
+    operation. There is no general dry-run/preview/validate mode on any write operation.
+reversibility:
+  grade: documented
+  grade_basis: >-
+    Reversal paths exist and are real, but NO published window governs any of them, so this grades
+    `documented` (0.4) and not `verified` (1.0). Synadia's docs state no restore period, no soft-delete
+    retention, and no undo horizon for any destroyed resource.
+  write_surface: true
+  summary: >-
+    Both APIs are write-capable and most destructive operations are IRREVERSIBLE by design. NATS
+    key-value and object buckets, JetStream streams, accounts and systems are destroyed outright, not
+    soft-deleted. The only true reversal primitives are credential rotations, which invalidate the old
+    secret rather than restoring prior state.
+  operations:
+  - surface: control-plane
+    action: rotate account signing key
+    reversal_operation: rotateAccountSk
+    path: POST /core/beta/account-sk-groups/{groupId}/rotate-sk
+    reverses: compromised or expiring account signing key
+    window: null
+    window_note: >-
+      Rotation is forward-only. The docs state no grace period during which the previous signing key
+      remains valid, so an agent cannot assume old credentials keep working after a rotate.
+  - surface: control-plane
+    action: rotate NATS user credentials
+    reversal_operation: rotateNatsUser
+    path: POST /core/beta/nats-users/{userId}/rotate
+    reverses: leaked NATS user credential
+    window: null
+  - surface: control-plane
+    action: rotate agent token
+    reversal_operation: rotateAgentToken
+    path: POST /core/beta/systems/{systemId}/agent-tokens
+    reverses: leaked system agent token
+    window: null
+  irreversible:
+  - operation: KvStoreDestroy
+    path: DELETE /kvm/buckets/{bucket}
+    note: Destroys the key-value bucket and all entries. No restore operation exists in the spec.
+  - operation: KvStorePurge
+    path: DELETE /kvm/buckets/{bucket}/purge
+    note: Purges all entries. No undo.
+  - operation: ObjmStoreDestroy
+    path: DELETE /objm/buckets/{bucket}
+    note: Destroys the object store bucket and its contents. No restore operation exists.
+  - operation: SimpleKvDeleteEntry / KvDeleteEntry
+    path: DELETE /kv/{bucket}/{key}
+    note: >-
+      NATS KV keeps history per bucket configuration, so a prior revision may still be readable, but
+      the API declares no restore-from-revision operation and the docs state no retention window.
+  - operation: account, system, stream and consumer deletes
+    surface: control-plane
+    note: >-
+      DELETE operations across accounts, systems, streams, mirrors and consumers have no matching
+      restore, undelete or recover operation anywhere in the 245-operation surface.
+  agent_guidance: >-
+    Before any DELETE on either API, an agent should assume the change is permanent and unwindable.
+    There is no cancel, no soft-delete, no restore endpoint and no stated recovery window anywhere in
+    Synadia's published contracts.
+cross_links:
+  errors: errors/synadia-communications-problem-types.yml
+  lifecycle: lifecycle/synadia-communications-lifecycle.yml
+  authentication: authentication/synadia-communications-authentication.yml
+  rate_limits: rate-limits/synadia-communications-rate-limits.yml

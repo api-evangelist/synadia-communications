@@ -1,0 +1,12 @@
+generated: '2026-08-29'
+method: searched
+probe: true
+source: https://www.synadia.com/security
+url: https://www.synadia.com/security
+certifications:
+- SOC 2
+evidence:
+- source: https://www.synadia.com/security
+  keywords:
+  - soc2
+  - trust center

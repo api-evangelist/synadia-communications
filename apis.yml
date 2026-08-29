@@ -1,18 +1,86 @@
 aid: synadia-communications
 name: Synadia Communications
-description: 'Synadia Communications is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: 'Synadia Communications, Inc. is the creator and primary maintainer of NATS.io, the CNCF
+  connectivity and messaging system, and sells the commercial platform built on it. Its products are
+  Synadia Cloud (fully managed, globally distributed NATS with a REST control-plane API and an HTTP
+  Gateway that exposes NATS key-value, object store, publish, request and subscribe over plain HTTP),
+  Synadia Platform / Control Plane (self-hosted management, security and observability for NATS
+  deployments on Kubernetes or Docker), Synadia Connect (managed connectors bridging NATS to external
+  data systems), Synadia Insights (NATS monitoring and 143 automated audit checks), and Synadia Protect
+  (a policy-enforcing security gateway for NATS traffic). The company positions NATS as the connectivity
+  fabric for agentic AI, edge and distributed systems, and publishes an unusually complete machine-readable
+  surface for agents: an llms.txt site index, Markdown twins of every page, an RFC 9727 API catalog, and a
+  registry of provider-authored Agent Skills.'
 url: https://raw.githubusercontent.com/api-evangelist/synadia-communications/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-29'
 modified: '2026-08-29'
+image: https://www.synadia.com/images/og-image-default.webp
 tags:
 - Company
-apis: []
+- Messaging
+- Event Streaming
+- NATS
+- Distributed Systems
+- Edge Computing
+- Publish Subscribe
+- Key Value Store
+- Object Storage
+- Infrastructure
+- Agentic AI
+- Open Source
+apis:
+- aid: synadia-communications-control-plane
+  name: Synadia Control Plane / Synadia Cloud API
+  description: 'The REST control-plane API behind Synadia Cloud and the self-hosted Synadia Control Plane.
+    245 operations across 158 paths manage systems, accounts, teams, NATS users, JetStream streams,
+    consumers, key-value and object buckets, mirrors, imports/exports, signing key groups, auth callout,
+    OIDC providers, alerts, workloads and licensing. Authenticated with a Personal Access Token as an HTTP
+    bearer token, or a session cookie in the console.'
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - Management
+  - Control Plane
+  - JetStream
+  - Accounts
+  - NATS
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-control-plane-openapi.yaml
+  - type: Overlay
+    url: overlays/synadia-communications-control-plane-overlay.yaml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+- aid: synadia-communications-http-gateway
+  name: Synadia Cloud NATS HTTP Gateway
+  description: 'A first-class RESTful HTTP interface to NATS, hosted by Synadia Cloud at api.ngs.global.
+    30 operations expose the NATS key-value store and its management surface, the object store and its
+    management surface, and core NATS publish, request and subscribe against any subject over HTTP.
+    Authenticated with an API token scoped to a User within an Account, passed in the Authorization header.'
+  humanURL: https://docs.synadia.com/cloud/resources/http-gateway
+  baseURL: https://api.ngs.global/v1
+  tags:
+  - Messaging
+  - Key Value Store
+  - Object Storage
+  - Publish Subscribe
+  - HTTP Gateway
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-http-gateway-openapi.json
+  - type: Overlay
+    url: overlays/synadia-communications-http-gateway-overlay.yaml
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +88,75 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://www.nasdaqprivatemarket.com/
+  url: https://www.synadia.com/
+- type: DeveloperPortal
+  url: https://docs.synadia.com/
+- type: Documentation
+  url: https://docs.synadia.com/
+- type: APIReference
+  url: https://cloud.synadia.com/api-docs
+- type: GettingStarted
+  url: https://docs.synadia.com/cloud/walkthrough
+- type: Support
+  url: https://www.synadia.com/contact
+- type: Blog
+  url: https://www.synadia.com/blog
+- type: GitHubOrganization
+  url: https://github.com/synadia-io
+- type: Pricing
+  url: https://www.synadia.com/cloud/pricing
+- type: SignUp
+  url: https://cloud.synadia.com/
+- type: TermsOfService
+  url: https://www.synadia.com/legal/terms
+- type: PrivacyPolicy
+  url: https://www.synadia.com/legal/privacy
+- type: LLMsTxt
+  url: llms/synadia-communications-llms.txt
+- type: WellKnown
+  url: well-known/synadia-communications-well-known.yml
+- type: Packages
+  url: packages/synadia-communications-packages.yml
+- type: SDKs
+  url: packages/synadia-communications-packages.yml
+- type: CLI
+  url: cli/synadia-communications-cli.yml
+- type: MCPServer
+  url: mcp/synadia-communications-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Conventions
+  url: conventions/synadia-communications-conventions.yml
+- type: ErrorCatalog
+  url: errors/synadia-communications-problem-types.yml
+- type: DataModel
+  url: data-model/synadia-communications-data-model.yml
+- type: Conformance
+  url: conformance/synadia-communications-conformance.yml
+- type: Compliance
+  url: conformance/synadia-communications-conformance.yml
+- type: TrustCenter
+  url: security/synadia-communications-trust-center.yml
+- type: Lifecycle
+  url: lifecycle/synadia-communications-lifecycle.yml
+- type: Authentication
+  url: authentication/synadia-communications-authentication.yml
+- type: DomainSecurity
+  url: security/synadia-communications-domain-security.yml
+- type: VulnerabilityDisclosure
+  url: security/synadia-communications-vulnerability-disclosure.yml
+- type: Security
+  url: security/synadia-communications-vulnerability-disclosure.yml
+- type: Plans
+  url: plans/synadia-communications-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/synadia-communications-rate-limits.yml
+- type: ChangeLog
+  url: changelog/synadia-communications-changelog.yml
+- type: Sandbox
+  url: sandbox/synadia-communications-sandbox.yml
+x-enrichment:
+  date: '2026-08-29'
+  status: enriched
+  artifacts_added: 31
+  pass: local-v1

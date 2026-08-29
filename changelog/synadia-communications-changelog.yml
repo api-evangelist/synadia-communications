@@ -1,0 +1,70 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://github.com/synadia-io/control-plane/releases (GitHub Releases API), after confirming that
+  no changelog page exists on any Synadia web property.
+name: Synadia Communications change log
+description: >-
+  Synadia publishes NO changelog or release-notes page for Synadia Cloud or the Control Plane API.
+  The only dated, structured release record is the GitHub Releases feed on the synadia-io/control-plane
+  repository, which tracks the self-hosted Control Plane product rather than the hosted Cloud API.
+  There is no per-API changelog: an agent or integrator cannot learn from any Synadia surface when a
+  Control Plane API operation was added, changed or removed.
+scheme: semver
+current_version:
+  control_plane_product: v1.12.0
+  control_plane_api: beta
+  http_gateway_api: 1.0.0
+  control_plane_sdk_go: v0.9.0
+source_of_truth: https://github.com/synadia-io/control-plane/releases
+probed:
+- url: https://www.synadia.com/changelog
+  status: 200
+  verdict: soft-404
+  note: >-
+    Returns HTTP 200 but the body is byte-identical to the homepage (md5 matched on probe), so the
+    Astro site is serving its catch-all. This is NOT a changelog and is not wired as a pointer.
+- url: https://docs.synadia.com/changelog
+  status: 404
+- url: https://docs.synadia.com/cloud/changelog
+  status: 404
+- url: https://docs.synadia.com/platform/control-plane/release-notes
+  status: 404
+- url: https://docs.synadia.com/platform/releases
+  status: 404
+entries:
+- version: v1.12.0
+  date: '2026-07-24'
+  product: Synadia Control Plane
+  breaking: unknown
+  note: >-
+    GitHub release tag only. Synadia publishes release bodies on a private/asset repo, so no
+    itemised highlights, additions or breaking-change list is available publicly. Recorded as the
+    dated fact it is rather than summarised into invented detail.
+- version: v1.11.0
+  date: '2026-06-18'
+  product: Synadia Control Plane
+  breaking: unknown
+- version: v1.10.1
+  date: '2026-07-06'
+  product: Synadia Control Plane
+  breaking: unknown
+  note: Patch tag published after v1.11.0, indicating a maintained back-branch.
+- version: v1.10.0
+  date: '2026-04-10'
+  product: Synadia Control Plane
+  breaking: unknown
+- version: v1.9.3
+  date: '2026-03-27'
+  product: Synadia Control Plane
+  breaking: unknown
+related:
+  nats_server_cadence: >-
+    NATS Server itself moved to a published six-month release cycle - see
+    https://www.synadia.com/blog/nats-server-next-steps - which is the closest thing Synadia publishes
+    to a release calendar.
+  blog: https://www.synadia.com/blog
+gaps:
+- No changelog page for the Synadia Cloud hosted API.
+- No release notes for the Control Plane REST API surface specifically.
+- Release bodies on GitHub carry tags only, with no itemised changes.

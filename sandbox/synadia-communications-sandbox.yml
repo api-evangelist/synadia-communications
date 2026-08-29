@@ -1,0 +1,69 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.synadia.com/cloud/pricing, https://docs.synadia.com/cloud/walkthrough,
+  https://www.synadia.com/.well-known/agent-skills/synadia-cloud-onboarding.md, and the trial pages
+  for Synadia Platform, Insights and Protect.
+name: Synadia Communications sandbox and trial access
+description: >-
+  Synadia publishes NO sandbox in the payments sense - there is no test mode, no test/live key
+  prefix pair, no fixture or trigger tooling, and no time simulation. What it offers instead is a
+  permanently free production tier and time-boxed product trials. A developer evaluates against real
+  infrastructure with small quotas, not against a mock.
+test_mode: false
+test_live_key_prefixes: false
+test_data_fixtures: false
+time_simulation: false
+note: >-
+  Because there is no test mode, there is no safe place to rehearse a destructive Control Plane call.
+  Combined with the absence of any dry-run parameter and the absence of any restore operation (see
+  conventions/synadia-communications-conventions.yml), an agent operating this API is doing so
+  against live state with no rehearsal surface and no undo.
+free_access:
+- name: Synadia Cloud Personal tier
+  type: free-forever
+  price: 0
+  signup: https://cloud.synadia.com/
+  credit_card_required: false
+  signup_methods: [GitHub OAuth, Google OAuth, email and password, SSO]
+  limits:
+    accounts: 2
+    connections: 10
+    subscriptions_per_connection: 100
+    leaf_nodes: 2
+    network_data: 10 GiB
+    standard_storage: 5 GiB
+    standard_streams: 10
+  note: >-
+    Real production infrastructure at small scale, not a sandbox. Both the Control Plane API and the
+    HTTP Gateway are reachable on this tier.
+  human_required: true
+  human_required_note: >-
+    Synadia's own onboarding Agent Skill states account creation is interactive and requires a human -
+    an agent cannot self-provision Synadia Cloud access.
+trials:
+- name: Synadia Insights
+  duration_days: 30
+  url: https://www.synadia.com/insights/trial
+  credit_card_required: false
+  requires: NATS system account credentials
+- name: Synadia Protect
+  duration_days: 14
+  url: https://www.synadia.com/protect/trial
+- name: Synadia Platform
+  url: https://docs.synadia.com/platform/trial
+  repository: https://github.com/synadia-io/platform-trial
+  note: Configuration for the Synadia Platform Trial is published as a public repo.
+- name: Deploy for Kubernetes
+  note: Trial covered by the provider's synadia-deploy-for-kubernetes Agent Skill.
+local_alternative:
+  name: Self-hosted NATS Server
+  note: >-
+    The genuine zero-cost local option is running open-source NATS Server, which Synadia documents in
+    its own nats-server-quickstart Agent Skill. It gives the full NATS data plane locally, but NOT the
+    Control Plane REST API or the HTTP Gateway, both of which are commercial.
+  source: https://www.synadia.com/.well-known/agent-skills/nats-server-quickstart.md
+credentials:
+  data_plane: >-
+    A downloaded .creds file containing a JWT and nkey seed, per Synadia's onboarding skill.
+  control_plane: Personal Access Token, created in the Synadia Cloud console.

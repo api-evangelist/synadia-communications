@@ -1,0 +1,29 @@
+generated: '2026-08-29'
+method: derived
+source: openapi/synadia-communications-control-plane-openapi.yaml, openapi/synadia-communications-http-gateway-openapi.json
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - cookie
+  - header
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: Personal Access Token
+  sources:
+  - openapi/synadia-communications-control-plane-openapi.yaml
+- name: sessionAuth
+  type: apiKey
+  in: cookie
+  parameter: control_plane_session
+  sources:
+  - openapi/synadia-communications-control-plane-openapi.yaml
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/synadia-communications-http-gateway-openapi.json

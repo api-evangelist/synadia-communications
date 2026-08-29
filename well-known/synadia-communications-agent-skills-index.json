@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agentskills.io/schemas/v0.2.0/index.json",
+  "version": "0.2.0",
+  "skills": [
+    {
+      "name": "llms-txt",
+      "type": "standard",
+      "description": "Machine-readable site index for AI agents listing all pages, blog posts, docs, and resources on synadia.com",
+      "url": "https://www.synadia.com/llms.txt"
+    },
+    {
+      "name": "api-catalog",
+      "type": "standard",
+      "description": "API catalog for Synadia services following RFC 9727",
+      "url": "https://www.synadia.com/.well-known/api-catalog"
+    },
+    {
+      "name": "synadia-cloud-onboarding",
+      "type": "skill",
+      "description": "Sign up for Synadia Cloud (managed NATS), create a system and account, and connect a NATS client to send a first message.",
+      "url": "https://www.synadia.com/.well-known/agent-skills/synadia-cloud-onboarding.md"
+    },
+    {
+      "name": "nats-server-quickstart",
+      "type": "skill",
+      "description": "Install and run a local NATS server, install the nats CLI, publish/subscribe a first message, and optionally enable JetStream.",
+      "url": "https://www.synadia.com/.well-known/agent-skills/nats-server-quickstart.md"
+    },
+    {
+      "name": "synadia-platform-deployment",
+      "type": "skill",
+      "description": "Start a Synadia Platform trial and deploy the Control Plane (plus optional HTTP Gateway, Connectors, Workloads, FIPS) on Kubernetes or Docker to manage a self-hosted NATS deployment.",
+      "url": "https://www.synadia.com/.well-known/agent-skills/synadia-platform-deployment.md"
+    },
+    {
+      "name": "synadia-insights-setup",
+      "type": "skill",
+      "description": "Start a Synadia Insights trial, install the binary, connect it to a NATS deployment with system account credentials, and run the built-in checks for NATS observability.",
+      "url": "https://www.synadia.com/.well-known/agent-skills/synadia-insights-setup.md"
+    },
+    {
+      "name": "synadia-deploy-for-kubernetes",
+      "type": "skill",
+      "description": "Start a Synadia Deploy for Kubernetes trial and run NATS plus the full Synadia Platform stack (Control Plane, HTTP Gateway, Connectors, Workloads) in the user's own Kubernetes cluster.",
+      "url": "https://www.synadia.com/.well-known/agent-skills/synadia-deploy-for-kubernetes.md"
+    }
+  ]
+}

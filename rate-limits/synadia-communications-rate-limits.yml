@@ -1,0 +1,62 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://docs.synadia.com/cloud/pricing, https://docs.synadia.com/cloud/faq, and the two OpenAPI
+  specs. Searched for HTTP rate limits, 429 responses and rate-limit response headers; none exist.
+name: Synadia Communications rate limits
+description: >-
+  Synadia publishes NO HTTP rate limits for either the Control Plane API or the NATS HTTP Gateway.
+  No 429 status is declared anywhere in either OpenAPI, no X-RateLimit-*, RateLimit-* or Retry-After
+  header appears in any response, and the docs and FAQ contain no rate-limit section. What Synadia
+  does publish are RESOURCE QUOTAS per pricing tier - connections, subscriptions, streams, storage,
+  network data - which constrain the messaging fabric rather than the API request rate. Those are
+  recorded here as the closest published constraint, clearly distinguished from request throttling.
+limit_count: 0
+request_rate_limits_published: false
+response_headers: []
+exhaustion_status: null
+retry_after: false
+note: >-
+  An agent driving the Control Plane API has no runtime backpressure signal. It cannot detect
+  throttling from headers, cannot learn a reset time, and has no documented ceiling to stay under.
+  Publishing RateLimit-* headers per RFC 9331 would be the single highest-value runtime addition to
+  this API.
+probed:
+- url: https://docs.synadia.com/cloud/faq
+  status: 200
+  result: no rate limit, throttle, 429 or Retry-After mention
+- url: https://docs.synadia.com/cloud/pricing
+  status: 200
+  result: resource quotas only, no request-rate limits
+- source: openapi/synadia-communications-control-plane-openapi.yaml
+  result: 245 operations, zero 429 responses, zero rate-limit headers
+- source: openapi/synadia-communications-http-gateway-openapi.json
+  result: 30 operations, zero 429 responses, zero rate-limit headers
+resource_quotas:
+  note: >-
+    NOT request-rate limits. These are per-tier capacity ceilings on the NATS fabric, published on the
+    pricing page, and are the only published numeric constraints on the service.
+  source: https://docs.synadia.com/cloud/pricing
+  quotas:
+  - tier: Personal
+    connections: 10
+    subscriptions_per_connection: 100
+    leaf_nodes: 2
+    max_message_size: 1 MiB
+    network_data: 10 GiB
+  - tier: Starter
+    connections: 100
+    subscriptions_per_connection: 1000
+    leaf_nodes: 3
+    max_message_size: 1 MiB
+    network_data: 100 GiB
+  - tier: Pro
+    connections: 1000
+    subscriptions_per_connection: 10000
+    leaf_nodes: 10
+    max_message_size: 2 MiB
+    network_data: 1 TiB
+  - tier: Enterprise
+    connections: custom
+    max_message_size: 8 MiB
+    network_data: 2 TiB

@@ -1,0 +1,96 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from the 4xx/5xx responses of openapi/synadia-communications-control-plane-openapi.yaml and
+  openapi/synadia-communications-http-gateway-openapi.json. docs.synadia.com publishes no error
+  reference page, so nothing here could be upgraded to searched.
+name: Synadia Communications error catalog
+description: >-
+  The two Synadia APIs handle errors very differently, and the difference matters to an agent. The
+  Control Plane declares 400/401/403/404 on all 245 operations with bare one-word descriptions and NO
+  content block at all - no media type, no schema - so a client cannot know what an error body looks
+  like from the contract. The HTTP Gateway is materially better: 15 of its error responses bind
+  application/json to a real `Error` schema. Neither API uses RFC 9457 application/problem+json, and
+  neither declares a 429 or any 5xx.
+format: undeclared
+rfc9457: false
+problem_json: false
+surfaces:
+- surface: control-plane
+  spec: openapi/synadia-communications-control-plane-openapi.yaml
+  operations: 245
+  declared_error_responses:
+  - status: 400
+    title: Bad Request
+    count: 245
+    body_schema: null
+    media_type: null
+  - status: 401
+    title: Unauthorized
+    count: 245
+    body_schema: null
+    media_type: null
+  - status: 403
+    title: Forbidden
+    count: 245
+    body_schema: null
+    media_type: null
+  - status: 404
+    title: Not Found
+    count: 245
+    body_schema: null
+    media_type: null
+  - status: 422
+    title: Unprocessable
+    count: 1
+    body_schema: null
+    media_type: null
+  note: >-
+    The 400/401/403/404 quartet is applied uniformly to every operation, which reads as a generator
+    default rather than a per-operation description of what can actually go wrong. No 409 conflict,
+    no 429 rate limit, and no 5xx is declared anywhere in the 245-operation surface.
+- surface: http-gateway
+  spec: openapi/synadia-communications-http-gateway-openapi.json
+  operations: 30
+  declared_error_responses:
+  - status: 400
+    title: Bad Request
+    count: 28
+    media_type: application/json
+  - status: 404
+    title: Not Found
+    count: 7
+    media_type: application/json
+  - status: 409
+    title: Conflict
+    count: 4
+    media_type: application/json
+    note: Returned on create-if-absent conflicts for KV and object bucket entries.
+  body_schema: Error
+  note: 15 of the 39 error responses bind the `Error` component schema with application/json.
+related_schemas:
+- name: Error
+  spec: http-gateway
+  note: The HTTP Gateway's error body component.
+- name: JSApiError
+  spec: control-plane
+  fields: [code, description, err_code]
+  note: >-
+    JetStream API error shape carried inside successful responses that embed NATS API results, not
+    used as an HTTP error body. `err_code` is a uint16 NATS JetStream error code.
+- name: HealthError
+  spec: control-plane
+  fields: [error, type]
+  note: Embedded in system health responses to report component-level failures.
+- name: StreamSourceInfo_error
+  spec: control-plane
+  note: Embedded error state for a stream source/mirror that has fallen behind or failed.
+agent_guidance: >-
+  Because the Control Plane declares no error body, an agent must parse errors defensively: read the
+  HTTP status as the primary signal and treat the body as untyped. Do not assume a `message` or
+  `error` field is present. On the HTTP Gateway, prefer the typed `Error` schema.
+gaps:
+- No RFC 9457 problem+json on either API.
+- No documented error code vocabulary or remediation reference on docs.synadia.com.
+- No 429 declared, consistent with no published rate limits.
+- Control Plane error responses carry no schema, so 245 operations are effectively untyped on failure.

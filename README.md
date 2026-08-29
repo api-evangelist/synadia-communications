@@ -64,5 +64,10 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Synadia Communications is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.nasdaqprivatemarket.com/
+Synadia Communications, Inc. is the creator and primary maintainer of NATS.io, the CNCF connectivity and messaging system, and sells the commercial platform built on it — Synadia Cloud (managed NATS with a REST control-plane API and an HTTP Gateway), Synadia Platform / Control Plane, Connect, Insights and Protect.
+
+- https://www.synadia.com/
+- https://docs.synadia.com/
+- https://cloud.synadia.com/api-docs
+- https://api.ngs.global/api/
+- https://github.com/synadia-io

@@ -1,0 +1,74 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  Searched github.com/synadia-io (code search for "asyncapi" across the org returned 0 results),
+  docs.synadia.com, the llms.txt site index, and the alerting/watch surfaces of both OpenAPI specs.
+name: Synadia Communications event surface
+description: >-
+  Recorded as an honest absence with the surrounding facts, because "no AsyncAPI" is a surprising
+  finding for the company that builds NATS. Synadia sells an event-driven messaging fabric and has a
+  real event surface, but publishes NO AsyncAPI document and NO HTTP webhook catalog. The events are
+  NATS-native: they are delivered on NATS subjects to NATS subscribers, which is the product itself
+  rather than an integration contract layered on top of it.
+asyncapi_published: false
+webhooks_published: false
+note: >-
+  No AsyncAPI or Webhooks pointer is emitted in apis.yml, because neither surface is published. This
+  file documents what DOES exist so the absence is legible rather than silent.
+event_surfaces:
+- name: Alert rule notifications
+  transport: NATS subject
+  spec_evidence: >-
+    NatsAlertingConfig in the Control Plane spec carries `account`, `subject` and a `receivers` array.
+    Alerts are published to a customer-configured NATS subject within a chosen account.
+  operations:
+  - listAlerts
+  - acknowledgeAlert
+  - alert rule CRUD under /core/beta/systems/{systemId}/alert-rules and /accounts/{accountId}/alert-rules
+  rule_types: [SystemDefault, System, AccountDefault, Account, Stream, Consumer]
+  threshold_metrics:
+  - account.max_connections
+  - account.max_consumers
+  - account.max_bytes
+  - account.max_exports
+  - account.max_imports
+  - account.max_jwt_expiry
+  - account.max_msg_payload
+  - account.max_streams
+  - account.max_subscriptions
+  - account.JS_max_file
+  - account.JS_max_memory
+  - system.JS_max_memory
+  - system.JS_max_file
+- name: Slack alert receivers
+  transport: Slack API
+  spec_evidence: >-
+    SlackReceiverConfig / SlackConfig components; the receivers array accepts type `slack` with a
+    config of {channel, token}. Slack is the ONLY receiver type in the enum.
+  note: >-
+    This is an outbound integration to Slack, not a generic HTTP webhook. There is no user-supplied
+    callback URL anywhere in the contract - the string "webhook" appears zero times in either spec.
+- name: HTTP Gateway watch endpoints
+  transport: HTTP streaming
+  operations:
+  - KvStoreWatch
+  - ObjStoreWatch
+  paths:
+  - GET /kvm/buckets/{bucket}/watch
+  - GET /objm/buckets/{bucket}/watch
+  note: >-
+    Long-lived HTTP endpoints streaming key-value and object store change events. The ValueEvent
+    schema describes the emitted payload. This is the closest thing to a documented event contract
+    Synadia publishes over HTTP, and it lives inside the OpenAPI rather than an AsyncAPI.
+- name: Core NATS messaging
+  transport: NATS protocol
+  note: >-
+    The product itself - publish/subscribe, request/reply and JetStream over the NATS wire protocol.
+    Subject hierarchies are customer-defined, so there is no fixed catalog of events to describe.
+    Synadia publishes guidance on designing them at
+    https://www.synadia.com/blog/designing-nats-subject-hierarchies rather than a machine-readable
+    channel list.
+opportunity: >-
+  The KV/object watch endpoints and the alert-rule notification schema are both fully specified
+  already. An AsyncAPI document describing the alerting subject and the watch streams would be a
+  small piece of work with outsized signalling value for the company that maintains NATS.

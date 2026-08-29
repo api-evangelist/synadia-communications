@@ -1,0 +1,69 @@
+generated: '2026-08-29'
+method: probed
+source: Direct anonymous HTTP probes of /.well-known/* on every Synadia host named in apis.yml.
+name: Synadia Communications well-known documents
+description: >-
+  Probe of the standard /.well-known/ discovery surface across Synadia's marketing host, docs host,
+  Synadia Cloud console host and the NGS HTTP Gateway API host. www.synadia.com serves a real
+  RFC 9727 api-catalog linkset and an Agent Skills registry index; both are saved verbatim. All other
+  standard paths return 404 on that host (the Astro site answers unknown paths with a 404-status HTML
+  page, so the byte size is non-zero but the status is a true 404). The Cloud console and NGS hosts
+  answer 404 text/plain on every well-known path.
+hosts:
+- host: www.synadia.com
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    file: synadia-communications-api-catalog.json
+    content_type: application/linkset+json
+    note: >-
+      Real RFC 9727 linkset. Two anchors - https://cloud.synadia.com and https://www.synadia.com - each
+      with a service-doc link to https://docs.synadia.com and a describedby link to the llms.txt.
+      It does NOT link an OpenAPI; both machine-readable contracts were found elsewhere.
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: synadia-communications-agent-skills-index.json
+    content_type: application/json
+    note: >-
+      agentskills.io v0.2.0 registry index listing 2 standards entries (llms.txt, api-catalog) and
+      5 provider-authored Agent Skills, each a fetchable markdown file. Saved to skills/.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/mcp.json
+    status: 404
+- host: cloud.synadia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api.ngs.global
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: docs.synadia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404

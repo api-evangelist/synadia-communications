@@ -1,0 +1,528 @@
+# Synadia
+
+> Synadia provides an enterprise-grade messaging and connectivity platform powered by NATS.io, enabling scalable, secure, and real-time distributed systems. Synadia’s offerings include managed cloud services and self-hosted solutions, seamlessly connecting applications across cloud, edge, and on-premises environments.
+
+As the creator and primary maintainer of NATS.io, Synadia empowers developers and organizations to build event-driven architectures, microservices, and real-time applications in the cloud, on-prem, or at the edge. The core capabilities provided include: NATS core for messaging (including publish-subscribe, request-reply), NATS JetStream for persistence and data streaming, distributed key-value store, object storage, HTTP Gateway for HTTP-NATS integration, Synadia Control Plane for security, observability, and management, and Managed Connectors for integrating NATS with external data systems.
+
+Synadia is trusted by global enterprises spanning financial services, automotive, manufacturing, IoT, telecommunications, and AI/edge computing, enabling scalable, secure, low-latency communication at global scale.
+
+## Pages
+
+- [404 Not Found](https://www.synadia.com/404.md): The page you are looking for doesn't exist or has been moved.
+- [Brand](https://www.synadia.com/about/brand.md): Synadia and NATS brand guidelines — logos, color, and typography.
+- [About](https://www.synadia.com/about.md): Learn about Synadia’s mission to connect the world with distributed solutions. Meet our leadership team, investors, and discover the core values that drive us.
+- [agentic ai](https://www.synadia.com/agentic-ai.md)
+- [Blog](https://www.synadia.com/blog.md): Distributed systems playbooks are changing. Read Synadia's blog on NATS, AI, edge computing, and what comes next to stay on top of all the changes.
+- [Careers](https://www.synadia.com/careers.md): Join Synadia's remote-first team building the future of distributed systems. Explore open positions and discover our company values and benefits.
+- [cloud/definitions](https://www.synadia.com/cloud/definitions.md)
+- [Synadia Cloud](https://www.synadia.com/cloud.md): Managed NATS hosting in the cloud. Build globally distributed applications with enterprise-grade security, monitoring, and 99.99% uptime SLA.
+- [cloud/sla](https://www.synadia.com/cloud/sla.md)
+- [Contact](https://www.synadia.com/contact.md): Get in touch with Synadia's team of NATS experts. Speak with sales about Synadia's software for managing, securing, scaling, or extending NATS. Or engage our NATS experts for technical support.
+- [Customer Stories](https://www.synadia.com/customer-stories.md): Synadia helps orgs reduce complexity in connectivity and messaging. If you're building and running distributed systems across clouds or at the edge, we can help.
+- [Synadia Demo Showcase](https://www.synadia.com/demos.md): Get inspired by sample applications built on Synadia's edge-native tech stack. Experience the apps and review their architectures so you are ready to build with NATS and Synadia.
+- [Deploy for Kubernetes](https://www.synadia.com/deploy-for-kubernetes.md): Everything you love about NATS, deployed to your data plane in minutes. Packaged with all the enterprise-grade features of Synadia Platform.
+- [NATS Administrator Course](https://www.synadia.com/education/course/nats-administrator-training.md): Deploy and manage NATS infrastructure at scale. Learn clustering, security, monitoring, and operational best practices.
+- [NATS Developer Course](https://www.synadia.com/education/course/nats-developer-training.md): Build robust messaging applications with NATS. Learn core concepts, patterns, and best practices for scalable distributed systems.
+- [Education](https://www.synadia.com/education.md): Build expertise in NATS messaging and streaming with our comprehensive, instructor-led training. From development fundamentals to infrastructure management, grow your NATS skills with hands-on learning.
+- [Home](https://www.synadia.com/index.md)
+- [Automated Audit Checks — Synadia Insights](https://www.synadia.com/insights/checks.md): Browse all 143 automated audit checks built into Synadia Insights. Filter by severity, domain, and type to find the checks relevant to your NATS deployment.
+- [Synadia Insights](https://www.synadia.com/insights.md): Purpose-built NATS monitoring. Troubleshoot with granular data on your connections, streams, and consumers — go beyond dashboards and find the why.
+- [Synadia Insights Evaluation Agreement](https://www.synadia.com/insights/terms.md): Terms governing the Synadia Insights 30-day free trial.
+- [Thank You — Synadia Insights](https://www.synadia.com/insights/thank-you.md): Thanks for signing up for your Insights trial. We'll be in touch shortly.
+- [Start Your 30 Day Free Trial — Synadia Insights](https://www.synadia.com/insights/trial.md): Get full access to Synadia Insights for 30 days. No credit card required — just your NATS system account credentials.
+- [legal/dpa](https://www.synadia.com/legal/dpa.md)
+- [legal/education terms](https://www.synadia.com/legal/education-terms.md)
+- [legal/privacy](https://www.synadia.com/legal/privacy.md)
+- [legal/subprocessors](https://www.synadia.com/legal/subprocessors.md)
+- [Product Support Lifecycle](https://www.synadia.com/legal/support.md): Synadia product support lifecycle, release schedule, and maintenance policies for NATS Server and Synadia Platform components.
+- [legal/terms](https://www.synadia.com/legal/terms.md)
+- [AI at the Edge with NATS.io](https://www.synadia.com/lp/ai-at-the-edge.md): Discover how NATS.io streamlines AI at the edge, enabling real-time, efficient data processing. Learn how it simplifies communication, offers secure, low-bandwidth data transmission, and excels in edge environments. Elevate your AI projects with NATS.io.
+- [Virtual Workshop: Get started with NATS & Synadia](https://www.synadia.com/lp/apj-getting-started-with-nats-synadia-workshop.md): Join Synadia virtually on November 20th 2024 for an instructor-led, hands-on lab that will introduce you to the fundamentals of NATS and Synadia. We'll cover connecting to Synadia Cloud, Core NATS messaging patterns, JetStream, and more.
+- [Confluent Current: F1 Arcade](https://www.synadia.com/lp/current-london-f1-arcade.md): Please join Synadia for a gathering at the innovative F1 Arcade in London on Wednesday May 20th during Confluent Current.
+- [Get the Synadia Platform Data Sheet](https://www.synadia.com/lp/data-sheet-form-cloud.md): Download Synadia Cloud technical specifications, pricing details, and deployment options for managed NATS hosting solutions.
+- [Get the Synadia Platform Data Sheet](https://www.synadia.com/lp/data-sheet-form.md): Download comprehensive technical specifications, features, and implementation details for Synadia Platform and NATS messaging.
+- [Scaling Secure Systems with NATS](https://www.synadia.com/lp/decentralized-security-nats.md): Traditional centralized security models struggle to keep up with the scale and complexity of modern architectures—especially in Edge and IoT environments. Join us for a deep dive into NATS decentralized security model, a scalable and standards-based approach that eliminates central bottlenecks while empowering domain-level security autonomy.
+- [Thank you!](https://www.synadia.com/lp/download-thank-you.md): Your download is ready. Thank you for your interest in Synadia's distributed systems solutions and NATS messaging technology.
+- [Real Time Telemetry at Scale](https://www.synadia.com/lp/edge-to-google-cloud-telemetry.md): Explore real-time edge-to-cloud telemetry with Synadia & Google Cloud
+- [Modernize Financial Services Messaging with NATS](https://www.synadia.com/lp/finance-nats-messaging.md): Our team of experts helped digitize trading floors, but it’s once again time to modernize. NATS is the best-in-class open source, low-latency, high performance messaging system being chosen today over MQ and Rendezvous.
+- [lp/fleet management](https://www.synadia.com/lp/fleet-management.md)
+- [contributor form](https://www.synadia.com/lp/individual-contributor-license-agreement.md): contributor form description
+- [Supercharge Your Microservices](https://www.synadia.com/lp/microservices-with-nats.md): Synadia Platform, powered by NATS, is a high-performance messaging system and connectivity layer perfect for modern microservices. Its 'micro' framework features a lightweight API and toolset that greatly speeds up and streamlines microservices development.
+- [Data Streaming Pipelines with NATS](https://www.synadia.com/lp/nats-edge-data-streaming-pipelines.md): Edge data streaming made easy. Replace the overhead and complexity of Kafka or Kinesis pipelines with the simplicity and flexibility of NATS. Run resilient data pipelines from cloud to edge without a PhD in distributed systems.
+- [Thank You](https://www.synadia.com/lp/nats-financial-services-event-architectures.md): Please enjoy our webinar on Future Proof Financial Services Event Architectures! See how NATS powers real-time, secure, and scalable systems transforming trading, risk, compliance, and customer engagement in financial services.
+- [AI Ready Messaging from Edge to Cloud](https://www.synadia.com/lp/nats-modern-messaging-for-ai-at-the-edge.md)
+- [KubeCon North America 2024](https://www.synadia.com/lp/nats-synadia-kubecon-na24.md): Headed to KubeCon North America 2024? Stop by booth P4 for all things NATS, Synadia, and edge computing.
+- [lp/nats vs aws kinesis streaming](https://www.synadia.com/lp/nats-vs-aws-kinesis-streaming.md)
+- [Get the NATS vs Kafka Resource Collection](https://www.synadia.com/lp/nats-vs-kafka.md): Discover the similarities and crucial differences between NATS and Kafka in this collection of resources, and learn why more engineering teams are choosing NATS.
+- [Get the Nomadic Apps Fact Sheet](https://www.synadia.com/lp/nomadic-apps-form.md): Download the Nomadic Apps fact sheet to learn how Synadia enables edge-native applications that seamlessly move between cloud and edge environments.
+- [Nomadic Apps Manifesto](https://www.synadia.com/lp/nomadic-apps-manifesto-form.md): Read the Nomadic Apps Manifesto to discover how modern applications must adapt for the edge-native era and why traditional architectures are obsolete.
+- [Nomadic Apps](https://www.synadia.com/lp/nomadic-apps.md): Moving from cloud to edge isn't a simple relocation. It's a revolutionary change in how apps are built and operated. Make your apps nomadic with Synadia.
+- [RethinkConn 2025](https://www.synadia.com/lp/rethink-conn-2025.md): Join RethinkConn 2025, the premier NATS community event, hosted by Synadia. Explore use cases, discover new features, and get insights into the NATS roadmap!
+- [Thanks for coming — RethinkConn 2026](https://www.synadia.com/lp/rethinkconn-2026/recording.md): Thank you for joining us at RethinkConn 2026. Watch the recap and relive the highlights.
+- [lp/rethinkconn 2026/workshops/[slug]/recording](https://www.synadia.com/lp/rethinkconn-2026/workshops/[slug]/recording.md)
+- [NATS 2026 Workshops](https://www.synadia.com/lp/rethinkconn-2026/workshops.md): Hands-on NATS workshops led by Synadia engineers. Browse the full lineup and start watching on demand.
+- [You're all set — NATS 2026 Workshops](https://www.synadia.com/lp/rethinkconn-2026/workshops/thank-you.md): Thanks for signing up. Want to watch another workshop? Pick one below.
+- [RethinkConn 2026 — The Virtual Conference for Connected Systems](https://www.synadia.com/lp/rethinkconn-2026.md): The biggest NATS event of the year. Join us virtually on Thursday, June 4, 2026 for architectural deep dives, real-world use cases, and live demos.
+- [Solution Usecase Template](https://www.synadia.com/lp/solution-usecase-template.md): Discover how NATS.io streamlines AI at the edge, enabling real-time, efficient data processing. Learn how it simplifies communication, offers secure, low-bandwidth data transmission, and excels in edge environments. Elevate your AI projects with NATS.io.
+- [KubeCon North America 2024](https://www.synadia.com/lp/synadia-kubecon24-salt-lake.md): Headed to KubeCon North America 2024? Stop by booth P4 for all things NATS, Synadia, and edge computing.
+- [lp/synapsemq](https://www.synadia.com/lp/synapsemq.md)
+- [Thank you!](https://www.synadia.com/lp/thank-you.md): Thank you for your interest in Synadia. Our team will be in touch soon to help you with your distributed systems journey.
+- [Thank you!](https://www.synadia.com/lp/ty-data-sheet-cloud.md): Thank you for downloading the Synadia Cloud data sheet. Check your email for managed NATS hosting details and pricing information.
+- [Thank you!](https://www.synadia.com/lp/ty-data-sheet.md): Thank you for downloading the Synadia Platform data sheet. Check your email for the download link and additional resources.
+- [Thank You](https://www.synadia.com/lp/ty-decentralized-security-nats.md): Watch the on-demand recording of “Scaling Secure Systems with NATS” and learn how NATS enables decentralized security, JWT-based auth, and scalable system design.
+- [Thank You](https://www.synadia.com/lp/ty-f1-arcade.md): You're confirmed for Synadia's exclusive F1 Arcade event in London. See what's next at RethinkConn 2026 — our premier NATS community conference in June.
+- [Thank You](https://www.synadia.com/lp/ty-finance-nats-messaging.md): Thanks for reaching out to Synadia. Learn how NATS is replacing legacy messaging systems like MQ and Rendezvous in modern trading and payments platforms.
+- [Thank you!](https://www.synadia.com/lp/ty-manifesto.md): Thank you for downloading the Nomadic Apps Manifesto. Discover how to build edge-native applications for the future of distributed computing.
+- [Resources   Data Pipelines with NATS](https://www.synadia.com/lp/ty-nats-edge-data-streaming-pipelines.md): Explore how NATS powers real-time, cost-effective data pipelines. Compare with Kafka and Kinesis, and learn with tutorials, benchmarks, and live demos.
+- [lp/ty nats vs aws kinesis streaming](https://www.synadia.com/lp/ty-nats-vs-aws-kinesis-streaming.md)
+- [lp/ty nats vs kafka](https://www.synadia.com/lp/ty-nats-vs-kafka.md)
+- [Thank you!](https://www.synadia.com/lp/ty-nomadic-apps.md): Thank you for downloading the Nomadic Apps fact sheet. Learn how Synadia enables seamless cloud-to-edge application deployment.
+- [Thank You](https://www.synadia.com/lp/ty-rethink-conn-2025.md): Watch the full RethinkConn 2025 recording and explore individual session replays, including talks on NATS 2.11, edge AI, real-world use cases, and Synadia platform updates.
+- [Thank you!](https://www.synadia.com/lp/ty-why-synadia-form.md): Thank you for downloading the Why Synadia white paper. Explore how Synadia Platform transforms distributed systems architecture.
+- [Get the Why Synadia white paper](https://www.synadia.com/lp/why-synadia-form.md): Download the Why Synadia white paper to understand how Synadia Platform solves distributed systems challenges at cloud scale.
+- [NATS Newsletter](https://www.synadia.com/newsletter.md): Stay updated with the latest NATS and Synadia news, product updates, community highlights, and distributed systems insights.
+- [Get help at NATS Office Hours!](https://www.synadia.com/office-hours.md): NATS Weekly Office Hours is a great opportunity to ask questions, learn about NATS, and connect with the community!
+- [Partners](https://www.synadia.com/partners.md): Join Synadia's ecosystem of cloud providers and solution partners defining the future of distributed computing. Become a partner today.
+- [Synadia Platform](https://www.synadia.com/platform.md): Everything you love about NATS.io, packaged with enterprise-grade features.
+- [Get Started with Synadia Platform](https://www.synadia.com/platform/trial.md): Try Synadia Platform with a 60-day free trial. No credit card required.
+- [Podcast](https://www.synadia.com/podcast.md): Listen to expert conversations about NATS, distributed systems, edge computing, and modern application architecture on the Synadia podcast.
+- [Podcast](https://www.synadia.com/podcast/oldest.md): Browse all Synadia podcast episodes from oldest to newest. Learn about NATS, distributed systems, and edge computing fundamentals.
+- [Press](https://www.synadia.com/press.md): Synadia press releases, media coverage, industry analyst reports, and brand resources. Download our media kit and stay updated on company news.
+- [Product](https://www.synadia.com/product.md): Access Synadia Platform components and NATS artifacts. Download enterprise-grade distributed messaging tools with your credentials.
+- [Synadia Protect](https://www.synadia.com/protect.md): Synadia Protect is a security gateway for NATS - a firewall for NATS traffic. Enforce policy on every connection and message, and stream audit events to your SIEM.
+- [Synadia Protect Evaluation Agreement](https://www.synadia.com/protect/terms.md): Terms governing the Synadia Protect 14-day free trial.
+- [Thank You — Synadia Protect](https://www.synadia.com/protect/thank-you.md): Thanks for signing up for your Protect trial. We'll be in touch shortly.
+- [Start Your 14 Day Free Trial — Synadia Protect](https://www.synadia.com/protect/trial.md): Get full access to Synadia Protect for 14 days. Put a security gateway in front of your NATS clusters and enforce policy on every connection and message.
+- [Reports & Research | Synadia](https://www.synadia.com/research-reports/_.md): Deep dives into the technologies shaping distributed systems, agentic AI, and cloud-native infrastructure.
+- [research reports/edge autonomy benchmark](https://www.synadia.com/research-reports/edge-autonomy-benchmark.md)
+- [Beyond Streaming Log Processing — NATS JetStream vs Apache Kafka](https://www.synadia.com/resources/beyond-streaming.md): NATS JetStream and Apache Kafka — the architectural differences that matter, and where each one wins. A Synadia white paper by Jean-Noël Moyne.
+- [Security Advisories](https://www.synadia.com/security.md): Stay informed with Synadia's Security Advisories. We prioritize your security by providing timely updates on vulnerabilities, patches, and best practices to ensure the safety of your data and systems.
+- [Synadia for Automotive](https://www.synadia.com/solutions/automotive.md): Discover how Synadia with NATS.io streamlines AI at the edge, enabling open source, cloud-native connectivity and real-time data processing for the modern automotive world - drivers, developers, manufacturers, operators and third-party service integrators.
+- [Synadia for Financial Services](https://www.synadia.com/solutions/financial-services.md): Enhance your financial experience with Synadia. From developers to managers and traders to customers, Synadia offers trusted data and highly connected services for security, performance, simplicity, and satisfaction.
+- [Synadia for Manufacturing](https://www.synadia.com/solutions/manufacturing.md): Discover how NATS.io streamlines AI at the edge, enabling real-time, efficient data processing. Learn how it simplifies communication, offers secure, low-bandwidth data transmission, and excels in edge environments. Elevate your AI projects with NATS.io.
+- [Synadia for Retail](https://www.synadia.com/solutions/retail.md): Discover how NATS.io streamlines AI at the edge, enabling real-time, efficient data processing. Learn how it simplifies communication, offers secure, low-bandwidth data transmission, and excels in edge environments. Elevate your AI projects with NATS.io.
+- [Technical Guides | Synadia](https://www.synadia.com/technical-guides/_.md): Architecture guides and whitepapers for building resilient, distributed event-driven systems with NATS.
+- [Videos](https://www.synadia.com/videos.md): Watch our comprehensive video library. From beginner tutorials to advanced distributed systems concepts - learn NATS through hands-on videos.
+- [NATS 101 Screencasts](https://www.synadia.com/videos/nats-101.md): Master NATS fundamentals with our step-by-step video series. Perfect for developers new to NATS messaging and distributed systems.
+- [Screencasts](https://www.synadia.com/videos/nats-101/oldest.md): Start your NATS journey from the beginning. Watch NATS 101 episodes in chronological order to build your distributed systems knowledge.
+- [Rethink Connectivity Screencasts](https://www.synadia.com/videos/rethink-connectivity.md): Explore what makes NATS different from traditional messaging and streaming technologies. Learn advanced connectivity patterns and best practices.
+- [Screencasts](https://www.synadia.com/videos/rethink-connectivity/oldest.md): Watch Rethink Connectivity screencasts from the beginning. Discover NATS advantages over traditional messaging systems in chronological order.
+- [Synadia Agents](https://www.synadia.com/videos/synadia-agents.md): Connect and orchestrate AI agents across any network with NATS. Explore agent discovery, the client and agent SDKs, the wire protocol, and headless multi-agent controllers.
+- [Synadia Agents](https://www.synadia.com/videos/synadia-agents/oldest.md): Watch the Synadia Agents series in order — from connecting AI agents over NATS to building agents from scratch and coordinating headless multi-agent controllers.
+- [Synadia Connectors](https://www.synadia.com/videos/synadia-connectors.md): Learn how to use Synadia Connectors to integrate NATS with external systems. Explore Outlets, Inlets, and Transformers.
+
+## Blog
+
+- [Do You Really Need MQTT and Kafka for Industrial IoT?](https://www.synadia.com/blog/mqtt-kafka-industrial-iot.md): The standard industrial IoT stack bridges an MQTT broker into Kafka, and the cost is the glue: two distributed systems to run, two security and monitoring models, and a bridge that is itself a failure point in the middle of your most important data path. Consolidating onto a second proprietary broker trades an integration problem for a procurement problem. Here is the third option.
+- [Reliable Message Delivery in NATS JetStream: Acks, Retries, Dead Letters, and Replay](https://www.synadia.com/blog/jetstream-reliable-delivery-dlq-replay.md): Delivery guarantees in JetStream are a small set of primitives you compose, and the interesting part is what happens when a message fails. Here is the full lifecycle, with working Go, including how to build a dead-letter queue.
+- [Message Reliability Belongs in the Infrastructure, Not in Your Application Code](https://www.synadia.com/blog/message-reliability-infrastructure.md): Every retry loop, outbox table, and deduplication cache is a bug report against your messaging layer. Five questions tell you whether your infrastructure guarantees enough, and where the line between delivery and meaning should sit.
+- [The cost of the stitched stack: why AI stalls before it reaches the edge](https://www.synadia.com/blog/stitched-stack-tax.md): Five vendors, three protocols, and a pile of bespoke glue: that's how most enterprises move data between cloud and edge today. What the stitched stack really costs, and the five outcomes of replacing it with one connective layer.
+- [What a Unified Namespace Actually Requires](https://www.synadia.com/blog/what-a-unified-namespace-requires.md): A Unified Namespace is an architecture, not a product. Here's the plain-English definition, the five capabilities any UNS needs, and why choosing the system underneath it is the decision that determines whether it scales past one site.
+- [Partitioned Consumer Groups in NATS JetStream: Ordered, Scalable Processing](https://www.synadia.com/blog/partitioned-consumer-groups.md): Partitioned consumer groups give NATS JetStream Kafka-style per-key ordering that survives horizontal scaling — every message for a key is pinned to one worker while different keys run in parallel, packaged as static and elastic groups by the Orbit pcgroups library.
+- [How to Stream NATS Messages to ClickHouse in Real Time](https://www.synadia.com/blog/stream-nats-messages-to-clickhouse.md): ClickHouse ships a native NATS table engine, so teams already running NATS can land events directly in an analytical store. Here's how to wire it up, add JetStream for durability, and run it in production.
+- [From Solace to NATS: One Platform for Messaging, Streaming, and the Edge](https://www.synadia.com/blog/solace-to-nats-migration.md): Evaluating a Solace PubSub+ alternative? See how NATS compares on streaming, clustering, edge, and cost, and what a Solace to NATS migration involves in practice.
+- [Migrating from TIBCO to NATS: A Modernization Guide for Financial Services](https://www.synadia.com/blog/tibco-to-nats-migration-financial-services.md): Financial services firms are moving from TIBCO RV and EMS to NATS. Here is how the platforms compare, what the migration actually involves, and why the architects who built TIBCO's messaging are now building NATS.
+- [Why NATS Is Built for DDIL Environments](https://www.synadia.com/blog/nats-ddil-leaf-nodes.md): DDIL networks — Denied, Disrupted, Intermittent, Limited-bandwidth — break most messaging systems. NATS was designed the other way around, and the leaf node is why.
+- [Replace Redis with NATS: Atomic Counters and Microsecond Key-Value](https://www.synadia.com/blog/replace-redis-with-nats-atomic-counters-and-microsecond-key-value.md): NATS 2.12 added server-side increment-in-place counters, and the JetStream KV store answers hot gets in microseconds. If counters and key-value are why you run Redis, you can likely delete one system.
+- [Pull Consumer Priority Groups in NATS JetStream: Overflow, Pinned, and Prioritized Routing](https://www.synadia.com/blog/pull-consumer-priority-groups.md): Pull consumer priority groups let multiple clients pull from one JetStream consumer under a server-side policy — overflow, pinned_client, or prioritized — so the server, not luck, decides which waiting client gets each message. No leader election, no lock service, no coordination code.
+- [How to Design NATS Subject Hierarchies (Patterns, Pitfalls & Best Practices)](https://www.synadia.com/blog/designing-nats-subject-hierarchies.md): A practical guide to NATS subject design: the three core patterns, how to choose one, reserved prefixes, versioning trade-offs, and the mistakes that force painful migrations later.
+- [JetStream Anti-Patterns: Avoid these pitfalls to scale more efficiently](https://www.synadia.com/blog/jetstream-design-patterns-for-scale.md): Leverage JetStream strategically—and steering clear of inefficient usage patterns like abusing consumer info—so you can maintain high performance and stability in your NATS server.
+- [Why are NATS reconnects slow in Kubernetes?](https://www.synadia.com/blog/troubleshooting-nats-reconnect-delays-kubernetes.md): NATS reconnect delays in Kubernetes usually come from stale TCP detection, DNS, or unreachable advertised URLs—not reconnect wait.
+- [NVIDIA Built Its AI Factory Event Bus on NATS](https://www.synadia.com/blog/nvidia-built-its-ai-factory-event-bus-on-nats.md): NVIDIA DSX Exchange is built on NATS, using NATS server's MQTT 3.1.1 compatibility, JetStream, leaf nodes, and Auth Callout for AI factory operations.
+- [Should You Use NATS KV or Object Store for Many Small Objects?](https://www.synadia.com/blog/choosing-nats-kv-or-object-store-for-many-small-objects.md): For many small values read by many replicas, NATS KV often fits better than Object Store. Use Object Store for file-like blobs.
+- [How to Fetch a Small NATS KV Key Hierarchy Without a Watcher](https://www.synadia.com/blog/fetch-nats-kv-key-hierarchy-without-watcher.md): For one-off NATS KV prefix reads, use JetStream batched Direct Get against the KV backing stream instead of creating a watcher.
+- [How Should NATS Auth Callout Permissions Change Dynamically?](https://www.synadia.com/blog/changing-nats-permissions-dynamically-auth-callout.md): Compare reconnect-and-kick versus scoped signing keys for dynamic NATS auth callout permissions without losing JWT precision.
+- [Should You Run NATS on AWS Fargate? EC2, EBS, and EFS Guidance](https://www.synadia.com/blog/running-nats-on-aws-ec2-ebs-fargate-efs.md): Run NATS on AWS, but use EC2 with EBS for JetStream by default. Treat Fargate and EFS as explicit tradeoffs.
+- [How to Connect Amazon Kinesis Data Streams to NATS JetStream](https://www.synadia.com/blog/how-to-connect-amazon-kinesis-to-nats-jetstream.md): Build a real-time pipeline from Amazon Kinesis Data Streams to NATS JetStream using Redpanda Connect. This tutorial covers stream setup, transformation, validation, and troubleshooting.
+- [How to Connect NATS.io to Apache Kafka with Redpanda Connect](https://www.synadia.com/blog/how-to-connect-nats-to-apache-kafka.md): Bridge Kafka events into NATS JetStream with Redpanda Connect. This tutorial shows the local setup, connector configuration, sample payloads, validation commands, and troubleshooting steps.
+- [How to Connect NATS JetStream to RabbitMQ with Redpanda Connect](https://www.synadia.com/blog/how-to-connect-nats-to-rabbitmq.md): Learn how to bridge RabbitMQ to NATS JetStream using Redpanda Connect, including RabbitMQ setup, JetStream configuration, pipeline YAML, test messages, validation, and troubleshooting.
+- [How JetStream Consumers Load Balance Across Multiple Clients](https://www.synadia.com/blog/jetstream-consumers-load-balance-clients.md): A shared JetStream consumer is a work-sharing mechanism, not a broadcast mechanism. If every client must process every message, use one consumer per client and coordinate completion explicitly.
+- [JetStream Scheduled Messages and Interest Retention](https://www.synadia.com/blog/jetstream-scheduled-messages-interest-retention.md): Scheduled messages can be used with JetStream Interest retention, but the retention policy still applies while the message is scheduled. In many cases, a Limits-based stream with TTL or MaxAge is the safer design.
+- [Handling JetStream WorkQueue Messages with No Consumer](https://www.synadia.com/blog/jetstream-workqueue-no-consumer-fallback.md): JetStream does not automatically move workqueue messages to a fallback consumer when no matching consumer exists. Choose retention semantics carefully, and add explicit cleanup or dead-letter handling where needed.
+- [NATS vs RabbitMQ: How to Choose the Right Messaging System](https://www.synadia.com/blog/nats-and-rabbitmq-compared.md): NATS and RabbitMQ both support distributed messaging, but they optimize for different goals. Learn when to choose NATS, when to add JetStream, and when RabbitMQ's richer broker features are the better fit.
+- [Preventing Duplicate Publishes While a Matching Message Exists in JetStream](https://www.synadia.com/blog/prevent-existing-duplicate-messages-jetstream.md): Nats-Msg-Id deduplicates within a time window. To reject a publish while a matching message still exists, make the subject the identity and use a publish expectation.
+- [Scaling JetStream Last-Per-Subject Streams with Many Subjects](https://www.synadia.com/blog/scaling-jetstream-last-per-subject-streams.md): JetStream streams that retain the last message per subject can accumulate many interior deletes under high update churn. For large or hot subject sets, file-backed streams or separating the hot log from the snapshot state are often better fits.
+- [The Edge Talks Back: Building Bidirectional Control Into Your Architecture](https://www.synadia.com/blog/nats-edge-event-architecture-9-the-edge-talks-back.md): An architecture that can only receive from the edge can observe problems but not respond to them. Learn how NATS's bidirectional communication model makes the edge an interactive, commandable participant — not just a passive sensor array.
+- [Are Slow Consumers Only a JetStream Concept in NATS?](https://www.synadia.com/blog/are-slow-consumers-only-a-jetstream-concept-in-nats.md): A slow consumer can happen anywhere NATS sends data faster than a client can receive it. Use server monitoring and system disconnect events to track when it happens.
+- [Avoiding NATS Server Name Collisions in Leaf Node Hub-and-Spoke Topologies](https://www.synadia.com/blog/avoid-nats-server-name-collisions-leafnodes.md): When multiple Kubernetes NATS clusters connect to a shared hub, default pod-based server names can collide. Plan globally unique server names, cluster names, and JetStream domains before joining the mesh.
+- [Copying a NATS JetStream Stream: Backup, Restore, and Mirror Options](https://www.synadia.com/blog/copy-jetstream-stream-messages-backup-mirror.md): JetStream offers several ways to preserve or duplicate stream data, but the right choice depends on whether you need restore, migration, or a temporary copy.
+- [Debugging CPU spikes in cross-account JetStream stream sourcing](https://www.synadia.com/blog/debugging-cross-account-jetstream-sourcing-cpu-spikes.md): Cross-account stream sourcing depends on correctly routed data, consumer-create, and flow-control subjects. Misconfigured flow control can look like an exponential core NATS message spike.
+- [Does JetStream Consumer Pinning Guarantee Exclusive Processing?](https://www.synadia.com/blog/does-consumer-pinning-guarantee-exclusive-jetstream-processing.md): Consumer pinning can help keep work for a shard on one worker, but it does not revoke messages already delivered to another client. Design pinned consumers as an affinity and failover mechanism, not as a strict distributed lock.
+- [Why Go NATS SubscribeSync Subscriptions Can Use Significant Memory](https://www.synadia.com/blog/go-nats-subscribesync-memory-use.md): SubscribeSync in the Go NATS client allocates a large buffered message channel per subscription. For high subscription counts, async callbacks or a smaller sync channel can reduce memory substantially.
+- [How Many Subjects Should a NATS JetStream Stream Have?](https://www.synadia.com/blog/how-many-subjects-jetstream-stream.md): A million subjects is not automatically too many for JetStream, but subject indexes use memory and consumer design matters.
+- [JetStream Atomic Publish Ordering Guarantees](https://www.synadia.com/blog/jetstream-atomic-publish-batch-ordering.md): JetStream atomic batch publish preserves message order within a committed batch and appends the batch contiguously.
+- [JetStream Chat Storage: One Stream per Space or per Room?](https://www.synadia.com/blog/jetstream-chat-stream-per-space-or-room.md): For chat history in JetStream, the right stream layout depends on room count, consumer count, retention, deletion, and operational overhead.
+- [JetStream disaster recovery across two Kubernetes clusters](https://www.synadia.com/blog/jetstream-disaster-recovery-two-kubernetes-clusters.md): JetStream failover across two Kubernetes clusters is mostly a quorum and state-replication design problem. Superclusters, stretched clusters, and stream mirrors each solve different parts of the problem.
+- [Can JetStream Work in a Fully Dynamic Edge Cluster?](https://www.synadia.com/blog/jetstream-dynamic-edge-clusters-quorum.md): JetStream is a good fit when you can give its RAFT groups stable membership. For highly dynamic edge nodes, consider separating Core NATS routing from local JetStream persistence.
+- [Can JetStream Pull Consumers Fetch Strictly Ordered Batches?](https://www.synadia.com/blog/jetstream-pull-consumer-ordered-batches.md): JetStream preserves ordered delivery for a consumer, but a pull batch is not an atomic reservation when multiple clients fetch from the same consumer.
+- [How JetStream Scales Raft per Stream](https://www.synadia.com/blog/jetstream-raft-per-stream-scaling.md): JetStream uses a Raft group per stream, which trades per-stream overhead for flexible placement, replication, and topology control.
+- [Using NATS JetStream or KV for Per-Service Configuration](https://www.synadia.com/blog/jetstream-service-configuration-kv-watchers.md): For thousands of services that each need their own configuration, NATS KV is usually the simplest JetStream-backed model. Raw streams can also work, but consumer design matters.
+- [Should You Shard JetStream Streams with Many Durable Consumers?](https://www.synadia.com/blog/jetstream-sharding-many-durable-consumers.md): A single JetStream stream with many durable consumers can work, but it will not scale linearly forever. Sharding is a design tradeoff driven by CPU, I/O, lag, and consumer behavior.
+- [How to Map JetStream Subjects with External Metadata](https://www.synadia.com/blog/map-jetstream-subjects-device-group.md): When JetStream subject routing depends on external metadata, a custom mapper is usually the right boundary. Partition by device ID to preserve per-device order while scaling mapper workers.
+- [Can NATS permissions or filters use custom message headers?](https://www.synadia.com/blog/nats-custom-headers-permissions-filtering.md): NATS messages can include custom headers, but the server permission model applies to subjects, not header values. If you need per-message authorization metadata, design where enforcement should happen carefully.
+- [Using NATS Gateways with Kubernetes Load Balancers](https://www.synadia.com/blog/nats-gateways-kubernetes-load-balancers.md): When building a NATS supercluster on Kubernetes, use load balancers for cross-region gateway reachability—not for local cluster routing.
+- [Designing NATS JetStream for per-tenant FIFO processing](https://www.synadia.com/blog/nats-jetstream-per-tenant-fifo-processing.md): For per-tenant FIFO event handling, model ordering and parallelism separately. Tenant-scoped streams can be a practical fit when stream and consumer counts remain stable.
+- [Onboarding Distributed NATS Clients with NKeys and JWTs](https://www.synadia.com/blog/onboarding-distributed-nats-clients-nkeys-jwts.md): For distributed clients, NATS JWT authentication lets clients keep private NKeys local while a trusted issuer signs user JWTs.
+- [How to Process JetStream Messages in Strict Order](https://www.synadia.com/blog/process-jetstream-messages-strict-order.md): JetStream can gate delivery with MaxAckPending=1 when strict serial processing is required. The tradeoff is throughput, so many systems scale by partitioning work by key.
+- [Mapping RabbitMQ-Style Routing to NATS JetStream](https://www.synadia.com/blog/rabbitmq-routing-patterns-in-nats-jetstream.md): In JetStream, streams store messages once and consumers provide delivery views over those messages. For RabbitMQ-style routing, model related data with subjects in a stream, then use filtered consumers for each application.
+- [Randomizing JetStream Message Processing Order](https://www.synadia.com/blog/randomize-jetstream-message-processing-order.md): JetStream preserves ordered streams, so true global randomization is expensive. For many workloads, subject buckets or delayed redelivery can break sequence within a bounded window.
+- [Reading large NATS Object Store objects slowly](https://www.synadia.com/blog/reading-large-nats-object-store-objects-slowly.md): The Object Store Get API is designed to download objects as quickly as possible. For long-running incremental processing, use the underlying JetStream stream APIs for more control.
+- [Can You Renew a TTL on a NATS Key-Value Entry?](https://www.synadia.com/blog/renew-nats-kv-key-ttl.md): NATS KV TTL behavior depends on whether you use bucket-level expiration or per-entry TTLs. For lease locks, prefer compare-and-set refreshes or design for expiration races.
+- [Scaling Dynamic Dashboard Subscriptions with JetStream and Core NATS](https://www.synadia.com/blog/scaling-dynamic-dashboard-subscriptions-jetstream-core-nats.md): For dashboards with many dynamic subject filters, use JetStream for recoverable state and core NATS for live fan-out. Short-lived consumers can build snapshots while lightweight subscriptions handle updates.
+- [Scaling NATS for Per-User Real-Time Notifications](https://www.synadia.com/blog/scaling-nats-per-user-notifications.md): Large per-user notification systems should optimize for connection count, reconnect behavior, and JetStream consumer count. Sharding streams and using short-lived catch-up consumers can keep the design more scalable.
+- [Should End Users Connect Directly to NATS?](https://www.synadia.com/blog/should-end-users-connect-directly-to-nats.md): Direct client connections to NATS can be a good fit for low-latency, persistent delivery at high concurrency. The main design work is around security, reconnect bursts, and buffering application handshakes.
+- [Designing Tenant-Isolated Edge Cold Starts with JetStream](https://www.synadia.com/blog/tenant-isolated-edge-cold-starts-jetstream.md): Edge cold starts need a different path from live streaming. Use leaf nodes, domains, filtered sources, and explicit backfill streams carefully.
+- [Why Is My JetStream Leader Using So Much RAM?](https://www.synadia.com/blog/why-is-jetstream-using-so-much-ram.md): JetStream can use RAM for deduplication state, file-store caches, per-subject tracking, and leader responsibilities.
+- [Mirror, Merge, or Consume: How to Choose Your Edge-to-Core Streaming Pattern](https://www.synadia.com/blog/nats-edge-event-architecture-8-mirror-merge-or-consume.md): The three edge-to-core streaming patterns aren't interchangeable. Learn when to consume, mirror, or merge edge streams — and why defaulting to the wrong one compounds into months of workarounds.
+- [Connecting distributed SCADA with NATS.io (part two)](https://www.synadia.com/blog/connecting-distributed-scada-with-natsio-part-two.md): A NATS.io architecture for distributed SCADA: leaf nodes at the edge, JetStream replacing Kafka, MQTT bridging, and decentralized auth across Levels 1–4.
+- [Introducing Synadia Protect: a security gateway for NATS](https://www.synadia.com/blog/introducing-synadia-protect.md): There's no firewall for NATS. Synadia Protect is the missing control point: a transparent proxy that inspects every connection and message, enforces NATS-aware policy at the network edge, and produces the audit trail your security team needs to actually approve the deployment.
+- [Flying Blind at the Edge: Why Approximate Decisions Are Costing You](https://www.synadia.com/blog/nats-edge-event-architecture-7-flying-blind-at-the-edge.md): Approximate observability at the edge doesn't just make diagnosis harder — it changes the quality of every decision your system makes. Learn why end-to-end event traceability is the missing layer in most edge monitoring implementations.
+- [The agentic AI era will be heterogeneous. Coordination is the next problem.](https://www.synadia.com/blog/synadia-agents-agentic-ai-era-will-be-heterogeneous.md): Enterprises are running fleets of agents across a variety of platforms and harnesses. Coordination is the next problem. Synadia's agent SDKs — on top of the NATS Agent Protocol — are the composable building blocks for the solutions.
+- [Heterogeneous agents, one fabric](https://www.synadia.com/blog/heterogeneous-agents-one-fabric.md): Introducing the NATS Agent Protocol and the synadia-agents SDKs — the substrate for coordinating across the heterogeneous fleet of agents you've already deployed, across providers, runtimes, and the physical places agents live.
+- [The Hidden Cost of Active-Passive Clustering (And What to Do Instead)](https://www.synadia.com/blog/nats-edge-event-architecture-6-hidden-cost-of-active-passive-clustering.md): Active-passive clustering feels like a safe default — until edge scale exposes the real costs. Learn why full-mesh clustering with Raft consensus changes the economics of high availability.
+- [Connecting distributed SCADA with NATS.io (part one)](https://www.synadia.com/blog/connecting-distributed-scada-with-natsio-part-one.md): Distributed SCADA explained: how SCADA's Level 0–4 architecture maps to modern industrial systems, and where NATS.io fits as a connective substrate for PLCs.
+- [You Don't Need Two Platforms: The Case for Hybrid Eventing](https://www.synadia.com/blog/nats-edge-event-architecture-5-you-dont-need-two-platforms.md): Platform sprawl at the edge is a tax on every decision that follows. Here's why a hybrid event platform that handles both pub/sub and durable streaming in a single deployable is the minimum viable architecture for resilient edge-to-core systems.
+- [Distributed Counters in NATS JetStream: A CRDT-Based Approach to Global Counting](https://www.synadia.com/blog/distributed-counter-crdt.md): NATS Server 2.12 adds a `AllowMsgCounter` flag to JetStream streams. Every subject in the stream becomes a signed-integer counter that you increment with a `Nats-Incr` header — no locks, no consensus, and order-independent across clusters, super clusters, and sources.
+- [Introducing Synadia Insights: see inside your NATS system](https://www.synadia.com/blog/introducing-synadia-insights.md): Put your production NATS systems under the monitoring microscope. Synadia Insights gives SRE, Ops, and Platform teams high-cardinality, entity-level visibility into their NATS infrastructure — pinpointing the exact connections, streams, consumers, and accounts driving performance issues.
+- [Stop Building Firehoses: Flow Control Isn't a Performance Optimization — It's an Architectural Decision](https://www.synadia.com/blog/nats-edge-event-architecture-4-flow-control-is-an-architectural-decision.md): Flow control at the edge isn't a tuning problem — it's an architectural decision. Learn how subject filtering, subject mapping, weighted routing, and pull consumption determine whether your edge-to-core system stays manageable at scale.
+- [RethinkConn 2025 Proved Virtual Events Can Be Exceptional — Here's What's Coming in 2026](https://www.synadia.com/blog/rethinkconn-2026.md): RethinkConn 2025 set the bar for virtual tech conferences with 16 deep-dive sessions. Here's what made it exceptional—and what's new for RethinkConn 2026 on June 4.
+- [Your Perimeter Is Already Gone — Edge Security Isn't a Checkbox](https://www.synadia.com/blog/nats-edge-event-architecture-3-your-perimeter-is-already-gone.md): Perimeter-based security fails at the edge. Learn why credential compromise, tampered data injection, and lateral movement require a realm-based security architecture with scoped credentials and explicit subject boundaries.
+- [Delayed Message Scheduling in NATS JetStream](https://www.synadia.com/blog/delayed-message-scheduling-nats-jetstream.md): NATS 2.12 introduces the JetStream Message Scheduler, enabling header-driven delayed delivery with no external schedulers or consumer workarounds required.
+- [Why "Just Retry" Will Kill Your Edge System](https://www.synadia.com/blog/nats-edge-event-architecture-2-retry-will-fail-your-edge-system.md): The retry model is built on a hidden assumption that doesn't hold at the edge. Learn why store-and-forward is the pattern that actually works for intermittent connectivity — and what it costs to find out the hard way.
+- [The Edge Isn't a Place — It's an Operating Reality](https://www.synadia.com/blog/nats-edge-event-architecture-1-edge-isnt-a-place-but-an-operating-reality.md): Most edge computing architectures fail because of the wrong mental model. Learn why the edge is a separate operational dimension—not just far-away infrastructure—and the four constraints that every edge-to-core system must design for.
+- [Per-Message TTL: Unlocking Ephemeral State Patterns in NATS](https://www.synadia.com/blog/per-message-ttl-nats-2-11.md): Per-message TTL lets each message carry its own expiration. Sessions, cache entries, and order events can now expire on their own schedule — no separate streams or external cleanup logic required.
+- [Living on the Edge: Eventing for a New Dimension](https://www.synadia.com/blog/living-on-the-edge-eventing-for-a-new-dimension.md): Edge computing changes how event-driven systems need to be designed. Living on the Edge walks through practical eventing patterns for edge-to-core architectures—where intermittent connectivity, security boundaries, and distribution constraints are part of normal operations.
+- [Mirror Streams in NATS JetStream: One-Way Replication Made Simple](https://www.synadia.com/blog/mirror-streams-jetstream.md): Mirror streams give you one-way, asynchronous replication of JetStream data—perfect for geographic distribution, cross-account sharing, and load distribution.
+- [MQTT vs. NATS for Fleet Management: Hub-and-Spoke vs. Distributed Mesh](https://www.synadia.com/blog/nats-vs-mqtt-technical-comparison-iot-fleet-management.md): MQTT vs. NATS: comparing hub-and-spoke and distributed mesh architectures for edge persistence, offline-resilient messaging, decentralized security, and scalable fleet management infrastructure.
+- [Message Tracing in NATS 2.11: Debug Your Entire System with One Command](https://www.synadia.com/blog/message-tracing-nats.md): NATS 2.11 introduced built-in message tracing. No external tools, no code instrumentation—just run a command and see exactly where your messages go.
+- [Monitoring NATS: From HTTP Scrapes to System Events](https://www.synadia.com/blog/monitoring-nats-from-http-scrapes-to-system-events.md): NATS embeds observability directly into the messaging system itself via the system account ($SYS). Learn how event-driven advisories, NATS-native monitoring queries, and periodic statistics work alongside traditional monitoring tools.
+
+- [NATS HTTP Monitoring Endpoints: A Complete Guide](https://www.synadia.com/blog/nats-http-monitoring-endpoints.md): NATS includes a built-in HTTP server that exposes real-time telemetry as JSON. Learn how to enable monitoring endpoints, what each endpoint reports, and how to integrate with Prometheus and Grafana.
+
+- [JetStream Expected Sequence Headers: Optimistic Concurrency Without Locks](https://www.synadia.com/blog/understanding-jetstream-expected-sequence-headers.md): NATS JetStream's expected sequence headers provide a powerful mechanism for optimistic concurrency control. Learn how to use global, per-subject, and per-pattern sequence validation for concurrent writes without locks.
+- [Scaling Global AI Inference with NATS JetStream](https://www.synadia.com/blog/scaling-global-ai-inference-with-nats-jetstream.md): How NATS + JetStream provides the messaging and queuing layer that AI inference systems need to handle bursty traffic, scale globally, and keep GPUs busy without overloading them.
+- [Consumer Pausing in NATS 2.11: Hit Pause Without Losing Messages](https://www.synadia.com/blog/consumer-pausing-nats-2-11.md): NATS 2.11 introduced consumer pausing—temporarily halt message delivery without losing data, throwing errors, or disconnecting clients.
+- [Jepsen: NATS 2.12.1](https://www.synadia.com/blog/jepsen-nats-2-12-1.md): Synadia's response to Kyle Kingsbury's Jepsen report on NATS 2.12.1, covering identified issues, fixes implemented, and our ongoing commitment to improving JetStream's reliability and consistency.
+
+- [Atomic Batch Publishing in NATS 2.12: All-or-Nothing Message Guarantees](https://www.synadia.com/blog/atomic-batch-publishing-nats-2-12.md): NATS 2.12 introduces atomic batch publishing for all-or-nothing message guarantees. Learn how to eliminate partial writes in event-sourced systems and fan-out scenarios.
+- [Why NATS](https://www.synadia.com/blog/why-nats.md): NATS has evolved from a lightweight message broker into a unified platform for distributed systems. Discover how its foundational design choices—location independence, M:N communication, and async-first interactions—let you replace multiple infrastructure tools with a single solution spanning cloud to edge.
+
+- [Building Event-Driven Banking as a Service (BaaS) with NATS](https://www.synadia.com/blog/event-driven-banking-as-a-service-with-nats.md): The banking industry has spent years layering APIs on top of legacy systems. To meet the next wave of digital banking innovation, financial institutions need to evolve beyond static API meshes and embrace event-driven architectures—and NATS is emerging as a powerful enabler.
+- [Synadia and TigerBeetle Pledge $512K to the Zig Software Foundation](https://www.synadia.com/blog/synadia-tigerbeetle-zig-foundation-pledge.md): Announcing a shared commitment to advancing the future of systems programming and reliable distributed software. Synadia and TigerBeetle have together pledged a combined $512,000 USD to the Zig Software Foundation over the next two years.
+- [Connector Series Recap: Building Real Data Pipelines with NATS](https://www.synadia.com/blog/connector-series-recap.md): Learn how to build complete data pipelines with NATS Connectors—moving data out to external systems, pulling it back in, and reshaping it along the way. Three episodes, one full loop you can follow from start to finish.
+- [Q&A - Financial Services Event Architectures](https://www.synadia.com/blog/financial-services-event-architectures.md): Explore how NATS powers financial services with event-driven architectures, stream processing, and AI integrations for scalable, secure systems.
+- [Orbit.go: A Guide to NATS Client-Side Abstractions for Go](https://www.synadia.com/blog/orbit-go-guide.md): Deep dive into orbit.go modules, exploring their capabilities, use cases, and how they simplify NATS-based applications
+- [How NATS Cuts Costs for Distributed AI](https://www.synadia.com/blog/nats-unlocks-distributed-ai-cost-savings.md): Learn how NATS boosts AI inference efficiency at the edge and in the cloud, cutting costs, reducing latency, and maximizing GPU utilization.
+- [How Sophotech Cut Latency by 3x Migrating from RabbitMQ to NATS](https://www.synadia.com/blog/rabbitmq-to-nats-sophotech-migration.md): Discover how Sophotech cut latency by 3x and simplified ops by migrating 50 microservices from RabbitMQ to NATS.
+- [Understanding JetStream Memory Usage Patterns](https://www.synadia.com/blog/nats-jetstream-high-ram-usage.md): Learn how NATS JetStream uses memory, key factors driving RAM usage, and tuning strategies to optimize performance and stability.
+- [NATS on Kubernetes in Minutes: Introducing Synadia Deploy](https://www.synadia.com/blog/nats-deploy-for-kubernetes.md): Simplify NATS deployments with Synadia Deploy for Kubernetes. Automate deploys and upgrades and manage on-going operations from our Control Plane, while NATS and Synadia Platform run on your infrastructure. Deploying and operating NATS has never been easier.
+- [NATS and Decentralized Security: A Modern Approach to Scalable Authentication](https://www.synadia.com/blog/decentralized-security-webinar.md): Discover how NATS decentralized security solves scalability challenges with domain-driven authentication, supporting millions of devices through operator models and auth callouts.
+- [Synadia Named as Fast Mover & Innovator in GigaOm Radar Report for Full-Stack Edge & AI Deployments](https://www.synadia.com/blog/synadia-gigaom-edge-ai-radar-report-2025.md): GigaOm recognizes Synadia as 2025 Fast Mover and Innovator for Full-Stack Edge and AI Deployments. Powering real-time, scalable, low-latency apps from cloud to constrained edge.
+- [From NATS to Looker Studio - Visualize your Vehicle Telemetry](https://www.synadia.com/blog/sdv-demo-nats-to-looker-studio.md): In this post, we’ll show you how to stream real-time vehicle telemetry using the Synadia Cloud for NATS and Google Cloud Platform.
+- [Synadia and the NATS project](https://www.synadia.com/blog/nats-server-next-steps.md): NATS will continue as a CNCF project under the Apache 2.0 license with support from Synadia. We’re adopting a regular 6-month release cycle to bring more predictability and transparency to the roadmap. Commercially, Synadia remains committed to building enterprise-grade capabilities that extend open source NATS.
+- [Streaming Costs Comparison: NATS vs. Kinesis Compute](https://www.synadia.com/blog/nats-vs-aws-kinesis-streaming-compute-costs.md): In his NATS vs AWS Kinesis benchmarking analysis, Jean-Noël Moyne shows how NATS's consumer model is functionally equivalent to Kinesis's more premium EFO consumers. When enhanced fanout (EFO) consumers are required for Kinesis to match NATS's capabilities, Kinesis costs escalate.
+- [Real-Time Vehicle Telemetry with Synadia Cloud and Google Cloud Bigtable](https://www.synadia.com/blog/sdv-demo-nats-to-bigtable.md): In this post, we’ll show you how to stream real-time vehicle telemetry using the Synadia Cloud for NATS.
+- [Every Company Will Soon be an AI Company - Is Your Infrastructure Ready?](https://www.synadia.com/blog/every-company-will-soon-be-an-ai-company-is-your-infrastructure-ready.md): The competitive advantage will go to those who master not just the technology, but its optimal deployment at the edge of the network.
+- [Say Hello to Synadia Connectors](https://www.synadia.com/blog/introducing-connectors-integrate-nats-with-mongo.md): Move data between NATS and external systems with scalable, runtime-agnostic Connectors running on Synadia Workloads. Get started with our MongoDB example or chose one of AWS, Azure, or GCP sources/sinks.
+- [Introducing Workloads: NATS-native distributed compute](https://www.synadia.com/blog/introducing-workloads-on-nats-execution-engine-nex.md): Discover Synadia Workloads—NATS-native distributed compute. From cloud to edge, deploy containers or JS functions anywhere NATS runs. All built on top of NATS Execution Engine (Nex).
+- [Looking Ahead with Clarity and Purpose for NATS.io](https://www.synadia.com/blog/synadia-response-to-cncf.md): Synadia has always championed open source, and this foundational principle remains unwavering.
+- [How NATS Beats Amazon Kinesis in Streaming Cost and Performance (and Why It Matters)](https://www.synadia.com/blog/nats-vs-amazon-kinesis-streaming.md): Discover why NATS beats Amazon Kinesis in cost, latency, and scalability—essential insights for smarter streaming and lower AWS bills. Read the full paper for detailed comparisons and benchmarks.
+- [AI at the Edge, an Opportunity](https://www.synadia.com/blog/ai-at-the-edge-an-opportunity.md): AI is shifting to the edge—faster, smarter, and more efficient. Discover how Synadia enables real-time AI, seamless connectivity, and edge-native innovation.
+- [Simplifying Microservices Architecture for the Edge and AI Era](https://www.synadia.com/blog/nats-microservices-architecture-for-edge-and-ai.md): Streamline your microservices architecture with NATS for secure, high-performance communication at the edge and in AI applications. Discover how reducing traditional dependencies with NATS leads to faster innovation and enhanced scalability.
+- [NATS: The Secret Weapon Behind Vitrifi’s Workflow Automation Platform](https://www.synadia.com/blog/vitrifi-workflow-automation-architecture-1.md): Learn how Vitrifi embraces NothingButNATS and uses NATS to power its Workflow Automation Platform with unmatched scalability, resilience, and seamless integration.
+- [NATS at System Initiative](https://www.synadia.com/blog/system-init-nats-synadia.md): Learn how System Initiative leverages NATS for distributed systems, scalable architecture, and a robust production environment with Synadia’s support.
+- [Build Telemetry Data Pipelines with NATS and Pathway](https://www.synadia.com/blog/nats-pathway-for-telemetry-data-pipelines.md): Struggling with the complexity, high costs, and operational overhead of Kafka and Flink? Build scalable real-time systems with NATS and Pathway instead
+- [Rethinking the System of Record](https://www.synadia.com/blog/rethinking-the-system-of-record.md): Explore how NATS and event-driven architecture enable context-aware data processing for accurate, flexible, and real-time decision-making
+- [Synadia is SOC 2 Type 2 Compliant](https://www.synadia.com/blog/synadia-soc2-type2-compliant.md): Synadia is now SOC 2 Type 2 Compliant.
+- [A new mindset for using data in your organization](https://www.synadia.com/blog/introducing-series-rethink-data-with-nats.md): The line between operational and analytical is blurring. Rethink your organizational approach to data and lay flexible, scalable foundations that don't rely on nightly sync jobs or other artifacts of legacy approaches to data.
+- [Orbit: NATS Extensions and the Future of the Clients](https://www.synadia.com/blog/orbit-and-the-future-of-the-clients.md): Introduction to the Orbit extensions and how it solves client libraries challenges
+- [Podcast Appearance: Rethinking application architecture for the edge](https://www.synadia.com/blog/derek-collison-dataframed-podcast-rethinking-apps-architectures-for-edge.md): Learn why edge computing, unlike the cloud, demands nomadic, self-healing apps and reimagined architectures for the low-latency, AI-driven experiences that are on the rise.
+- [Increased Connection and Subscription Limits on Synadia Cloud](https://www.synadia.com/blog/synadia-cloud-increased-limits.md): Paid plans now include 10x higher client connections and subject subscription limits, without any price increase. Whether you need resilient, scalable connectivity for distributed services or higher-order data patterns like streaming, KV, or object storage, now is the perfect time to explore our global, multi-tenant NATS supercluster.
+- [NATS and Kafka Compared](https://www.synadia.com/blog/nats-and-kafka-compared.md): Compare NATS vs Kafka for distributed systems: Explore key differences in architecture, performance, and messaging patterns for building scalable infrastructure.
+- [Survey results in: Synadia developers LOVE NATS.](https://www.synadia.com/blog/why-synadia-developers-love-nats.md): Discover why Synadia developers and engineers love NATS. Known for performance, simplicity, and flexibility, NATS powers global distributed systems with ease. From the data center to the edge, see how this open-source project scales across clouds and supports mission-critical applications.
+- [NATS for Retail: Manage Thousands of Nodes at the Edge by Reducing East-West Traffic](https://www.synadia.com/blog/east-west-vs-north-south-in-nats.md): Discover the difference between north-south and east-west traffic in distributed systems, particularly in edge computing. Learn how NATS enables scalable architectures for the edge, ensuring robust data flow between edge nodes and central clusters, minimizing unnecessary east-west chatter.
+- [Building a Job Queue With NATS.io and Go](https://www.synadia.com/blog/building-a-job-queue-with-nats-io-and-go.md): Learn to build a lightweight and performant job queue with NATS.io and Go. Implement a dead letter queue for handling failed messages.
+- [You can't forklift apps from Cloud to Edge](https://www.synadia.com/blog/cant-forklift-apps-from-cloud-to-the-edge.md): Discover why moving apps from cloud to edge requires a new approach. Learn how to design edge-native applications to handle unique constraints.
+- [Complex ≠ complicated: a fresh take on system design](https://www.synadia.com/blog/system-design-complex-not-complicated.md): Discover how Kevin Hoffman simplifies large-scale distributed systems. Learn the difference between complex and complicated designs. Read more now!
+- [Connect Your Self-Hosted NATS.io Cluster to Synadia Cloud](https://www.synadia.com/blog/synadia-cloud-byon.md): Learn about Synadia Cloud's new Bring Your Own NATS feature, allowing you to connect private NATS systems to Synadia Cloud for enhanced management and monitoring.
+- [Modern Connected, AI-Ready Vehicles Powered by Synadia Are Driving On Your Roads](https://www.synadia.com/blog/modern-connected-ai-ready-vehicles-powered-by-synadia.md): Discover how Synadia's technology powers modern connected, AI-ready vehicles, enhancing driving safety and experience with real-time data and AI applications.
+- [Rethinking Microservices: Using NATS to Dramatically Simplify Your Microservices](https://www.synadia.com/blog/rethinking-microservices.md): Discover how NATS simplifies microservices architecture, reducing complexity and improving efficiency. Learn about typical microservice challenges and how NATS addresses them.
+- [SUSECON 2024: Chat with Synadia about Kubernetes HA and AI at the Edge](https://www.synadia.com/blog/susecon-2024-chat-with-synadia-about-kubernetes-ha-and-ai-at-the-edge.md): Join Synadia at SUSECON 2024 to discuss Kubernetes HA and AI at the Edge. Learn about our two-node HA solution and how it can benefit your edge infrastructure.
+- [Synadia Enters SAAS Awards, Driving Innovation at the Edge](https://www.synadia.com/blog/synadia-enters-saas-awards-driving-innovation-at-the-edge.md): Synadia Cloud enters the SaaS Awards, showcasing our innovative platform that drives edge computing and cloud-agnostic solutions.
+- [Announcing the preview of Synadia Cloud's HTTP Gateway](https://www.synadia.com/blog/synadia-cloud-http-gateway-preview.md): Discover Synadia Cloud's new HTTP Gateway, providing HTTP access to NATS capabilities like key-value, object store, services, and messaging. Try the preview today!
+- [Synadia Cloud KV Bucket Viewer launched](https://www.synadia.com/blog/synadia-cloud-kv-viewer-preview-launched.md): Synadia Cloud KV Bucket Viewer is now live! Explore key history, delete records, and real-time updates with our latest feature.
+- [Multi-Region Consistency: Have Your Cake and Eat it Too!](https://www.synadia.com/blog/multi-cluster-consistency-models.md): Learn how to improve latency and availability in global NATS deployments using stretch clusters and virtual streams. Follow this practical example for multi-region consistency.
+- [Living on the Edge! A KubeCon Europe '24 Recap](https://www.synadia.com/blog/kubecon-europe-2024-recap.md): Recap of Synadia's highlights from KubeCon Europe 2024, including NATS at the Edge, production use cases, and innovative edge deployment solutions.
+- [Synadia Cloud Stream Viewer preview is here!](https://www.synadia.com/blog/synadia-cloud-stream-viewer-preview-is-here.md): Synadia Cloud Stream Viewer preview is now available, offering users the ability to view and filter stream data natively. Try it today!
+- [Announcing Synadia Platform](https://www.synadia.com/blog/announcing-synadia-platform.md): Introducing Synadia Platform, a deployable suite of components providing Synadia Control Plane capabilities in your environment Synadia Platform can be fully managed by our experts (BYOC) or self-hosted and self-mangaged by your team.
+- [Synadia Closes Series B Funding](https://www.synadia.com/blog/synadia-closes-series-b-funding.md): Synadia raises $25M in Series B funding to enhance NATS and JetStream, simplifying modern distributed systems. Learn more about our vision and future plans.
+- [Synadia Cloud, NATS Execution Engine and more: A recap of RethinkConn 2024](https://www.synadia.com/blog/rethinkconn-2024-recap.md): Missed RethinkConn 2024? Catch up on the highlights, including new features in Synadia Cloud, NATS Execution Engine, and the NATS Project Roadmap.
+- [RethinkConn 2024](https://www.synadia.com/blog/rethinkconn-2024.md): Join us at RethinkConn 2024 for updates on NATS, new features, demos, and insights from industry experts. Register now for the virtual event on Jan 11th, 2024.
+- [Introducing Synadia Cloud](https://www.synadia.com/blog/introducing-synadia-cloud.md): Announcing Synadia Cloud, a new platform for managing NGS with features like multi-account management, JetStream, and a comprehensive API.
+- [Why NATS.io JetStream is so well suited to AI at the edge](https://www.synadia.com/blog/ai-at-the-edge-with-nats-jetstream.md): Discover why NATS.io JetStream is perfect for AI at the edge. Learn about its capabilities for handling data and ensuring reliable delivery.
+- [Synadia is now SOC 2 Type 1 Compliant](https://www.synadia.com/blog/synadia-soc2-compliant.md): Synadia achieves SOC 2 Type 1 compliance, demonstrating our commitment to security and reliability. Learn what this means for our customers.
+- [Building a Data Driven Healthcare demo with NATS.io](https://www.synadia.com/blog/bulding-a-data-driven-healthcare-demo-with-nats.md): See how NATS.io handles real-time data from medical devices in a healthcare demo. Discover the benefits of a data-driven approach in healthcare.
+- [Announcing the General Availability of Synadia Control Plane - What can Control Plane do?](https://www.synadia.com/blog/announcing-the-general-availability-of-synadia-control-plane.md): Synadia Control Plane is now available! Manage NATS.io deployments with ease, providing monitoring, management, and security features.
+- [Why FinecoBank chose NATS.io & Synadia for it's NextGen stock trade processing layer](https://www.synadia.com/blog/why-finecobank-chose-nats-io-synadia-for-it-s-nextgen-stock-trade-processing-layer.md): Discover why FinecoBank chose NATS.io and Synadia for their next-gen stock trade processing layer, enhancing performance and simplifying operations.
+- [Total cost of ownership: NATS vs Kafka](https://www.synadia.com/blog/nats-io-total-cost-of-ownership-tco-comparison-with-kafka.md): Compare the total cost of ownership between NATS and Kafka. Learn how NATS offers simplicity, performance, and cost savings for real-world workloads.
+- [FileWave: why we moved from ZeroMQ to NATS](https://www.synadia.com/blog/filewave-why-we-moved-from-zeromq-to-nats.md): Learn why FileWave transitioned from ZeroMQ to NATS for their device management system, improving security, web support, and message persistence.
+- [NATS powers the new HarperDB 4.0 platform](https://www.synadia.com/blog/nats-powers-the-new-harperdb-4-0-platform.md): Learn how NATS powers HarperDB 4.0, enabling a global data platform with low latency. Discover the benefits of this collaboration for real-time data delivery.
+- [Synadia news and updates](https://www.synadia.com/blog/synadia-on-a-roll.md): Synadia's recent achievements, including awards and product updates, highlight our innovation in cloud computing and distributed systems.
+- [Matrix Dendrite project moves from Kafka to NATS.io](https://www.synadia.com/blog/dendrite-project-moves-from-kafka-to-nats.md): Discover why the Matrix Dendrite project switched from Kafka to NATS.io, gaining performance, flexibility, and reduced complexity for real-time communications.
+- [Creating a global virtual healthcare cloud with Control Plane & Synadia NGS](https://www.synadia.com/blog/creating-a-global-virtual-healthcare-cloud-with-control-plane-synadia-ngs.md): Learn how Control Plane and Synadia NGS create a global virtual healthcare cloud, enabling multi-cloud messaging, data streaming, and zero-trust security.
+- [Sote slashes latency more than 2x running Synadia’s NGS utilitySote](https://www.synadia.com/blog/sote-slashes-latency-more-than-2x-running-synadia-s-ngs-utility.md): See how Sote improved latency by over 2x using Synadia's NGS utility. Learn about their tech stack and the benefits of using NATS for logistics.
+- [NATS for the adaptive edge - A cloud native platform for IoT developers](https://www.synadia.com/blog/nats-for-the-adaptive-edge-a-cloud-native-platform-for-iot-developers.md): Explore how NATS supports the adaptive edge, providing a cloud-native platform for IoT developers. Learn how to reduce costs and simplify your software stack.
+- [NATS server 2.9 release: more stability, greater scale, better security](https://www.synadia.com/blog/nats-server-2-9-release-more-stability-greater-scale-better-security.md): Discover the new features in NATS server 2.9, including improved stability, scalability, and security. Learn how JetStream elevates NATS to a global utility for communications.
+- [Streaming, messaging and persistence for Personal.ai](https://www.synadia.com/blog/streaming-messaging-and-persistence-for-personal-ai.md): Discover how Personal.ai uses Synadia Cloud for streaming, messaging, and data persistence to create personal AI agents. Learn about their innovative tech stack and architecture.
+- [WebAssembly applications with wasmCloud and NATS](https://www.synadia.com/blog/wasmcloud.md): Learn how WebAssembly and NATS integration is revolutionizing application platforms, driving innovation beyond the public cloud to the edge.
+- [How Intelecy optimizes factory processes with NATS, NGS and JetStream](https://www.synadia.com/blog/how-intelecy-optimizes-factory-processes-with-nats-ngs-and-jetstream.md): Learn how Intelecy uses NATS, Synadia Cloud, and JetStream to optimize factory processes with real-time machine learning insights and bi-directional data pipelines.
+- [14 factors of adaptive edge (part two)](https://www.synadia.com/blog/adaptive-edge-2.md): Continue exploring the 14 key factors that adaptive edge systems should possess to meet modern distributed application requirements.
+- [14 factors of adaptive edge (part one)](https://www.synadia.com/blog/adaptive-edge-1.md): Learn about the concept of adaptive edge systems and the first part of the 14 factors that define adaptive edge architectures.
+- [K3s and NATS](https://www.synadia.com/blog/suse-k3s-nats.md): Explore how K3s and NATS simplify edge computing with real-world use cases from Duke Energy and PowerFlex. Learn about their innovative edge solutions.
+- [NGS guides: battery spa](https://www.synadia.com/blog/ngs-guides-battery-spa.md): Learn how to set up a battery charging station back-end in 20 minutes using Synadia’s NGS service. Follow this guide for a quick and efficient solution.
+- [SOX compliance with NATS](https://www.synadia.com/blog/sox-compliance-with-nats.md): Learn how to use NATS.io to set up a SOX compliance system. Discover features and best practices for achieving SOX compliance with NATS.
+- [How Form3 built a multi-cloud low-latency payments service with NATS.io + JetStream](https://www.synadia.com/blog/how-form3-built-a-multi-cloud-low-latency-payments-service-with-nats-io-jetstream.md): Discover how Form3 built a multi-cloud, low-latency payments service using NATS.io and JetStream, achieving high reliability and reduced latency.
+
+## Newsletters
+
+- [NATS Monthly - August 2024](https://www.synadia.com/newsletter/nats-august-2024.md)
+- [NATS Monthly - April 2024](https://www.synadia.com/newsletter/nats-monthly-april-2024.md)
+- [NATS Monthly - April 2025](https://www.synadia.com/newsletter/nats-monthly-april-2025.md)
+- [NATS Monthly - April 2026](https://www.synadia.com/newsletter/nats-monthly-april-2026.md)
+- [NATS Monthly - August 2023](https://www.synadia.com/newsletter/nats-monthly-august-2023.md)
+- [NATS Monthly - August 2025](https://www.synadia.com/newsletter/nats-monthly-august-2025.md)
+- [NATS Monthly - August 2026](https://www.synadia.com/newsletter/nats-monthly-august-2026.md)
+- [NATS Monthly - December 2023](https://www.synadia.com/newsletter/nats-monthly-december-2023.md)
+- [NATS Monthly - December 2024](https://www.synadia.com/newsletter/nats-monthly-december-2024.md)
+- [NATS Monthly - December 2025](https://www.synadia.com/newsletter/nats-monthly-december-2025.md)
+- [NATS Monthly - February 2024](https://www.synadia.com/newsletter/nats-monthly-february-2024.md)
+- [NATS Monthly - February 2025](https://www.synadia.com/newsletter/nats-monthly-february-2025.md)
+- [NATS Monthly - February 2026](https://www.synadia.com/newsletter/nats-monthly-february-2026.md)
+- [NATS Monthly - January 2024](https://www.synadia.com/newsletter/nats-monthly-january-2024.md)
+- [NATS Monthly - January 2025](https://www.synadia.com/newsletter/nats-monthly-january-2025.md)
+- [NATS Monthly - January 2026](https://www.synadia.com/newsletter/nats-monthly-january-2026.md)
+- [NATS Monthly - July 2023](https://www.synadia.com/newsletter/nats-monthly-july-2023.md)
+- [NATS Monthly - July 2024](https://www.synadia.com/newsletter/nats-monthly-july-2024.md)
+- [NATS Monthly - July 2025](https://www.synadia.com/newsletter/nats-monthly-july-2025.md)
+- [NATS Monthly - July 2026](https://www.synadia.com/newsletter/nats-monthly-july-2026.md)
+- [NATS Monthly - June 2023](https://www.synadia.com/newsletter/nats-monthly-june-2023.md)
+- [NATS Monthly - June 2024](https://www.synadia.com/newsletter/nats-monthly-june-2024.md)
+- [NATS Monthly - June 2025](https://www.synadia.com/newsletter/nats-monthly-june-2025.md)
+- [NATS Monthly - June 2026](https://www.synadia.com/newsletter/nats-monthly-june-2026.md)
+- [NATS Monthly - March 2024](https://www.synadia.com/newsletter/nats-monthly-march-2024.md)
+- [NATS Monthly - March 2025](https://www.synadia.com/newsletter/nats-monthly-march-2025.md)
+- [NATS Monthly - March 2026](https://www.synadia.com/newsletter/nats-monthly-march-2026.md)
+- [NATS Monthly - May 2024](https://www.synadia.com/newsletter/nats-monthly-may-2024.md)
+- [NATS Monthly - May 2025](https://www.synadia.com/newsletter/nats-monthly-may-2025.md)
+- [NATS Monthly - May 2026](https://www.synadia.com/newsletter/nats-monthly-may-2026.md)
+- [NATS Monthly - November 2023](https://www.synadia.com/newsletter/nats-monthly-november-2023.md)
+- [NATS Monthly - November 2024](https://www.synadia.com/newsletter/nats-monthly-november-2024.md)
+- [NATS Monthly - November 2025](https://www.synadia.com/newsletter/nats-monthly-november-2025.md)
+- [NATS Monthly - October 2023](https://www.synadia.com/newsletter/nats-monthly-october-2023.md)
+- [NATS Monthly - October 2024](https://www.synadia.com/newsletter/nats-monthly-october-2024.md)
+- [NATS Monthly - October 2025](https://www.synadia.com/newsletter/nats-monthly-october-2025.md)
+- [NATS Monthly - September 2023](https://www.synadia.com/newsletter/nats-monthly-september-2023.md)
+- [NATS Monthly - September 2024](https://www.synadia.com/newsletter/nats-monthly-september-2024.md)
+- [NATS Monthly - September 2025](https://www.synadia.com/newsletter/nats-monthly-september-2025.md)
+- [NATS Weekly #1](https://www.synadia.com/newsletter/nats-weekly-1.md)
+- [NATS Weekly #10](https://www.synadia.com/newsletter/nats-weekly-10.md)
+- [NATS Weekly #11](https://www.synadia.com/newsletter/nats-weekly-11.md)
+- [NATS Weekly #12](https://www.synadia.com/newsletter/nats-weekly-12.md)
+- [NATS Weekly #13](https://www.synadia.com/newsletter/nats-weekly-13.md)
+- [NATS Weekly #14](https://www.synadia.com/newsletter/nats-weekly-14.md)
+- [NATS Weekly #15](https://www.synadia.com/newsletter/nats-weekly-15.md)
+- [NATS Weekly #16](https://www.synadia.com/newsletter/nats-weekly-16.md)
+- [NATS Weekly #17](https://www.synadia.com/newsletter/nats-weekly-17.md)
+- [NATS Weekly #18](https://www.synadia.com/newsletter/nats-weekly-18.md)
+- [NATS Weekly #19](https://www.synadia.com/newsletter/nats-weekly-19.md)
+- [NATS Weekly #2](https://www.synadia.com/newsletter/nats-weekly-2.md)
+- [NATS Weekly #20](https://www.synadia.com/newsletter/nats-weekly-20.md)
+- [NATS Weekly #21](https://www.synadia.com/newsletter/nats-weekly-21.md)
+- [NATS Weekly #22](https://www.synadia.com/newsletter/nats-weekly-22.md)
+- [NATS Weekly #23](https://www.synadia.com/newsletter/nats-weekly-23.md)
+- [NATS Weekly #24](https://www.synadia.com/newsletter/nats-weekly-24.md)
+- [NATS Weekly #25](https://www.synadia.com/newsletter/nats-weekly-25.md)
+- [NATS Weekly #26](https://www.synadia.com/newsletter/nats-weekly-26.md)
+- [NATS Weekly #27](https://www.synadia.com/newsletter/nats-weekly-27.md)
+- [NATS Weekly #28](https://www.synadia.com/newsletter/nats-weekly-28.md)
+- [NATS Weekly #29](https://www.synadia.com/newsletter/nats-weekly-29.md)
+- [NATS Weekly #3](https://www.synadia.com/newsletter/nats-weekly-3.md)
+- [NATS Weekly #30](https://www.synadia.com/newsletter/nats-weekly-30.md)
+- [NATS Weekly #31](https://www.synadia.com/newsletter/nats-weekly-31.md)
+- [NATS Weekly #32](https://www.synadia.com/newsletter/nats-weekly-32.md)
+- [NATS Weekly #33](https://www.synadia.com/newsletter/nats-weekly-33.md)
+- [NATS Weekly #34](https://www.synadia.com/newsletter/nats-weekly-34.md)
+- [NATS Weekly #35](https://www.synadia.com/newsletter/nats-weekly-35.md)
+- [NATS Weekly #36](https://www.synadia.com/newsletter/nats-weekly-36.md)
+- [NATS Weekly #37](https://www.synadia.com/newsletter/nats-weekly-37.md)
+- [NATS Weekly #38](https://www.synadia.com/newsletter/nats-weekly-38.md)
+- [NATS Weekly #39](https://www.synadia.com/newsletter/nats-weekly-39.md)
+- [NATS Weekly #4](https://www.synadia.com/newsletter/nats-weekly-4.md)
+- [NATS Weekly #40](https://www.synadia.com/newsletter/nats-weekly-40.md)
+- [NATS Weekly #41](https://www.synadia.com/newsletter/nats-weekly-41.md)
+- [NATS Weekly #42](https://www.synadia.com/newsletter/nats-weekly-42.md)
+- [NATS Weekly #43](https://www.synadia.com/newsletter/nats-weekly-43.md)
+- [NATS Weekly #44](https://www.synadia.com/newsletter/nats-weekly-44.md)
+- [NATS Weekly #45](https://www.synadia.com/newsletter/nats-weekly-45.md)
+- [NATS Weekly #46](https://www.synadia.com/newsletter/nats-weekly-46.md)
+- [NATS Weekly #47](https://www.synadia.com/newsletter/nats-weekly-47.md)
+- [NATS Weekly #48](https://www.synadia.com/newsletter/nats-weekly-48.md)
+- [NATS Weekly #49](https://www.synadia.com/newsletter/nats-weekly-49.md)
+- [NATS Weekly #5](https://www.synadia.com/newsletter/nats-weekly-5.md)
+- [NATS Weekly #50](https://www.synadia.com/newsletter/nats-weekly-50.md)
+- [NATS Weekly #51](https://www.synadia.com/newsletter/nats-weekly-51.md)
+- [NATS Weekly #52](https://www.synadia.com/newsletter/nats-weekly-52.md)
+- [NATS Weekly #53](https://www.synadia.com/newsletter/nats-weekly-53.md)
+- [NATS Weekly #54](https://www.synadia.com/newsletter/nats-weekly-54.md)
+- [NATS Weekly #55](https://www.synadia.com/newsletter/nats-weekly-55.md)
+- [NATS Weekly #56](https://www.synadia.com/newsletter/nats-weekly-56.md)
+- [NATS Weekly #57](https://www.synadia.com/newsletter/nats-weekly-57.md)
+- [NATS Weekly #58](https://www.synadia.com/newsletter/nats-weekly-58.md)
+- [NATS Weekly #59](https://www.synadia.com/newsletter/nats-weekly-59.md)
+- [NATS Weekly #6.5](https://www.synadia.com/newsletter/nats-weekly-6-5.md)
+- [NATS Weekly #6](https://www.synadia.com/newsletter/nats-weekly-6.md)
+- [NATS Weekly #60](https://www.synadia.com/newsletter/nats-weekly-60.md)
+- [NATS Weekly #61](https://www.synadia.com/newsletter/nats-weekly-61.md)
+- [NATS Weekly #62](https://www.synadia.com/newsletter/nats-weekly-62.md)
+- [NATS Weekly #63](https://www.synadia.com/newsletter/nats-weekly-63.md)
+- [NATS Weekly #64](https://www.synadia.com/newsletter/nats-weekly-64.md)
+- [NATS Weekly #65](https://www.synadia.com/newsletter/nats-weekly-65.md)
+- [NATS Weekly #66](https://www.synadia.com/newsletter/nats-weekly-66.md)
+- [NATS Weekly #67](https://www.synadia.com/newsletter/nats-weekly-67.md)
+- [NATS Weekly #68](https://www.synadia.com/newsletter/nats-weekly-68.md)
+- [NATS Weekly #69](https://www.synadia.com/newsletter/nats-weekly-69.md)
+- [NATS Weekly #7](https://www.synadia.com/newsletter/nats-weekly-7.md)
+- [NATS Weekly #70](https://www.synadia.com/newsletter/nats-weekly-70.md)
+- [NATS Weekly #71](https://www.synadia.com/newsletter/nats-weekly-71.md)
+- [NATS Weekly #72](https://www.synadia.com/newsletter/nats-weekly-72.md)
+- [NATS Weekly #73](https://www.synadia.com/newsletter/nats-weekly-73.md)
+- [NATS Weekly #74](https://www.synadia.com/newsletter/nats-weekly-74.md)
+- [NATS Weekly #75](https://www.synadia.com/newsletter/nats-weekly-75.md)
+- [NATS Weekly #76](https://www.synadia.com/newsletter/nats-weekly-76.md)
+- [NATS Weekly #77](https://www.synadia.com/newsletter/nats-weekly-77.md)
+- [NATS Weekly #8](https://www.synadia.com/newsletter/nats-weekly-8.md)
+- [NATS Weekly #9](https://www.synadia.com/newsletter/nats-weekly-9.md)
+
+## Podcasts
+
+- [A Service Mesh Pattern for NATS.io](https://www.synadia.com/podcast/a-service-mesh-pattern-for-nats-io.md)
+- [AI at the Edge(s) with NATS.io](https://www.synadia.com/podcast/ai-at-the-edges-with-nats-io.md)
+- [Back to Basics With Core NATS](https://www.synadia.com/podcast/back-to-basics-with-core-nats.md)
+- [Escaping the HTTP Mindset with NATS.io](https://www.synadia.com/podcast/escaping-the-http-mindset-with-nats-io.md)
+- [Exploring Powerful Client-side Features and Abstractions in NATS.io](https://www.synadia.com/podcast/exploring-powerful-client-side-features-and-abstractions-in-nats-io.md)
+- [Going off piste; KV patterns with NATS.io (pt1)](https://www.synadia.com/podcast/going-off-piste-kv-patterns-with-nats-io-pt1.md)
+- [Grokking NATS.io Streams and Consumers](https://www.synadia.com/podcast/grokking-nats-io-streams-and-consumers.md)
+- [Monolith to Modular Monolith with NATS.io](https://www.synadia.com/podcast/monolith-to-modular-monolith-with-nats-io.md)
+- [NATS.FM: Orbit, The NATS Client Extensions](https://www.synadia.com/podcast/orbit-nats-client-extensions.md)
+- [Protecting data with NATS.io for ML, AI, and LLMs](https://www.synadia.com/podcast/protecting-data-with-nats-for-ml-ai-and-llms.md)
+- [The journey and features of the NATS.io 2. 10 release](https://www.synadia.com/podcast/the-journey-and-features-of-the-nats-io-2-10-release.md)
+- [Welcoming in 2024 with a bang](https://www.synadia.com/podcast/welcoming-in-2024-with-a-bang.md)
+- [NATS.FM: What's new in NATS Server v2.11 release](https://www.synadia.com/podcast/whats-new-nats-server-release-v211.md)
+
+## Videos
+
+- [Building an Interactive Whiteboard with NATS Websockets](https://www.synadia.com/videos/building-an-interactive-whiteboard-with-nats-websockets.md)
+- [Clustering NATS Servers](https://www.synadia.com/videos/clustering-nats-servers.md)
+- [Dynamic Permissions with Scoped Signing Keys](https://www.synadia.com/videos/dynamic-permissions-with-scoped-signing-keys.md)
+- [Extend your NATS Cluster with Leaf Nodes](https://www.synadia.com/videos/extend-your-nats-cluster-with-leaf-nodes.md)
+- [Getting Started with NATS](https://www.synadia.com/videos/getting-started-with-nats.md)
+- [How to build a NATS Supercluster](https://www.synadia.com/videos/how-to-build-a-nats-supercluster.md)
+- [How to configure NATS JetStream streams](https://www.synadia.com/videos/how-to-configure-nats-jetstream-streams.md)
+- [Give your Go app superpowers with an Embedded NATS Server](https://www.synadia.com/videos/how-to-embed-nats-server-in-your-app.md)
+- [How to set up Decentralized Authentication/Authorization in NATS](https://www.synadia.com/videos/how-to-set-up-decentralized-authentication-authorization-in-nats.md)
+- [Connect ANY Auth System to NATS.io with Auth Callout](https://www.synadia.com/videos/how-to-use-auth-callout.md)
+- [JetStream KV: A fascinating alternative to Redis...](https://www.synadia.com/videos/jetstream-kv-a-fascinating-alternative-to-redis.md)
+- [Nothing but NATS - Going Beyond Cloud Native](https://www.synadia.com/videos/kubecon-2024-nothing-but-nats-beyond-cloud-native.md)
+- [Message Persistence and Streaming with NATS JetStream](https://www.synadia.com/videos/message-persistence-and-streaming-with-nats-jetstream.md)
+- [Micro-services with auto discovery, observability and load balancing](https://www.synadia.com/videos/micro-services-with-auto-discovery-observability-and-load-balancing.md)
+- [NATS JetStream: Retrieve data from Streams with Consumers](https://www.synadia.com/videos/nats-101-jetstream-consumers.md)
+- [NATS JetStream: Streams, Storage, and Data Lifecycle](https://www.synadia.com/videos/nats-101-jetstream-streams.md)
+- [An Intro to NATS for Microservice or Distributed Systems Communication](https://www.synadia.com/videos/nats-communication-in-code.md)
+- [NATS Supercluster: Cross-Cloud Geo-Affinity for High Availability and Low Latency](https://www.synadia.com/videos/nats-cross-cloud-high-availability.md)
+- [NATS vs Kafka: Part 1](https://www.synadia.com/videos/nats-vs-kafka-part-1.md)
+- [NATS vs Kafka: Part 2](https://www.synadia.com/videos/nats-vs-kafka-part-2.md)
+- [Build Priority Background Jobs & Dead Letter Queues with NATS JetStream](https://www.synadia.com/videos/priority-bg-jobs-and-dead-letter-queues-nats-jetstream.md)
+- [Replace Kafka, RabbitMQ, Redis and more w/NATS JetStream](https://www.synadia.com/videos/replace-kafka-rabbitmq-redis-and-more-w-nats-jetstream.md)
+- [Rethinking Microservices](https://www.synadia.com/videos/rethinking-microservices.md)
+- [Stream Processing with NATS and Benthos](https://www.synadia.com/videos/rethinking-stream-processing.md)
+- [Synadia Agents: Connect AI Agents Across Any Network](https://www.synadia.com/videos/synadia-agents-connect-across-any-network.md)
+- [Synadia Agents: DSPy Agents, Headless Controllers & a Meta-Agent Dashboard](https://www.synadia.com/videos/synadia-agents-dspy-and-headless-controllers.md)
+- [Synadia Agents: Client SDK, Agent SDK & the Wire Protocol](https://www.synadia.com/videos/synadia-agents-sdks-and-wire-protocol.md)
+- [Synadia Cloud Walkthrough: Connection Graph](https://www.synadia.com/videos/synadia-cloud-connections-graph-monitoring-and-observability.md)
+- [Synadia Cloud Walkthrough: Part 1](https://www.synadia.com/videos/synadia-cloud-overview.md)
+- [Synadia Connectors: Inlets](https://www.synadia.com/videos/synadia-connectors-inlets.md)
+- [Synadia Connectors: Outlets](https://www.synadia.com/videos/synadia-connectors-outlets.md)
+- [Synadia Connectors: Transformers](https://www.synadia.com/videos/synadia-connectors-transformers.md)
+- [The ONE feature that makes NATS more powerful than Kafka, Pulsar, RabbitMQ & Redis](https://www.synadia.com/videos/the-one-feature-that-makes-nats-more-powerful-than-kafka-pulsar-rabbitmq-redis.md)
+- [How Verrus Built a Flexible Data Center Backbone on NATS](https://www.synadia.com/videos/verrus-flexible-data-center-backbone-on-nats.md)
+
+## Customer Stories
+
+- [From Device Telemetry to Autonomous Agents: 200 Million Events per Minute on NATS](https://www.synadia.com/customer-stories/calix.md) - Calix runs the communication layer for millions of home routers and access devices on NATS — moving ~200M events per minute into the cloud in real time.
+- [Building a Flexible Data Center Backbone for the AI Era with NATS](https://www.synadia.com/downloads/Synadia-Verrus-CaseStudy.pdf) - NATS gives Verrus a single data plane for the entire facility: real-time telemetry served as queryable state, so power flexes with the grid while AI workloads run untouched.
+- [MachineMetrics: Unlocking Industrial IoT Innovation with NATS at the Edge](https://www.synadia.com/customer-stories/machinemetrics.md) - For MachineMetrics, NATS.io has become the foundation for its new data transport layer with plans to replace tools like Amazon Kinesis where it makes sense.
+- [Real-Time Data Accelerates High-Powered Electricity Trading for Eviny](https://www.synadia.com/customer-stories/eviny.md) - With NATS.io-based Synadia Platform, Eviny modernized its messaging and connectivity infrastructure for real-time electricity trading with zero data loss.
+- [Data is The New Oil](https://www.synadia.com/downloads/Synadia-Rivitt-CaseStudy.pdf) - The simplicity and efficiency of Synadia Cloud enabled Rivitt to move faster than their competition
+- [Messaging, Streaming, and Persistence](https://www.synadia.com/downloads/Synadia-PersonalAI-CaseStudy-1.pdf) - With NATS, Personal.ai built a simpler, more reliable, and more extensible architecture.
+- [Optimizing Edge Connectivity with NATS JetStream](https://www.synadia.com/downloads/Synadia-PowerflexCaseStudy.pdf) - Edge-based EV charging and energy management with zero data loss using Synadia and NATS.
+- [Optimizing factory data flows with Synadia Cloud](https://www.synadia.com/downloads/Synadia-Intelecy-CaseStudy.pdf) - NATS was the ideal low-latency messaging and streaming solution for Intelecy's bi-directional ML data pipelines.
+- [A Future Built on Simplicity](https://www.synadia.com/downloads/Synadia-Fineco-CaseStudy.pdf) - Operational simplicity and intuitive patterns made NATS the ideal messaging and connectivity platform for the future.
+- [Lightning-fast Payments with NATS.io](https://www.synadia.com/downloads/Synadia-Form3-CaseStudy.pdf) - Decreased message latency and increased server uptime with Synadia and NATS.
+- [Performance and Resilience at the Edge](https://www.synadia.com/downloads/Synadia-HarperDBCaseStudy.pdf) - HarperDB integrates NATS.io for highly scalable, real-time messaging for its distributed systems platform.
+
+## Press
+
+- [Synadia Annoucned as a Fall 2024 Intellyx Digital Innovator Award Winner](https://www.synadia.com/press/fall-2024-intellyx-digital-innovator-award-winners-announced.md)
+- [AI At The Edge: Synadia’s RethinkConn 2025 Reimagines What’s Possible With Cloud-to-Edge Connectivity](https://www.synadia.com/press/ai-at-the-edge.md)
+- [Are Your Apps Truly Nomadic?](https://www.synadia.com/press/are-your-apps-truly-nomadic.md)
+- [BCC Group, BCware, and Synadia Team to Accelerate Smart Contract Adoption via New Web3Link Platform](https://www.synadia.com/press/bcc-group-bcware-and-synadia-team-to-accelerate-smart-contract-adoption-via-new-web3link-platform.md)
+- [CNCF and Synadia align on securing the future of the NATS.io project](https://www.synadia.com/press/cncf-and-synadia-align-on-securing-the-future-of-nats.md)
+- [Synadia Announces a 200% YoY Increase in Customer Adoption Across Synadia Platform and Synadia Cloud](https://www.synadia.com/press/customer-adoption-200.md)
+- [Interview with Derek Collison, Founder & CEO of Synadia](https://www.synadia.com/press/derek-collison-founder-ceo-of-synadia-interview-series.md)
+- [Edge AI with Derek Collison & Justyna Bak, CEO & VP of Marketing at Synadia](https://www.synadia.com/press/edge-ai-with-derek-collison-and-justyna-bak.md)
+- [Every Company Will Soon be an AI Company: Is Your Infrastructure Ready? - Techstrong.ai](https://www.synadia.com/press/every-company-will-soon-be-an-ai-company-is-your-infrastructure-ready.md)
+- [Exploring NATS: A Multi-Paradigm Connectivity Layer for Distributed Applications](https://www.synadia.com/press/exploring-nats-a-multi-paradigm-connectivity-layer-for-distributed-applications.md)
+- [From Cloud to Edge: Why One Size Doesn’t Fit All](https://www.synadia.com/press/from-cloud-to-edge-why-one-size-doesnt-fit-all.md)
+- [Innovation at the edge transforms connected mobility](https://www.synadia.com/press/innovation-at-the-edge-synadia-transforms-connected-mobility.md)
+- [Intellyx Brain Candy Video: Synadia](https://www.synadia.com/press/intellyx-brain-candy-video-synadia.md)
+- [OASIS Launches PRVD Open Project to Advance Production-Grade Reference Implementation of the Baseline Protocol](https://www.synadia.com/press/oasis-launches-prvd-open-project-to-advance-production-grade-reference-implementation-of-the-baseline-protocol.md)
+- [Podcast: A RedMonk Conversation with Derek Collison](https://www.synadia.com/press/redmonk-conversation-podcast.md)
+- [Synadia Announces Availability of Hardened NATS.io Image for the DoD Community](https://www.synadia.com/press/synadia-announces-availability-of-hardened-nats-io-image-for-the-dod-community.md)
+- [Synadia Announces Availability of Synadia Control Plane](https://www.synadia.com/press/synadia-announces-availability-of-synadia-control-plane.md)
+- [Synadia Communications Inc. doubles funding with recent raise](https://www.synadia.com/press/synadia-communications-inc-doubles-funding-with-recent-raise.md)
+- [Synadia: Building The Next Generation Of Digital Communications](https://www.synadia.com/press/synadia-derek-collison-building-the-next-gen-of-digital-communications.md)
+- [Synadia Furthers Commitment to Connected Enterprises With Executive Hire and Promotion](https://www.synadia.com/press/synadia-furthers-commitment-to-connected-enterprises-with-executive-hire-and-promotion.md)
+- [Synadia: Leveraging Publish/Subscribe and Network Abstraction to Reinvent Edge Infrastructure](https://www.synadia.com/press/synadia-leveraging-publish-subscribe-and-network-abstraction-to-reinvent-edge-infrastructure.md)
+- [Synadia Named a Global Leader in Cloud Computing with 2022 Stratus Award](https://www.synadia.com/press/synadia-named-a-global-leader-in-cloud-computing-with-2022-stratus-award.md)
+- [Synadia: the foundational messaging and connectivity layer for distributed systems, offers a powerful alternative to complex data pipelines and service meshes](https://www.synadia.com/press/synadia-nats-foundational-messaging-and-connectivity-layer-for-distributed-systems.md)
+- [Synadia: Interview With VP of Marketing Justyna Bak About The Era of Edge Computing, IoT and AI](https://www.synadia.com/press/synadia-profile-justyna-bak-interview.md)
+- [Synadia Raises $25 Million Series B Funding to Meet Massive Demand for Multi-cloud and Edge Computing Driven by AI](https://www.synadia.com/press/synadia-raises-25-million-series-b-funding.md)
+- [Synadia Raises Funding to Meet Multi-Cloud and Edge Computing Demand](https://www.synadia.com/press/synadia-raises-funding-to-meet-multi-cloud-and-edge-computing-demand.md)
+- [Synadia Reimagines Distributed Workloads with NATS and NEX: A Vision for Edge and Cloud-Native Computing](https://www.synadia.com/press/synadia-reimagines-distributed-workloads-with-nats-and-nex-a-vision-for-edge-and-cloud-native-computing.md)
+- [The IoT Community Announces Synadia as a Gold-level Corporate Member in its Elite IoT Ecosystem](https://www.synadia.com/press/the-iot-community-announces-synadia-as-a-gold-level-corporate-member-in-its-elite-iot-ecosystem.md)
+- [With HarperDB 4.0, connectivity extends even further thanks to NATS open-source connective technology for adaptive edge and distributed systems.](https://www.synadia.com/press/with-harperdb-4-0-connectivity-extends-even-further-thanks-to-nats-open-source-connective-technology-for-adaptive-edge-and-distributed-systems.md)
+
+## Glossary
+
+- [What is a Control Plane?](https://www.synadia.com/glossary/control-plane.md)
+- [What is MQTT?](https://www.synadia.com/glossary/mqtt.md)
+- [What is a Multi-Cluster NATS Deployment? A supercluster](https://www.synadia.com/glossary/multi-cluster.md)
+- [What is NATS Bench?   ](https://www.synadia.com/glossary/nats-bench.md)
+- [What is the NATS CLI?](https://www.synadia.com/glossary/nats-cli.md)
+- [What are NATS Leaf Nodes?](https://www.synadia.com/glossary/nats-leaf-nodes.md)
+- [What is NATS?](https://www.synadia.com/glossary/nats.md)
+- [Publish/Subscribe (Pub/Sub)](https://www.synadia.com/glossary/pub-sub-publish-subscribe.md)
+- [What is a Queue Group?](https://www.synadia.com/glossary/queue-groups.md)
+- [What is Request/Reply?](https://www.synadia.com/glossary/request-reply.md)
+- [What are Streams in NATS?](https://www.synadia.com/glossary/streams.md)
+- [What is TLS / mTLS?](https://www.synadia.com/glossary/tls-mtls.md)
+- [What are WebSockets in NATS?](https://www.synadia.com/glossary/websockets.md)
+- [What is a Work Queue?](https://www.synadia.com/glossary/work-queue.md)
+
+## Open Source
+
+- [NATS Server](https://github.com/nats-io/nats-server): Core NATS messaging server (Apache 2.0 license)
+- [NATS Clients](https://github.com/nats-io): Official client libraries for all major languages
+- [Community](https://nats.io/community/): Contributing guidelines and community resources
+- [NATS Slack](https://natsio.slack.com): Active community support and discussions
+

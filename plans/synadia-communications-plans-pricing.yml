@@ -1,0 +1,116 @@
+generated: '2026-08-29'
+method: searched
+source: https://docs.synadia.com/cloud/pricing
+name: Synadia Cloud plans and pricing
+description: >-
+  Synadia Cloud publishes a full public pricing table with four tiers and per-tier resource quotas,
+  plus explicit network-data overage rates. Quotas are expressed in NATS terms - accounts,
+  connections, subscriptions per connection, leaf nodes, streams, consumers, storage - rather than
+  API call counts, because the metered product is the messaging fabric, not the control-plane API.
+  The Control Plane API and HTTP Gateway are included with every tier and are not separately priced
+  or metered.
+pricing_url: https://www.synadia.com/cloud/pricing
+docs_url: https://docs.synadia.com/cloud/pricing
+currency: USD
+plan_count: 4
+plans:
+- name: Personal
+  price: 0
+  price_display: Free
+  currency: USD
+  billing_period: month
+  collaborators: false
+  limits:
+    accounts: 2
+    connections: 10
+    subscriptions_per_connection: 100
+    leaf_nodes: 2
+    max_message_size: 1 MiB
+    network_data: 10 GiB
+    standard_storage: 5 GiB
+    standard_streams: 10
+    standard_consumers_per_stream: 100
+- name: Starter
+  price: 49
+  price_display: $49/mo
+  currency: USD
+  billing_period: month
+  collaborators: unlimited
+  limits:
+    accounts: 3
+    connections: 100
+    subscriptions_per_connection: 1000
+    leaf_nodes: 3
+    services: 1
+    functions: 3
+    connectors: 1
+    max_message_size: 1 MiB
+    network_data: 100 GiB
+    standard_storage: 10 GiB
+    standard_streams: 20
+    ha_storage: 1 GiB
+    ha_streams: 2
+- name: Pro
+  price: 199
+  price_display: $199/mo
+  currency: USD
+  billing_period: month
+  collaborators: unlimited
+  limits:
+    accounts: 10
+    connections: 1000
+    subscriptions_per_connection: 10000
+    leaf_nodes: 10
+    services: 3
+    functions: 5
+    connectors: 3
+    max_message_size: 2 MiB
+    network_data: 1 TiB
+    standard_storage: 50 GiB
+    standard_streams: 25
+    ha_storage: 10 GiB
+    ha_streams: 10
+- name: Enterprise
+  price: null
+  price_display: Contact for quote
+  currency: USD
+  billing_period: custom
+  collaborators: unlimited
+  limits:
+    accounts: custom
+    connections: custom
+    subscriptions_per_connection: custom
+    leaf_nodes: custom
+    services: custom
+    functions: custom
+    connectors: custom
+    max_message_size: 8 MiB
+    network_data: 2 TiB
+  includes:
+  - SLA support
+  - design review
+  sla: https://www.synadia.com/cloud/sla
+overage:
+  metric: network data egress
+  rates:
+  - scope: client and leaf egress
+    price: 0.09
+    unit: GiB
+    currency: USD
+  - scope: gateway egress
+    price: 0.02
+    unit: GiB
+    currency: USD
+  - scope: route ingress and egress
+    price: 0.01
+    unit: GiB
+    currency: USD
+api_metering:
+  metered: false
+  note: >-
+    Neither the Control Plane API nor the HTTP Gateway is billed per request. Cost is driven by
+    connections, storage and network data, so the API itself carries no per-call price.
+other_products:
+  note: >-
+    Synadia Platform, Insights, Protect and Deploy for Kubernetes are sold via trials and sales
+    contact rather than a published price. Only Synadia Cloud has a public price table.

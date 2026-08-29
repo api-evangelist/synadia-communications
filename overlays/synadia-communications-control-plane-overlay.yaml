@@ -1,0 +1,59 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for Synadia Control Plane / Synadia Cloud
+  version: 1.0.0
+x-provenance:
+  generated: '2026-08-29'
+  method: generated
+  source: >-
+    Enhancements derived from API Evangelist analysis of the upstream spec. Extends
+    openapi/synadia-communications-control-plane-openapi.yaml, which is Synadia's own document saved
+    verbatim from
+    https://raw.githubusercontent.com/synadia-io/control-plane-sdk-go/main/syncp/api/openapi.yaml.
+    The original is never mutated.
+extends: ../openapi/synadia-communications-control-plane-openapi.yaml
+actions:
+- target: $.info
+  description: >-
+    Record the concrete hosted base URL and the maturity caveat. The upstream servers[] block is a
+    template with an EMPTY default ({baseUrl}/api), which is correct for the self-hosted Control Plane
+    but leaves a client with no reachable host for Synadia Cloud.
+  update:
+    x-hosted-base-url: https://cloud.synadia.com/api
+    x-api-reference: https://cloud.synadia.com/api-docs
+    x-documentation: https://docs.synadia.com/platform/control-plane
+    x-maturity: >-
+      Self-declared beta (/core/beta) behind a GA product; the /workloads/alpha subtree is alpha.
+      No operation in this document is marked deprecated and no deprecation policy is published.
+- target: $.servers
+  description: >-
+    Add the Synadia Cloud hosted server alongside the upstream self-hosted template, without removing
+    or replacing it. The templated entry is correct and stays.
+  update:
+  - url: https://cloud.synadia.com/api
+    description: Synadia Cloud (hosted) Control Plane API
+    x-added-by: api-evangelist
+- target: $.info
+  description: Runtime semantics an agent needs that the contract does not state.
+  update:
+    x-conventions:
+      idempotency: none declared
+      pagination: >-
+        No repo-wide convention. 3 of 245 operations accept `limit`; no cursor, offset or Link header.
+      error_envelope: >-
+        400/401/403/404 are declared on all 245 operations with no media type and no schema. Treat
+        error bodies as untyped.
+      rate_limits: none published; no 429 and no RateLimit-* headers exist
+      reversibility: >-
+        Deletes are permanent. No restore, undelete or recover operation exists anywhere in this
+        document. The only reversal primitives are credential rotations (rotateAccountSk,
+        rotateNatsUser, rotateAgentToken), which invalidate rather than restore, and no grace window
+        is published for any of them.
+      dry_run: none
+    x-artifacts:
+      conventions: ../conventions/synadia-communications-conventions.yml
+      errors: ../errors/synadia-communications-problem-types.yml
+      data_model: ../data-model/synadia-communications-data-model.yml
+      lifecycle: ../lifecycle/synadia-communications-lifecycle.yml
+      authentication: ../authentication/synadia-communications-authentication.yml
+      rate_limits: ../rate-limits/synadia-communications-rate-limits.yml

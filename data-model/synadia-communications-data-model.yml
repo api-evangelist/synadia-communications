@@ -1,0 +1,197 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Derived from the path hierarchy and component schemas of
+  openapi/synadia-communications-control-plane-openapi.yaml (158 paths, 487 schemas) and
+  openapi/synadia-communications-http-gateway-openapi.json (14 paths, 11 schemas).
+name: Synadia Communications data model
+description: >-
+  Synadia's control plane has an unusually legible containment hierarchy, readable directly from its
+  URL structure: a Team owns Systems, a System owns Accounts, and an Account is the isolation boundary
+  that owns NATS Users, JetStream resources, and the import/export grants that let one account share
+  subjects and streams with another. JetStream itself is a sub-namespace of an Account holding four
+  peer resource families - Streams, KV Buckets, Object Buckets and Mirrors - each of which owns
+  Consumers. The HTTP Gateway exposes a much smaller, flatter model: Buckets holding Values or Objects.
+entities:
+- name: Team
+  path: /core/beta/teams/{teamId}
+  description: Billing and collaboration boundary. Owns systems, app users and service accounts.
+- name: System
+  path: /core/beta/systems/{systemId}
+  description: >-
+    An isolated NATS deployment across one or more regions. Owns accounts, agent tokens, auth callout
+    configuration, alert rules, platform components, health and audit surfaces.
+- name: Account
+  path: /core/beta/accounts/{accountId}
+  description: >-
+    The NATS security and isolation boundary. Owns NATS users, JetStream resources, signing key
+    groups, imports and exports, alert rules and connection/metrics views.
+- name: NatsUser
+  path: /core/beta/nats-users/{userId}
+  description: A NATS client identity within an account; the subject of credential issuance and rotation.
+- name: Stream
+  path: /core/beta/accounts/{accountId}/jetstream/streams
+  description: A JetStream persisted message stream. Owns consumers.
+- name: KvBucket
+  path: /core/beta/accounts/{accountId}/jetstream/kv-buckets
+  description: A JetStream key-value bucket. Backed by a stream, so it also owns consumers.
+- name: ObjectBucket
+  path: /core/beta/accounts/{accountId}/jetstream/object-buckets
+  description: A JetStream object store bucket. Backed by a stream, so it also owns consumers.
+- name: Mirror
+  path: /core/beta/accounts/{accountId}/jetstream/mirrors
+  description: A mirrored copy of a stream, typically in another region or account. Owns consumers.
+- name: Consumer
+  path: /core/beta/.../consumers
+  description: >-
+    A pull or push subscription over a stream-backed resource. Distinct sub-shapes exist for pull
+    (/consumers/pull) and push (/consumers/push).
+- name: AccountSkGroup
+  path: /core/beta/account-sk-groups/{groupId}
+  description: A group of account signing keys; the unit of key rotation and NATS user assignment.
+- name: AuthCallout
+  path: /core/beta/systems/{systemId}/auth-callout
+  description: Delegated authentication configuration, with target accounts and users.
+- name: StreamExport / SubjectExport
+  path: /core/beta/accounts/{accountId}/stream-exports, /subject-exports
+  description: Grants that publish an account's streams or subjects to other accounts, via shares.
+- name: StreamImport / SubjectImport
+  path: /core/beta/accounts/{accountId}/stream-imports, /subject-imports
+  description: The receiving half of a share, binding another account's export into this account.
+- name: AppUser
+  path: /core/beta/teams/{teamId}/app-users
+  description: A human console user, distinct from a NatsUser. Carries roles.
+- name: ServiceAccount
+  path: /core/beta/service-accounts
+  description: Machine identity at team or app scope, with its own token collection.
+- name: PersonalAccessToken
+  path: /core/beta/personal-access-tokens
+  description: The bearer credential used to call the Control Plane API itself.
+- name: Bucket
+  surface: http-gateway
+  description: HTTP Gateway view of a KV or object bucket, addressed by name.
+- name: Value / ObjectInfo
+  surface: http-gateway
+  description: An entry within a KV bucket (Value) or object bucket (ObjectInfo), addressed by key.
+relationships:
+- from: Team
+  to: System
+  type: has_many
+  via: /teams/{teamId}/systems
+- from: Team
+  to: AppUser
+  type: has_many
+  via: /teams/{teamId}/app-users
+- from: Team
+  to: ServiceAccount
+  type: has_many
+  via: /service-accounts/team
+- from: System
+  to: Account
+  type: has_many
+  via: /systems/{systemId}/accounts
+- from: System
+  to: AgentToken
+  type: has_many
+  via: /systems/{systemId}/agent-tokens
+- from: System
+  to: AuthCallout
+  type: has_one
+  via: /systems/{systemId}/auth-callout
+- from: System
+  to: AlertRule
+  type: has_many
+  via: /systems/{systemId}/alert-rules
+- from: System
+  to: PlatformComponent
+  type: has_many
+  via: /systems/{systemId}/platform-components
+- from: Account
+  to: NatsUser
+  type: has_many
+  via: /accounts/{accountId}/nats-users
+- from: Account
+  to: Stream
+  type: has_many
+  via: /accounts/{accountId}/jetstream/streams
+- from: Account
+  to: KvBucket
+  type: has_many
+  via: /accounts/{accountId}/jetstream/kv-buckets
+- from: Account
+  to: ObjectBucket
+  type: has_many
+  via: /accounts/{accountId}/jetstream/object-buckets
+- from: Account
+  to: Mirror
+  type: has_many
+  via: /accounts/{accountId}/jetstream/mirrors
+- from: Account
+  to: AccountSkGroup
+  type: has_many
+  via: /accounts/{accountId}/account-sk-groups
+- from: Account
+  to: StreamExport
+  type: has_many
+  via: /accounts/{accountId}/stream-exports
+- from: Account
+  to: SubjectExport
+  type: has_many
+  via: /accounts/{accountId}/subject-exports
+- from: Account
+  to: StreamImport
+  type: has_many
+  via: /accounts/{accountId}/stream-imports
+- from: Account
+  to: SubjectImport
+  type: has_many
+  via: /accounts/{accountId}/subject-imports
+- from: Stream
+  to: Consumer
+  type: has_many
+  via: /stream/{id}/consumers
+- from: KvBucket
+  to: Consumer
+  type: has_many
+  via: /kv-bucket/{id}/consumers
+- from: ObjectBucket
+  to: Consumer
+  type: has_many
+  via: /object-bucket/{id}/consumers
+- from: Mirror
+  to: Consumer
+  type: has_many
+  via: /mirror/{id}/consumers
+- from: AccountSkGroup
+  to: NatsUser
+  type: has_many
+  via: /account-sk-groups/{groupId}/nats-users
+- from: StreamExport
+  to: Share
+  type: has_many
+  via: /stream-exports/{id}/shares
+- from: SubjectExport
+  to: Share
+  type: has_many
+  via: /subject-exports/{id}/shares
+- from: Bucket
+  to: Value
+  type: has_many
+  via: /kv/{bucket}/{key}
+  surface: http-gateway
+- from: Bucket
+  to: ObjectInfo
+  type: has_many
+  via: /obj/{bucket}/{key}
+  surface: http-gateway
+identifiers:
+  style: opaque path ids
+  note: >-
+    Ids appear as opaque path parameters (teamId, systemId, accountId, userId, groupId, keyId,
+    bucket). The specs declare no typed id prefixes of the Stripe `acct_`/`cus_` kind, so an id
+    cannot be classified by inspection - an agent must track which collection it came from.
+counts:
+  control_plane_schemas: 487
+  control_plane_paths: 158
+  http_gateway_schemas: 11
+  http_gateway_paths: 14

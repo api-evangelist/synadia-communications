@@ -1,0 +1,86 @@
+generated: '2026-08-29'
+method: searched
+source: >-
+  https://www.synadia.com/legal/support (Product Support Lifecycle), https://www.synadia.com/cloud/sla,
+  https://www.synadia.com/blog/nats-server-next-steps, plus deprecation analysis of the two OpenAPI specs.
+name: Synadia Communications lifecycle, versioning and support policy
+description: >-
+  Synadia publishes a Product Support Lifecycle page covering NATS Server and Synadia Platform
+  components, a Synadia Cloud SLA with a 99.99% availability commitment, and a public commitment to a
+  regular six-month NATS Server release cycle. What it does NOT publish is an API deprecation policy:
+  neither OpenAPI marks a single operation deprecated, and no Sunset or Deprecation header (RFC 8594)
+  is documented anywhere.
+versioning:
+  control_plane:
+    style: path segment by maturity stage
+    current: /core/beta
+    also: /workloads/alpha
+    info_version: beta
+    note: >-
+      The Control Plane API is labelled beta in both its path and its info.version despite backing a
+      GA product, and the workloads subtree is alpha. There is no numeric API version and no published
+      policy for how or when /core/beta becomes /core/v1.
+  http_gateway:
+    style: path prefix
+    current: /v1
+    info_version: 1.0.0
+    base: https://api.ngs.global/v1
+    note: The KV Store API is documented as being in preview.
+  nats_server:
+    style: semantic versioning
+    cadence: six-month release cycle
+    source: https://www.synadia.com/blog/nats-server-next-steps
+deprecation:
+  policy_published: false
+  policy_url: https://www.synadia.com/legal/support
+  policy_scope: >-
+    The Product Support Lifecycle page covers NATS Server and Synadia Platform component releases and
+    maintenance windows. It is a SOFTWARE support lifecycle, not an API deprecation policy - it does
+    not commit to notice periods for removing or changing HTTP API operations.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations:
+    control_plane: 0
+    http_gateway: 0
+    note: >-
+      Zero operations across all 275 operations in both specs carry `deprecated: true`. For a surface
+      self-labelled beta and alpha, the absence of any deprecation marking means an agent has no
+      in-contract warning before an operation changes.
+sla:
+  published: true
+  url: https://www.synadia.com/cloud/sla
+  availability: 99.99%
+  measurement: monthly, all hours weighted equally
+  response_time: >-
+    Within 8 hours of customer notification during normal business hours (Mon-Fri, 8:00am-6:00pm
+    Pacific), or within 8 hours of the start of the next business day outside those hours.
+  exclusions: >-
+    Scheduled maintenance, third-party connections and utilities, force majeure, and customer-caused
+    downtime are excluded from the availability measurement.
+  entity: Synadia Communications, Inc.
+  tier_note: >-
+    The pricing page attaches SLA support to the Enterprise tier; Personal, Starter and Pro do not
+    carry the SLA.
+support_lifecycle:
+  published: true
+  url: https://www.synadia.com/legal/support
+  covers: [NATS Server, Synadia Platform components]
+status_page:
+  published: false
+  probed:
+  - url: https://status.synadia.com/
+    status: '<no response>'
+    note: >-
+      DNS/connection did not resolve to a reachable host within the probe deadline; curl returned
+      exit status with HTTP code 000. Recorded as unreachable rather than as a 404.
+  note: >-
+    No status page is linked from www.synadia.com, docs.synadia.com, the llms.txt site index or the
+    RFC 9727 api-catalog. No StatusPage pointer is emitted for this provider because no status page
+    was found to exist.
+open_source_governance:
+  note: >-
+    NATS.io remains a CNCF project under Apache 2.0 with Synadia support, on a six-month release
+    cycle. Synadia's commercial products (Control Plane, Cloud, Connect, Insights, Protect) are
+    proprietary and versioned separately from NATS Server.
+  source: https://www.synadia.com/blog/nats-server-next-steps

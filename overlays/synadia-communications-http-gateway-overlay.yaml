@@ -1,0 +1,54 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enrichment overlay for Synadia Cloud NATS HTTP Gateway
+  version: 1.0.0
+x-provenance:
+  generated: '2026-08-29'
+  method: generated
+  source: >-
+    Enhancements derived from API Evangelist analysis of the upstream spec. Extends
+    openapi/synadia-communications-http-gateway-openapi.json, saved verbatim from the live spec at
+    https://api.ngs.global/docs/api.json, which is the document the provider's own RapiDoc explorer
+    at https://api.ngs.global/api/ loads. The original is never mutated.
+extends: ../openapi/synadia-communications-http-gateway-openapi.json
+actions:
+- target: $.info
+  description: Bind the gateway spec to the Synadia product and docs it belongs to.
+  update:
+    x-provider: Synadia Communications, Inc.
+    x-product: Synadia Cloud HTTP Gateway
+    x-documentation: https://docs.synadia.com/cloud/resources/http-gateway
+    x-api-reference: https://api.ngs.global/api/
+    x-maturity: The KV Store API is documented by the provider as being in preview.
+- target: $.info
+  description: Runtime semantics and the destructive-operation warning.
+  update:
+    x-conventions:
+      auth: 'Authorization: Bearer <API_TOKEN>, scoped to a User within an Account'
+      error_envelope: >-
+        Typed. 15 error responses bind application/json to the `Error` component schema across
+        400, 404 and 409. Better than the Control Plane, which declares no error body at all.
+      rate_limits: none published; no 429 and no RateLimit-* headers exist
+      idempotency: >-
+        No idempotency key. PUT-shaped entry writes are naturally idempotent; POST create operations
+        return 409 on conflict, which is the only duplicate protection available.
+      reversibility: >-
+        KvStoreDestroy, KvStorePurge and ObjmStoreDestroy are permanent and have no restore
+        counterpart. NATS KV may retain prior revisions per bucket history configuration, but no
+        restore-from-revision operation is exposed and no retention window is published.
+    x-artifacts:
+      conventions: ../conventions/synadia-communications-conventions.yml
+      errors: ../errors/synadia-communications-problem-types.yml
+      event_surface: ../asyncapi/synadia-communications-event-surface.yml
+- target: $.paths['/kvm/buckets/{bucket}/watch'].get
+  description: Flag the streaming nature of the watch endpoint, which the contract does not state.
+  update:
+    x-streaming: true
+    x-note: >-
+      Long-lived streaming response emitting ValueEvent payloads on key-value change. Clients must
+      handle an open connection rather than a single response.
+- target: $.paths['/objm/buckets/{bucket}/watch'].get
+  description: Flag the streaming nature of the object store watch endpoint.
+  update:
+    x-streaming: true
+    x-note: Long-lived streaming response emitting object store change events.

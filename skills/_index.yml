@@ -1,0 +1,66 @@
+generated: '2026-08-29'
+method: searched
+source: https://www.synadia.com/.well-known/agent-skills/index.json
+name: Synadia Communications Agent Skills
+description: >-
+  Synadia publishes its own Agent Skills registry at /.well-known/agent-skills/index.json, conforming
+  to the agentskills.io v0.2.0 index schema, and serves five skill markdown files from that path. Every
+  file here is the PROVIDER'S OWN text saved verbatim - none of it is authored by API Evangelist. This
+  is a rare posture: fewer than a handful of providers in the catalog ship a first-party agent-skills
+  registry, and Synadia additionally advertises it in an HTML comment at the top of every page on
+  www.synadia.com alongside its llms.txt and RFC 9727 api-catalog.
+registry:
+  schema: https://agentskills.io/schemas/v0.2.0/index.json
+  version: 0.2.0
+  url: https://www.synadia.com/.well-known/agent-skills/index.json
+  status: 200
+  file: ../well-known/synadia-communications-agent-skills-index.json
+skills:
+- name: synadia-cloud-onboarding
+  file: synadia-communications-synadia-cloud-onboarding.md
+  source: https://www.synadia.com/.well-known/agent-skills/synadia-cloud-onboarding.md
+  status: 200
+  method: searched
+  description: >-
+    Sign up for Synadia Cloud (managed NATS), create a system and account, and connect a NATS client
+    to send a first message.
+- name: nats-server-quickstart
+  file: synadia-communications-nats-server-quickstart.md
+  source: https://www.synadia.com/.well-known/agent-skills/nats-server-quickstart.md
+  status: 200
+  method: searched
+  description: >-
+    Install and run a local NATS server, install the nats CLI, publish/subscribe a first message, and
+    optionally enable JetStream.
+- name: synadia-platform-deployment
+  file: synadia-communications-synadia-platform-deployment.md
+  source: https://www.synadia.com/.well-known/agent-skills/synadia-platform-deployment.md
+  status: 200
+  method: searched
+  description: >-
+    Start a Synadia Platform trial and deploy the Control Plane (plus optional HTTP Gateway, Connectors,
+    Workloads, FIPS) on Kubernetes or Docker.
+- name: synadia-insights-setup
+  file: synadia-communications-synadia-insights-setup.md
+  source: https://www.synadia.com/.well-known/agent-skills/synadia-insights-setup.md
+  status: 200
+  method: searched
+  description: >-
+    Start a Synadia Insights trial, install the binary, connect it to a NATS deployment with system
+    account credentials, and run the built-in checks.
+- name: synadia-deploy-for-kubernetes
+  file: synadia-communications-synadia-deploy-for-kubernetes.md
+  source: https://www.synadia.com/.well-known/agent-skills/synadia-deploy-for-kubernetes.md
+  status: 200
+  method: searched
+  description: >-
+    Start a Synadia Deploy for Kubernetes trial and run NATS plus the full Synadia Platform stack in
+    the user's own Kubernetes cluster.
+coverage:
+  provider_published: 5
+  api_evangelist_generated: 0
+  note: >-
+    All five skills are onboarding/deployment flows for Synadia's products. NONE of them is grounded in
+    the Control Plane OpenAPI operationIds - they are human-facing setup narratives. No API Evangelist
+    skills were generated on top, because the provider already occupies this slot with its own text and
+    overwriting it would replace a searched artifact with a weaker generated one.

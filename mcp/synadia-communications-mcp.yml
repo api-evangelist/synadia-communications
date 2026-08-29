@@ -1,0 +1,85 @@
+generated: '2026-08-29'
+method: derived
+source: >-
+  Searched for a first-party Synadia MCP server across the synadia-io GitHub org, docs.synadia.com,
+  the llms.txt site index, the Agent Skills registry, and the web. None exists. Candidate tool list
+  derived from operationIds in openapi/synadia-communications-http-gateway-openapi.json and
+  openapi/synadia-communications-control-plane-openapi.yaml.
+name: Synadia Communications MCP surface
+description: >-
+  Synadia ships NO Model Context Protocol server. This is a derived candidate only. Every NATS MCP
+  server found in the search is third-party and unaffiliated - sinadarbouy/mcp-nats,
+  JaredCluff/nuntius, gooseus/mcp-nats - none is published by Synadia and none is listed in Synadia's
+  own Agent Skills registry or llms.txt. Notably, Synadia HAS invested in the agent-readiness layer,
+  just not through MCP: it publishes an agent-skills registry, an llms.txt, an RFC 9727 api-catalog
+  and Markdown twins of every page. The MCP-shaped gap is therefore a deliberate-looking absence, not
+  a provider that ignored agents.
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+  note: >-
+    mode:none because nobody ships a server. No endpoint and no install command are recorded because
+    none exists and inventing either would read as a verified agent surface.
+searched:
+- url: https://www.synadia.com/.well-known/agent-skills/index.json
+  status: 200
+  result: no MCP entry
+- url: https://www.synadia.com/llms.txt
+  status: 200
+  result: no MCP mention
+- url: https://www.synadia.com/.well-known/mcp.json
+  status: 404
+- url: https://github.com/synadia-io
+  status: 200
+  result: 42 public repos, none an MCP server
+candidate_tools:
+  note: >-
+    Derived from real operationIds. These are what a Synadia MCP server WOULD expose if one existed.
+    They are not implemented and must not be presented as callable.
+  from_http_gateway:
+  - tool: nats_publish
+    rest: [publish]
+    description: Publish a message to a NATS subject over HTTP.
+  - tool: nats_request
+    rest: [request]
+    description: Send a NATS request and receive the reply over HTTP.
+  - tool: nats_subscribe
+    rest: [subscribe]
+    description: Subscribe to a NATS subject over HTTP.
+  - tool: kv_get
+    rest: [SimpleKvGet, KvGetEntry]
+    description: Read a value from a NATS key-value bucket.
+  - tool: kv_put
+    rest: [SimpleKvPutEntry, KvPutEntry]
+    description: Write a value to a NATS key-value bucket.
+  - tool: kv_delete
+    rest: [SimpleKvDeleteEntry, KvDeleteEntry]
+    description: Delete a key from a NATS key-value bucket.
+  - tool: kv_list_buckets
+    rest: [ListKvStores]
+    description: List key-value buckets in the account.
+  - tool: kv_bucket_keys
+    rest: [KvStoreKeys]
+    description: List keys in a key-value bucket.
+  - tool: object_get
+    rest: [SimpleObjGet, ObjGetEntry]
+    description: Read an object from a NATS object store bucket.
+  - tool: object_put
+    rest: [SimpleObjPutEntry, ObjCreateEntry]
+    description: Write an object to a NATS object store bucket.
+  - tool: object_list_buckets
+    rest: [ObjmList]
+    description: List object store buckets in the account.
+  from_control_plane:
+  - tool: list_systems
+    description: List NATS systems in a Synadia Cloud team.
+  - tool: list_accounts
+    description: List accounts within a system.
+  - tool: list_streams
+    description: List JetStream streams in an account.
+  - tool: list_nats_users
+    description: List NATS users and their credentials metadata.
+  - tool: create_nats_user
+    description: Create a NATS user within an account.
