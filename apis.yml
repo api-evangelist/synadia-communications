@@ -26,6 +26,19 @@ tags:
 - Distributed Systems
 - Edge Computing
 - Publish Subscribe
+- Key-Value Store
+- Object Storage
+- Infrastructure
+- Agentic AI
+- Open-Source
+tags_raw:
+- Company
+- Messaging
+- Event Streaming
+- NATS
+- Distributed Systems
+- Edge Computing
+- Publish Subscribe
 - Key Value Store
 - Object Storage
 - Infrastructure
@@ -42,6 +55,12 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Management
+  - Control Plane
+  - JetStream
+  - Account
+  - NATS
+  tags_raw:
   - Management
   - Control Plane
   - JetStream
@@ -67,6 +86,12 @@ apis:
   humanURL: https://docs.synadia.com/cloud/resources/http-gateway
   baseURL: https://api.ngs.global/v1
   tags:
+  - Messaging
+  - Key-Value Store
+  - Object Storage
+  - Publish Subscribe
+  - HTTP Gateway
+  tags_raw:
   - Messaging
   - Key Value Store
   - Object Storage
