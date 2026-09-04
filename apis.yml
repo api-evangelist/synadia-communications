@@ -14,6 +14,22 @@ description: 'Synadia Communications, Inc. is the creator and primary maintainer
 url: https://raw.githubusercontent.com/api-evangelist/synadia-communications/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  - sandbox
+  generated: '2026-09-03'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-08-29'
 modified: '2026-08-29'
@@ -149,8 +165,9 @@ common:
   url: packages/synadia-communications-packages.yml
 - type: CLI
   url: cli/synadia-communications-cli.yml
-- type: MCPServer
+- type: X-MCPServerCandidate
   url: mcp/synadia-communications-mcp.yml
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
 - type: AgentSkill
   url: skills/_index.yml
 - type: Conventions
