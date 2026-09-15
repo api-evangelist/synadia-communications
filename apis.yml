@@ -1,16 +1,15 @@
 aid: synadia-communications
 name: Synadia Communications
 description: 'Synadia Communications, Inc. is the creator and primary maintainer of NATS.io, the CNCF
-  connectivity and messaging system, and sells the commercial platform built on it. Its products are
-  Synadia Cloud (fully managed, globally distributed NATS with a REST control-plane API and an HTTP
-  Gateway that exposes NATS key-value, object store, publish, request and subscribe over plain HTTP),
-  Synadia Platform / Control Plane (self-hosted management, security and observability for NATS
-  deployments on Kubernetes or Docker), Synadia Connect (managed connectors bridging NATS to external
-  data systems), Synadia Insights (NATS monitoring and 143 automated audit checks), and Synadia Protect
-  (a policy-enforcing security gateway for NATS traffic). The company positions NATS as the connectivity
-  fabric for agentic AI, edge and distributed systems, and publishes an unusually complete machine-readable
-  surface for agents: an llms.txt site index, Markdown twins of every page, an RFC 9727 API catalog, and a
-  registry of provider-authored Agent Skills.'
+  connectivity and messaging system, and sells the commercial platform built on it. Its products are Synadia
+  Cloud (fully managed, globally distributed NATS with a REST control-plane API and an HTTP Gateway that
+  exposes NATS key-value, object store, publish, request and subscribe over plain HTTP), Synadia Platform
+  / Control Plane (self-hosted management, security and observability for NATS deployments on Kubernetes
+  or Docker), Synadia Connect (managed connectors bridging NATS to external data systems), Synadia Insights
+  (NATS monitoring and 143 automated audit checks), and Synadia Protect (a policy-enforcing security gateway
+  for NATS traffic). The company positions NATS as the connectivity fabric for agentic AI, edge and distributed
+  systems, and publishes an unusually complete machine-readable surface for agents: an llms.txt site index,
+  Markdown twins of every page, an RFC 9727 API catalog, and a registry of provider-authored Agent Skills.'
 url: https://raw.githubusercontent.com/api-evangelist/synadia-communications/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
@@ -61,13 +60,13 @@ tags_raw:
 - Agentic AI
 - Open Source
 apis:
-- aid: synadia-communications-control-plane
+- aid: synadia-communications:synadia-communications-control-plane
   name: Synadia Control Plane / Synadia Cloud API
-  description: 'The REST control-plane API behind Synadia Cloud and the self-hosted Synadia Control Plane.
-    245 operations across 158 paths manage systems, accounts, teams, NATS users, JetStream streams,
-    consumers, key-value and object buckets, mirrors, imports/exports, signing key groups, auth callout,
-    OIDC providers, alerts, workloads and licensing. Authenticated with a Personal Access Token as an HTTP
-    bearer token, or a session cookie in the console.'
+  description: The REST control-plane API behind Synadia Cloud and the self-hosted Synadia Control Plane.
+    245 operations across 158 paths manage systems, accounts, teams, NATS users, JetStream streams, consumers,
+    key-value and object buckets, mirrors, imports/exports, signing key groups, auth callout, OIDC providers,
+    alerts, workloads and licensing. Authenticated with a Personal Access Token as an HTTP bearer token,
+    or a session cookie in the console.
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
@@ -93,12 +92,12 @@ apis:
     url: https://cloud.synadia.com/api-docs
   - type: SourceCode
     url: https://github.com/synadia-io/control-plane-sdk-go
-- aid: synadia-communications-http-gateway
+- aid: synadia-communications:synadia-communications-http-gateway
   name: Synadia Cloud NATS HTTP Gateway
-  description: 'A first-class RESTful HTTP interface to NATS, hosted by Synadia Cloud at api.ngs.global.
+  description: A first-class RESTful HTTP interface to NATS, hosted by Synadia Cloud at api.ngs.global.
     30 operations expose the NATS key-value store and its management surface, the object store and its
-    management surface, and core NATS publish, request and subscribe against any subject over HTTP.
-    Authenticated with an API token scoped to a User within an Account, passed in the Authorization header.'
+    management surface, and core NATS publish, request and subscribe against any subject over HTTP. Authenticated
+    with an API token scoped to a User within an Account, passed in the Authorization header.
   humanURL: https://docs.synadia.com/cloud/resources/http-gateway
   baseURL: https://api.ngs.global/v1
   tags:
@@ -167,7 +166,10 @@ common:
   url: cli/synadia-communications-cli.yml
 - type: X-MCPServerCandidate
   url: mcp/synadia-communications-mcp.yml
-  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate — a tool list derived from the published API contracts, not an existing server. The scorer already read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type surfaces with a server that does not exist.'
+  note: 'Renamed from MCPServer 2026-09-03 (roadmap#247): the manifest self-describes as status: candidate
+    — a tool list derived from the published API contracts, not an existing server. The scorer already
+    read the manifest and reported mcp_server correctly; the MCPServer type was crediting the artifact-type
+    surfaces with a server that does not exist.'
 - type: AgentSkill
   url: skills/_index.yml
 - type: Conventions
