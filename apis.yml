@@ -60,63 +60,839 @@ tags_raw:
 - Agentic AI
 - Open Source
 apis:
-- aid: synadia-communications:synadia-communications-control-plane
-  name: Synadia Control Plane / Synadia Cloud API
-  description: The REST control-plane API behind Synadia Cloud and the self-hosted Synadia Control Plane.
-    245 operations across 158 paths manage systems, accounts, teams, NATS users, JetStream streams, consumers,
-    key-value and object buckets, mirrors, imports/exports, signing key groups, auth callout, OIDC providers,
-    alerts, workloads and licensing. Authenticated with a Personal Access Token as an HTTP bearer token,
-    or a session cookie in the console.
+- aid: synadia-communications:synadia-communications-account-api
+  name: Synadia Communications Account API
+  description: The account API from Synadia Communications — 27 operation(s) for account.
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
-  - Management
-  - Control Plane
-  - JetStream
-  - Account
-  - NATS
-  tags_raw:
-  - Management
-  - Control Plane
-  - JetStream
-  - Accounts
-  - NATS
+  - account
   properties:
   - type: OpenAPI
-    url: openapi/synadia-communications-control-plane-openapi.yaml
-  - type: Overlay
-    url: overlays/synadia-communications-control-plane-overlay.yaml
+    url: openapi/synadia-communications-account-api-openapi.yml
   - type: Documentation
     url: https://docs.synadia.com/platform/control-plane
   - type: APIReference
     url: https://cloud.synadia.com/api-docs
   - type: SourceCode
     url: https://github.com/synadia-io/control-plane-sdk-go
-- aid: synadia-communications:synadia-communications-http-gateway
-  name: Synadia Cloud NATS HTTP Gateway
-  description: A first-class RESTful HTTP interface to NATS, hosted by Synadia Cloud at api.ngs.global.
-    30 operations expose the NATS key-value store and its management surface, the object store and its
-    management surface, and core NATS publish, request and subscribe against any subject over HTTP. Authenticated
-    with an API token scoped to a User within an Account, passed in the Authorization header.
-  humanURL: https://docs.synadia.com/cloud/resources/http-gateway
-  baseURL: https://api.ngs.global/v1
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-admin-api
+  name: Synadia Communications Admin API
+  description: The admin API from Synadia Communications — 1 operation(s) for admin.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
   tags:
-  - Messaging
-  - Key-Value Store
-  - Object Storage
-  - Publish Subscribe
-  - HTTP Gateway
-  tags_raw:
-  - Messaging
-  - Key Value Store
-  - Object Storage
-  - Publish Subscribe
-  - HTTP Gateway
+  - admin
   properties:
   - type: OpenAPI
-    url: openapi/synadia-communications-http-gateway-openapi.json
-  - type: Overlay
-    url: overlays/synadia-communications-http-gateway-overlay.yaml
+    url: openapi/synadia-communications-admin-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-agent-token-api
+  name: Synadia Communications Agent Token API
+  description: The agent-token API from Synadia Communications — 1 operation(s) for agent-token.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - agent-token
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-agent-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-alert-api
+  name: Synadia Communications Alert API
+  description: The alert API from Synadia Communications — 2 operation(s) for alert.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - alert
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-alert-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-app-service-account-api
+  name: Synadia Communications App Service Account API
+  description: >-
+    The app-service-account API from Synadia Communications — 2 operation(s) for app-service-account.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - app-service-account
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-app-service-account-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-app-service-account-tokens-api
+  name: Synadia Communications App Service Account Tokens API
+  description: >-
+    The app-service-account-tokens API from Synadia Communications — 1 operation(s) for app-service-account-tokens.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - app-service-account-tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-app-service-account-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-app-user-api
+  name: Synadia Communications App User API
+  description: The app-user API from Synadia Communications — 3 operation(s) for app-user.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - app-user
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-app-user-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-auth-callout-api
+  name: Synadia Communications Auth Callout API
+  description: The auth-callout API from Synadia Communications — 5 operation(s) for auth-callout.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - auth-callout
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-auth-callout-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-authz-api
+  name: Synadia Communications Authz API
+  description: The authz API from Synadia Communications — 3 operation(s) for authz.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - authz
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-authz-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-component-versions-api
+  name: Synadia Communications Component Versions API
+  description: >-
+    The component-versions API from Synadia Communications — 1 operation(s) for component-versions.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - component-versions
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-component-versions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-extended-kv-entry-operations-api
+  name: Synadia Communications Extended KV Entry Operations API
+  description: >-
+    The Extended KV Entry Operations API from Synadia Communications — 1 operation(s) for extended kv
+    entry operations.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - Extended KV Entry Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-extended-kv-entry-operations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-issuance-api
+  name: Synadia Communications Issuance API
+  description: The issuance API from Synadia Communications — 1 operation(s) for issuance.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - issuance
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-issuance-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-kv-api-api
+  name: Synadia Communications KV API
+  description: The KV API API from Synadia Communications — 1 operation(s) for kv api.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - KV API
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-kv-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-kv-bucket-api
+  name: Synadia Communications Kv Bucket API
+  description: The kv-bucket API from Synadia Communications — 5 operation(s) for kv-bucket.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - kv-bucket
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-kv-bucket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-kv-management-api-api
+  name: Synadia Communications KV Management API
+  description: >-
+    The KV Management API API from Synadia Communications — 5 operation(s) for kv management api.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - KV Management API
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-kv-management-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-license-api
+  name: Synadia Communications License API
+  description: The license API from Synadia Communications — 1 operation(s) for license.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - license
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-license-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-mirror-api
+  name: Synadia Communications Mirror API
+  description: The mirror API from Synadia Communications — 5 operation(s) for mirror.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - mirror
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-mirror-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-nats-core-messaging-experimental-api
+  name: Synadia Communications NATS Core Messaging (Experimental) API
+  description: >-
+    The NATS Core Messaging (Experimental) API from Synadia Communications — 1 operation(s) for nats core
+    messaging (experimental).
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - NATS Core Messaging (Experimental)
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-nats-core-messaging-experimental-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-nats-user-api
+  name: Synadia Communications Nats User API
+  description: The nats-user API from Synadia Communications — 10 operation(s) for nats-user.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - nats-user
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-nats-user-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-object-bucket-api
+  name: Synadia Communications Object Bucket API
+  description: The object-bucket API from Synadia Communications — 5 operation(s) for object-bucket.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - object-bucket
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-object-bucket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-objectstore-api-api
+  name: Synadia Communications ObjectStore API
+  description: >-
+    The ObjectStore API API from Synadia Communications — 1 operation(s) for objectstore api.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - ObjectStore API
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-objectstore-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-objectstore-entry-operations-api
+  name: Synadia Communications ObjectStore Entry Operations API
+  description: >-
+    The ObjectStore Entry Operations API from Synadia Communications — 1 operation(s) for objectstore
+    entry operations.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - ObjectStore Entry Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-objectstore-entry-operations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-objectstore-management-api-api
+  name: Synadia Communications ObjectStore Management API
+  description: >-
+    The ObjectStore Management API API from Synadia Communications — 4 operation(s) for objectstore management
+    api.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - ObjectStore Management API
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-objectstore-management-api-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-oidc-provider-api
+  name: Synadia Communications Oidc Provider API
+  description: The oidc-provider API from Synadia Communications — 3 operation(s) for oidc-provider.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - oidc-provider
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-oidc-provider-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-personal-access-token-api
+  name: Synadia Communications Personal Access Token API
+  description: >-
+    The personal-access-token API from Synadia Communications — 1 operation(s) for personal-access-token.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - personal-access-token
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-personal-access-token-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-platform-components-api
+  name: Synadia Communications Platform Components API
+  description: >-
+    The platform-components API from Synadia Communications — 1 operation(s) for platform-components.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - platform-components
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-platform-components-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-pull-consumer-api
+  name: Synadia Communications Pull Consumer API
+  description: The pull-consumer API from Synadia Communications — 1 operation(s) for pull-consumer.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - pull-consumer
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-pull-consumer-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-push-consumer-api
+  name: Synadia Communications Push Consumer API
+  description: The push-consumer API from Synadia Communications — 1 operation(s) for push-consumer.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - push-consumer
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-push-consumer-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-session-api
+  name: Synadia Communications Session API
+  description: The session API from Synadia Communications — 9 operation(s) for session.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - session
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-session-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-sig-key-api
+  name: Synadia Communications Sig Key API
+  description: The sig-key API from Synadia Communications — 1 operation(s) for sig-key.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - sig-key
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-sig-key-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-sig-key-group-api
+  name: Synadia Communications Sig Key Group API
+  description: The sig-key-group API from Synadia Communications — 5 operation(s) for sig-key-group.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - sig-key-group
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-sig-key-group-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-stream-api
+  name: Synadia Communications Stream API
+  description: The stream API from Synadia Communications — 5 operation(s) for stream.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - stream
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-stream-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-stream-export-api
+  name: Synadia Communications Stream Export API
+  description: The stream-export API from Synadia Communications — 3 operation(s) for stream-export.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - stream-export
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-stream-export-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-stream-import-api
+  name: Synadia Communications Stream Import API
+  description: The stream-import API from Synadia Communications — 1 operation(s) for stream-import.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - stream-import
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-stream-import-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-subject-export-api
+  name: Synadia Communications Subject Export API
+  description: The subject-export API from Synadia Communications — 3 operation(s) for subject-export.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - subject-export
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-subject-export-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-subject-import-api
+  name: Synadia Communications Subject Import API
+  description: The subject-import API from Synadia Communications — 1 operation(s) for subject-import.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - subject-import
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-subject-import-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-system-api
+  name: Synadia Communications System API
+  description: The system API from Synadia Communications — 35 operation(s) for system.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - system
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-system-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-team-api
+  name: Synadia Communications Team API
+  description: The team API from Synadia Communications — 10 operation(s) for team.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - team
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-team-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-team-service-account-api
+  name: Synadia Communications Team Service Account API
+  description: >-
+    The team-service-account API from Synadia Communications — 2 operation(s) for team-service-account.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - team-service-account
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-team-service-account-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-team-service-account-tokens-api
+  name: Synadia Communications Team Service Account Tokens API
+  description: >-
+    The team-service-account-tokens API from Synadia Communications — 1 operation(s) for team-service-account-tokens.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - team-service-account-tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-team-service-account-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
+  - type: Documentation
+    url: https://docs.synadia.com/cloud/resources/http-gateway
+  - type: APIReference
+    url: https://api.ngs.global/api/
+- aid: synadia-communications:synadia-communications-workloads-api
+  name: Synadia Communications Workloads API
+  description: The workloads API from Synadia Communications — 2 operation(s) for workloads.
+  humanURL: https://cloud.synadia.com/api-docs
+  baseURL: https://cloud.synadia.com/api
+  tags:
+  - workloads
+  properties:
+  - type: OpenAPI
+    url: openapi/synadia-communications-workloads-api-openapi.yml
+  - type: Documentation
+    url: https://docs.synadia.com/platform/control-plane
+  - type: APIReference
+    url: https://cloud.synadia.com/api-docs
+  - type: SourceCode
+    url: https://github.com/synadia-io/control-plane-sdk-go
   - type: Documentation
     url: https://docs.synadia.com/cloud/resources/http-gateway
   - type: APIReference
@@ -127,6 +903,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/synadia-communications-control-plane-overlay.yaml
+- type: Overlay
+  url: overlays/synadia-communications-http-gateway-overlay.yaml
 - type: License
   name: Apache-2.0
   url: https://github.com/synadia-io/control-plane-sdk-go/blob/main/LICENSE
