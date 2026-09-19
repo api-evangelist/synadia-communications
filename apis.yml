@@ -66,6 +66,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Account
+  tags_raw:
   - account
   properties:
   - type: OpenAPI
@@ -86,6 +88,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Admin
+  tags_raw:
   - admin
   properties:
   - type: OpenAPI
@@ -106,6 +110,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Agent Token
+  tags_raw:
   - agent-token
   properties:
   - type: OpenAPI
@@ -126,6 +132,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Alert
+  tags_raw:
   - alert
   properties:
   - type: OpenAPI
@@ -291,6 +299,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Issuance
+  tags_raw:
   - issuance
   properties:
   - type: OpenAPI
@@ -372,6 +382,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - License
+  tags_raw:
   - license
   properties:
   - type: OpenAPI
@@ -392,6 +404,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Mirror
+  tags_raw:
   - mirror
   properties:
   - type: OpenAPI
@@ -539,6 +553,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Oidc Provider
+  tags_raw:
   - oidc-provider
   properties:
   - type: OpenAPI
@@ -560,6 +576,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Personal Access Token
+  tags_raw:
   - personal-access-token
   properties:
   - type: OpenAPI
@@ -641,6 +659,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Sessions
+  tags_raw:
   - session
   properties:
   - type: OpenAPI
@@ -701,6 +721,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Stream
+  tags_raw:
   - stream
   properties:
   - type: OpenAPI
@@ -801,6 +823,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - System
+  tags_raw:
   - system
   properties:
   - type: OpenAPI
@@ -821,6 +845,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Team
+  tags_raw:
   - team
   properties:
   - type: OpenAPI
@@ -883,6 +909,8 @@ apis:
   humanURL: https://cloud.synadia.com/api-docs
   baseURL: https://cloud.synadia.com/api
   tags:
+  - Workloads
+  tags_raw:
   - workloads
   properties:
   - type: OpenAPI
