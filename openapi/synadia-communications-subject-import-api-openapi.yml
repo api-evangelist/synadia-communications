@@ -1,0 +1,276 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Subject Import API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: subject-import
+paths:
+  /core/beta/subject-imports/{subjectImportId}:
+    delete:
+      operationId: deleteSubjectImport
+      parameters:
+      - explode: false
+        in: path
+        name: subjectImportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete Subject Import
+      tags:
+      - subject-import
+      x-doc-tags:
+      - Sharing
+    get:
+      description: Returns Subject Import
+      operationId: getSubjectImport
+      parameters:
+      - explode: false
+        in: path
+        name: subjectImportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectImportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Subject Import
+      tags:
+      - subject-import
+      x-doc-tags:
+      - Sharing
+    patch:
+      description: Updates Subject Import
+      operationId: updateSubjectImport
+      parameters:
+      - explode: false
+        in: path
+        name: subjectImportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectImportUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectImportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Subject Import
+      tags:
+      - subject-import
+      x-doc-tags:
+      - Sharing
+components:
+  schemas:
+    SubjectImportViewResponse:
+      description: '/
+
+        Subject Imports
+
+        /'
+      example:
+        remote_account_nkey_public: remote_account_nkey_public
+        remote_subject: remote_subject
+        created: 2000-01-23 04:56:07+00:00
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        name: name
+        id: id
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/Import'
+        name:
+          type: string
+        remote_account_nkey_public:
+          type: string
+        remote_subject:
+          type: string
+      required:
+      - created
+      - id
+      - jwt_settings
+      - name
+      - remote_account_nkey_public
+      - remote_subject
+      type: object
+    ImportPatch:
+      example:
+        local_subject: local_subject
+        subject: subject
+        name: name
+        share: true
+        to: to
+        type: null
+        account: account
+        token: token
+      properties:
+        account:
+          type: string
+        local_subject:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        share:
+          type: boolean
+        subject:
+          type: string
+        to:
+          type:
+          - string
+          - 'null'
+        token:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    Import:
+      description: Import describes a mapping from another account into this one
+      example:
+        local_subject: local_subject
+        subject: subject
+        name: name
+        share: true
+        to: to
+        type: null
+        account: account
+        token: token
+      properties:
+        account:
+          type: string
+        local_subject:
+          description: 'Local subject used to subscribe (for streams) and publish (for services) to.
+
+            This value only needs setting if you want to change the value of Subject.
+
+            If the value of Subject ends in > then LocalSubject needs to end in > as well.
+
+            LocalSubject can contain $<number> wildcard references where number references the nth wildcard in Subject.
+
+            The sum of wildcard reference and * tokens needs to match the number of * token in Subject.'
+          type: string
+        name:
+          type: string
+        share:
+          type: boolean
+        subject:
+          description: 'Subject field in an import is always from the perspective of the
+
+            initial publisher - in the case of a stream it is the account owning
+
+            the stream (the exporter), and in the case of a service it is the
+
+            account making the request (the importer).'
+          type: string
+        to:
+          description: 'Deprecated: use LocalSubject instead
+
+            To field in an import is always from the perspective of the subscriber
+
+            in the case of a stream it is the client of the stream (the importer),
+
+            from the perspective of a service, it is the subscription waiting for
+
+            requests (the exporter). If the field is empty, it will default to the
+
+            value in the Subject field.'
+          type: string
+        token:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    SubjectImportUpdateRequest:
+      example:
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/ImportPatch'
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

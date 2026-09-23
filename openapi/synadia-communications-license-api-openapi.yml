@@ -1,0 +1,187 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud License API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: License
+paths:
+  /core/beta/license:
+    delete:
+      description: Remove the stored license
+      operationId: deleteLicense
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseStatusResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete License
+      tags:
+      - License
+      x-doc-tags:
+      - License
+    get:
+      description: Returns the current license status and entitlements
+      operationId: getLicenseStatus
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseStatusResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get License Status
+      tags:
+      - License
+      x-doc-tags:
+      - License
+    put:
+      description: Submit a new license
+      operationId: updateLicense
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LicenseUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LicenseStatusResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update License
+      tags:
+      - License
+      x-doc-tags:
+      - License
+components:
+  schemas:
+    LicenseStatusResponse:
+      example:
+        entitlements:
+          http_gateway: 5
+          schema_registry: 7
+          fleet: 1
+          connectors: 6
+          insights: 5
+          catalog: 0
+          workloads: 9
+          protect: 2
+        contract_type: contract_type
+        expires_at: 2000-01-23 04:56:07+00:00
+        grace_period_end: 2000-01-23 04:56:07+00:00
+        team_id: team_id
+        team_name: team_name
+        status: status
+      properties:
+        contract_type:
+          type: string
+        entitlements:
+          $ref: '#/components/schemas/EntitlementsView'
+        expires_at:
+          format: date-time
+          type: string
+        grace_period_end:
+          format: date-time
+          type: string
+        status:
+          type: string
+        team_id:
+          type: string
+        team_name:
+          type: string
+      required:
+      - status
+      type: object
+    LicenseUpdateRequest:
+      example:
+        license_key: license_key
+      properties:
+        license_key:
+          pattern: ^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$
+          type: string
+      required:
+      - license_key
+      type: object
+    EntitlementsView:
+      example:
+        http_gateway: 5
+        schema_registry: 7
+        fleet: 1
+        connectors: 6
+        insights: 5
+        catalog: 0
+        workloads: 9
+        protect: 2
+      properties:
+        catalog:
+          type: integer
+        connectors:
+          type: integer
+        fleet:
+          type: integer
+        http_gateway:
+          type: integer
+        insights:
+          type: integer
+        protect:
+          type: integer
+        schema_registry:
+          type: integer
+        workloads:
+          type: integer
+      required:
+      - catalog
+      - connectors
+      - fleet
+      - http_gateway
+      - insights
+      - protect
+      - schema_registry
+      - workloads
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

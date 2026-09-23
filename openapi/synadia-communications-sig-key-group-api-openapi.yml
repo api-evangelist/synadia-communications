@@ -1,0 +1,1101 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Sig Key Group API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: sig-key-group
+paths:
+  /core/beta/account-sk-groups/{groupId}:
+    delete:
+      description: Deletes Account Signing Key Group
+      operationId: deleteAccountSkGroup
+      parameters:
+      - explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete Account Signing Key Group
+      tags:
+      - sig-key-group
+      x-doc-tags:
+      - Signing Key Groups
+    get:
+      operationId: getAccountSkGroup
+      parameters:
+      - explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningKeyGroupViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Account Signing Key Group
+      tags:
+      - sig-key-group
+      x-doc-tags:
+      - Signing Key Groups
+    patch:
+      operationId: updateAccountSkGroup
+      parameters:
+      - explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SigningKeyGroupUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningKeyGroupViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Account Signing Key Group
+      tags:
+      - sig-key-group
+      x-doc-tags:
+      - Signing Key Groups
+  /core/beta/account-sk-groups/{groupId}/account-sks:
+    get:
+      description: List Account Signing Keys In Group
+      operationId: listAccountSkGroupKeys
+      parameters:
+      - explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningKeyListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Signing Keys
+      tags:
+      - sig-key-group
+      x-doc-tags:
+      - Signing Key Groups
+  /core/beta/account-sk-groups/{groupId}/copy:
+    post:
+      description: Copies Account SK Group. Copies all users from old SK group to the new SK group, generating new NKeys for copied users.
+      operationId: copyAccountSkGroup
+      parameters:
+      - explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SigningKeyGroupCopyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningKeyGroupViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Copy Account SK Group
+      tags:
+      - sig-key-group
+      x-doc-tags:
+      - Signing Key Groups
+  /core/beta/account-sk-groups/{groupId}/nats-users:
+    get:
+      description: Returns a list of NATS users for the given signing key group
+      operationId: listAccountSKGroupUsers
+      parameters:
+      - explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List NATS Users
+      tags:
+      - sig-key-group
+      x-doc-tags:
+      - NATS Users
+  /core/beta/account-sk-groups/{groupId}/rotate-sk:
+    post:
+      description: Rotates The Active Signing Key For Account Signing Key Group
+      operationId: rotateAccountSk
+      parameters:
+      - explode: false
+        in: path
+        name: groupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningKeyRotateResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Roate Active Signing Key
+      tags:
+      - sig-key-group
+      x-doc-tags:
+      - Signing Key Groups
+components:
+  schemas:
+    UserClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: UserClaims defines a user JWT
+      example:
+        nats:
+          issuer_account: issuer_account
+      properties:
+        nats:
+          $ref: '#/components/schemas/User'
+      type: object
+    TimeRange:
+      description: TimeRange is used to represent a start and end time
+      properties:
+        end:
+          type: string
+        start:
+          type: string
+      type: object
+    NatsLimits:
+      properties:
+        data:
+          format: int64
+          type: integer
+        payload:
+          format: int64
+          type: integer
+        subs:
+          format: int64
+          type: integer
+      type: object
+    NatsUserJwtSettingsPatch_pub:
+      allOf:
+      - $ref: '#/components/schemas/PermissionPatch'
+      type:
+      - object
+      - 'null'
+    SigningKeyListResponse:
+      example:
+        items:
+        - public_key: public_key
+          current: true
+          missing_seed: true
+          group_id: group_id
+          created: 2000-01-23 04:56:07+00:00
+          disabled_at: 2000-01-23 04:56:07+00:00
+          rotated: true
+          disabled: true
+          id: id
+          rotated_at: 2000-01-23 04:56:07+00:00
+        - public_key: public_key
+          current: true
+          missing_seed: true
+          group_id: group_id
+          created: 2000-01-23 04:56:07+00:00
+          disabled_at: 2000-01-23 04:56:07+00:00
+          rotated: true
+          disabled: true
+          id: id
+          rotated_at: 2000-01-23 04:56:07+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SigningKeyViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    NatsUserJwtSettings:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      description: 'Set correct allowed values
+
+        extention of jwt.#UserPermissionsLimits'
+      example:
+        bearer_token: true
+        data: 2147483647
+        payload: 2147483647
+        subs: 2147483647
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+        tags:
+        - tags
+        - tags
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+        data:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        payload:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        subs:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    ClaimsData:
+      description: ClaimsData is the base struct for all claims
+      properties:
+        aud:
+          type: string
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        iss:
+          type: string
+        jti:
+          type: string
+        name:
+          type: string
+        nbf:
+          format: int64
+          type: integer
+        sub:
+          type: string
+      type: object
+    SigningKeyViewResponse:
+      example:
+        public_key: public_key
+        current: true
+        missing_seed: true
+        group_id: group_id
+        created: 2000-01-23 04:56:07+00:00
+        disabled_at: 2000-01-23 04:56:07+00:00
+        rotated: true
+        disabled: true
+        id: id
+        rotated_at: 2000-01-23 04:56:07+00:00
+      properties:
+        created:
+          format: date-time
+          type: string
+        current:
+          type: boolean
+        disabled:
+          type: boolean
+        disabled_at:
+          format: date-time
+          type: string
+        group_id:
+          type: string
+        id:
+          type: string
+        missing_seed:
+          type: boolean
+        public_key:
+          type: string
+        rotated:
+          type: boolean
+        rotated_at:
+          format: date-time
+          type: string
+      required:
+      - created
+      - current
+      - disabled
+      - group_id
+      - id
+      - missing_seed
+      - public_key
+      - rotated
+      type: object
+    SigningKeyGroupViewResponse:
+      example:
+        missing_seed: true
+        created: 2000-01-23 04:56:07+00:00
+        disabled_at: 2000-01-23 04:56:07+00:00
+        programmatic: true
+        scope:
+          bearer_token: true
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+        is_scoped: true
+        name: name
+        disabled: true
+        id: id
+      properties:
+        created:
+          format: date-time
+          type: string
+        disabled:
+          type: boolean
+        disabled_at:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_scoped:
+          type: boolean
+        missing_seed:
+          type: boolean
+        name:
+          type: string
+        programmatic:
+          type: boolean
+        scope:
+          $ref: '#/components/schemas/UserPermissionLimits'
+      required:
+      - created
+      - disabled
+      - id
+      - is_scoped
+      - missing_seed
+      - name
+      - programmatic
+      type: object
+    Permission:
+      description: Permission defines allow/deny subjects
+      example:
+        allow:
+        - allow
+        - allow
+        deny:
+        - deny
+        - deny
+      properties:
+        allow:
+          items:
+            type: string
+          type: array
+        deny:
+          items:
+            type: string
+          type: array
+      type: object
+    ResponsePermission:
+      description: 'ResponsePermission can be used to allow responses to any reply subject
+
+        that is received on a valid subscription.'
+      example:
+        max: 0
+        ttl: 6
+      properties:
+        max:
+          type: integer
+        ttl:
+          format: int64
+          type: integer
+      required:
+      - max
+      - ttl
+      type: object
+    User:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      - $ref: '#/components/schemas/UserPermissionLimits'
+      description: User defines the user specific data in a user JWT
+      example:
+        issuer_account: issuer_account
+      properties:
+        issuer_account:
+          description: 'IssuerAccount stores the public key for the account the issuer represents.
+
+            When set, the claim was issued by a signing key.'
+          type: string
+      type: object
+    UserLimits:
+      description: Src is a comma separated list of CIDR specifications
+      properties:
+        src:
+          items:
+            type: string
+          type: array
+        times:
+          items:
+            $ref: '#/components/schemas/TimeRange'
+          type: array
+        times_location:
+          type: string
+      type: object
+    SystemInfo:
+      example:
+        jetstream_enabled: true
+        http_gateway_url: http_gateway_url
+        is_tenant: true
+        connection_type: null
+        managed_by: null
+        config_mode: true
+        server_urls: server_urls
+        user_jwt_expires_in_secs: 7
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        name: name
+        id: id
+        state: null
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        http_gateway_url:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        name:
+          type: string
+        server_urls:
+          type: string
+        state:
+          $ref: '#/components/schemas/SystemState'
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - name
+      - state
+      - user_jwt_expires_in_secs
+      type: object
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    SigningKeyRotateResponse:
+      allOf:
+      - $ref: '#/components/schemas/SigningKeyViewResponse'
+      example:
+        seed: seed
+      properties:
+        seed:
+          type: string
+      type: object
+    NatsUserJwtSettingsPatch_times_inner:
+      example:
+        start: start
+        end: end
+      properties:
+        end:
+          type: string
+        start:
+          type: string
+      type: object
+    Permissions:
+      description: Permissions are used to restrict subject access, either on a user or for everyone on a server by default
+      example:
+        sub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+        resp:
+          max: 0
+          ttl: 6
+        pub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+      properties:
+        pub:
+          $ref: '#/components/schemas/Permission'
+        resp:
+          $ref: '#/components/schemas/ResponsePermission'
+        sub:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    NatsUserListResponse:
+      example:
+        items:
+        - sk_group_id: sk_group_id
+          user_public_key: user_public_key
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          team:
+            name: name
+            id: id
+          jwt_expires_at_max: 6
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          jwt_settings:
+            bearer_token: true
+            data: 2147483647
+            payload: 2147483647
+            subs: 2147483647
+            allowed_connection_types:
+            - allowed_connection_types
+            - allowed_connection_types
+            tags:
+            - tags
+            - tags
+          claims:
+            nats:
+              issuer_account: issuer_account
+          name: name
+          jwt_expires_in_secs: 1
+          id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+        - sk_group_id: sk_group_id
+          user_public_key: user_public_key
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          team:
+            name: name
+            id: id
+          jwt_expires_at_max: 6
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          jwt_settings:
+            bearer_token: true
+            data: 2147483647
+            payload: 2147483647
+            subs: 2147483647
+            allowed_connection_types:
+            - allowed_connection_types
+            - allowed_connection_types
+            tags:
+            - tags
+            - tags
+          claims:
+            nats:
+              issuer_account: issuer_account
+          name: name
+          jwt_expires_in_secs: 1
+          id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/NatsUserViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    GenericFields:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          description: ClaimType is used to indicate the type of JWT being stored in a Claim
+          type: string
+        version:
+          type: integer
+      type: object
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
+      type: string
+    PermissionPatch:
+      properties:
+        allow:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        deny:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type: object
+    UserPermissionLimitsPatch:
+      example:
+        sub: null
+        bearer_token: true
+        times:
+        - start: start
+          end: end
+        - start: start
+          end: end
+        times_location: times_location
+        data: 0
+        payload: 6
+        resp: null
+        src:
+        - src
+        - src
+        subs: 1
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+        pub: null
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        bearer_token:
+          type: boolean
+        data:
+          format: int64
+          type: integer
+        payload:
+          format: int64
+          type: integer
+        pub:
+          $ref: '#/components/schemas/NatsUserJwtSettingsPatch_pub'
+        resp:
+          $ref: '#/components/schemas/NatsUserJwtSettingsPatch_resp'
+        src:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        sub:
+          $ref: '#/components/schemas/NatsUserJwtSettingsPatch_pub'
+        subs:
+          format: int64
+          type: integer
+        times:
+          items:
+            $ref: '#/components/schemas/NatsUserJwtSettingsPatch_times_inner'
+          type:
+          - array
+          - 'null'
+        times_location:
+          type:
+          - string
+          - 'null'
+      type: object
+    ResponsePermissionPatch:
+      properties:
+        max:
+          type: integer
+        ttl:
+          format: int64
+          type: integer
+      type: object
+    SigningKeyGroupUpdateRequest:
+      example:
+        scope:
+          sub: null
+          bearer_token: true
+          times:
+          - start: start
+            end: end
+          - start: start
+            end: end
+          times_location: times_location
+          data: 0
+          payload: 6
+          resp: null
+          src:
+          - src
+          - src
+          subs: 1
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+          pub: null
+        name: name
+        disabled: true
+      properties:
+        disabled:
+          type: boolean
+        name:
+          type: string
+        scope:
+          $ref: '#/components/schemas/UserPermissionLimitsPatch'
+      type: object
+    TeamInfo:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    NatsUserJwtSettingsPatch_resp:
+      allOf:
+      - $ref: '#/components/schemas/ResponsePermissionPatch'
+      type:
+      - object
+      - 'null'
+    AccountInfo:
+      example:
+        user_jwt: user_jwt
+        auth_type: null
+        user_cred: user_cred
+        account_public_key: account_public_key
+        name: name
+        user_jwt_expires_in_secs: 0
+        id: id
+        is_platform_account: true
+        is_scp_account: true
+        is_system_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - auth_type
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - name
+      - user_jwt_expires_in_secs
+      type: object
+    SystemManagedBy:
+      enum:
+      - byon
+      - sdkube
+      type: string
+    SigningKeyGroupCopyRequest:
+      example:
+        name: name
+      properties:
+        name:
+          type: string
+      required:
+      - name
+      type: object
+    UserPermissionLimits:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      - $ref: '#/components/schemas/NatsLimits'
+      example:
+        bearer_token: true
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+      type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
+    NatsUserViewResponse:
+      example:
+        sk_group_id: sk_group_id
+        user_public_key: user_public_key
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        team:
+          name: name
+          id: id
+        jwt_expires_at_max: 6
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        jwt_settings:
+          bearer_token: true
+          data: 2147483647
+          payload: 2147483647
+          subs: 2147483647
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+          tags:
+          - tags
+          - tags
+        claims:
+          nats:
+            issuer_account: issuer_account
+        name: name
+        jwt_expires_in_secs: 1
+        id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        claims:
+          $ref: '#/components/schemas/UserClaims'
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt:
+          type: string
+        jwt_expires_at_max:
+          format: int64
+          type: integer
+        jwt_expires_in_secs:
+          format: int64
+          type: integer
+        jwt_settings:
+          $ref: '#/components/schemas/NatsUserJwtSettings'
+        name:
+          type: string
+        sk_group_id:
+          type: string
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        user_public_key:
+          type: string
+      required:
+      - account
+      - claims
+      - created
+      - id
+      - jwt
+      - jwt_expires_at_max
+      - jwt_expires_in_secs
+      - jwt_settings
+      - name
+      - system
+      - team
+      - user_public_key
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

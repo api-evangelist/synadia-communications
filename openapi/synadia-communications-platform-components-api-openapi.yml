@@ -1,0 +1,173 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Platform Components…
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: platform-components
+paths:
+  /core/beta/platform-components/connect:
+    post:
+      description: Connection endpoint for platform components to use. Requires a platform component bearer token
+      operationId: platformComponentConnect
+      parameters:
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformComponentsConnectRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformComponentsConnectViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Connect a Platform Component
+      tags:
+      - platform-components
+      x-doc-tags:
+      - Platform Components
+components:
+  schemas:
+    PlatformComponentsConnectViewResponse:
+      example:
+        server: server
+        jwt: jwt
+        config: null
+        account: account
+      properties:
+        account:
+          type: string
+        config:
+          $ref: '#/components/schemas/PlatformComponentConfigs'
+        jwt:
+          type: string
+        server:
+          type: string
+      required:
+      - account
+      - jwt
+      - server
+      type: object
+    PlatformComponentConfigs:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      - $ref: '#/components/schemas/WorkloadsPlatformComponentConfig'
+      - $ref: '#/components/schemas/ScraperComponentConfig'
+      - $ref: '#/components/schemas/CatalogPlatformComponentConfig'
+      type:
+      - object
+      - 'null'
+    PlatformComponentConnectConfig:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      type:
+      - object
+      - 'null'
+    WorkloadsPlatformComponentConfig:
+      properties:
+        account:
+          type: string
+        nexus_name:
+          type: string
+      required:
+      - account
+      - nexus_name
+      type: object
+    AuthCalloutAuthenticatorComponentConfig:
+      properties:
+        account:
+          type: string
+        bucket:
+          type: string
+      required:
+      - account
+      - bucket
+      type: object
+    ScraperComponentConfig:
+      properties:
+        account:
+          type: string
+        interval:
+          default: 15
+          minimum: 0
+          type: integer
+        stream:
+          type: string
+      required:
+      - account
+      - interval
+      - stream
+      type: object
+    HttpGatewayPlatformComponentConfig:
+      properties:
+        account:
+          type: string
+        token_bucket:
+          type: string
+        url:
+          type: string
+      required:
+      - account
+      - token_bucket
+      - url
+      type: object
+    PlatformComponentsConnectRequest:
+      example:
+        data: null
+        nkey_public: nkey_public
+      properties:
+        data:
+          $ref: '#/components/schemas/PlatformComponentConnectConfig'
+        nkey_public:
+          type: string
+      required:
+      - nkey_public
+      type: object
+    CatalogPlatformComponentConfig:
+      properties:
+        account:
+          default: ''
+          type: string
+        catalog_id:
+          type: string
+      required:
+      - account
+      - catalog_id
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

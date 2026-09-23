@@ -1,0 +1,135 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Component Versions API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: component-versions
+paths:
+  /core/beta/component-versions:
+    get:
+      description: Get available component versions
+      operationId: getAvailableComponentVersions
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableComponentVersionsResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Available Component Versions
+      tags:
+      - component-versions
+      x-doc-tags:
+      - Component Versions
+    post:
+      description: Get available component versions by type
+      operationId: getAvailableComponentVersionsByType
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvailableComponentVersionsRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvailableChartVersions'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Available Component Versions By Type
+      tags:
+      - component-versions
+      x-doc-tags:
+      - Component Versions
+components:
+  schemas:
+    AvailableChartVersion:
+      example:
+        app_version: app_version
+        repo: repo
+        type: type
+        chart: chart
+        version: version
+      properties:
+        app_version:
+          type: string
+        chart:
+          type: string
+        repo:
+          type: string
+        type:
+          type: string
+        version:
+          type: string
+      required:
+      - app_version
+      - chart
+      - repo
+      - type
+      - version
+      type: object
+    AvailableComponentVersionsRequest:
+      example:
+        deployment_type: deployment_type
+        major: 2147483647
+        minor: 2147483647
+      properties:
+        deployment_type:
+          type: string
+        major:
+          default: -1
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        minor:
+          default: -1
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+      required:
+      - major
+      - minor
+      type: object
+    AvailableChartVersions:
+      items:
+        $ref: '#/components/schemas/AvailableChartVersion'
+      type: array
+    AvailableComponentVersionsResponse:
+      additionalProperties:
+        $ref: '#/components/schemas/AvailableChartVersions'
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

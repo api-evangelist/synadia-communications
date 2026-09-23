@@ -1,0 +1,6363 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Account API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: Account
+paths:
+  /core/beta/accounts/{accountId}:
+    delete:
+      description: Deletes a Account in a system
+      operationId: deleteAccount
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable
+      summary: Delete Account
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+    get:
+      description: Returns a Account by ID
+      operationId: getAccount
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Account
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+    patch:
+      description: Updates a Account in a system
+      operationId: updateAccount
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Account
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+  /core/beta/accounts/{accountId}/account-sk-groups:
+    get:
+      operationId: listAccountSkGroup
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningKeyGroupListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Account Signing Key Groups
+      tags:
+      - Account
+      x-doc-tags:
+      - Signing Key Groups
+    post:
+      description: Creates Account Signing Key Group
+      operationId: createAccountSkGroup
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SigningKeyGroupCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SigningKeyGroupCreateResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Account Signing Key Group
+      tags:
+      - Account
+      x-doc-tags:
+      - Signing Key Groups
+  /core/beta/accounts/{accountId}/alert-rules:
+    get:
+      operationId: listAlertRules
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Account Alert Rules
+      tags:
+      - Account
+      x-doc-tags:
+      - Alerts
+    post:
+      description: Creates Account Alert Rule
+      operationId: createAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRuleAccountCreateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Account Alert Rule
+      tags:
+      - Account
+      x-doc-tags:
+      - Alerts
+  /core/beta/accounts/{accountId}/alert-rules/{alertRuleId}:
+    delete:
+      description: Deletes Account alert rule
+      operationId: deleteAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete Account Alert Rule
+      tags:
+      - Account
+      x-doc-tags:
+      - Alerts
+    get:
+      operationId: getAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Account Alert Rule
+      tags:
+      - Account
+      x-doc-tags:
+      - Alerts
+    patch:
+      operationId: updateAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRuleUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Account Alert Rule
+      tags:
+      - Account
+      x-doc-tags:
+      - Alerts
+  /core/beta/accounts/{accountId}/alert-rules/{alertRuleId}/run:
+    get:
+      description: Run Account Alert Rule and return an alert object if the rule condition is met
+      operationId: runAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Run Account Alert Rule
+      tags:
+      - Account
+      x-doc-tags:
+      - Alerts
+  /core/beta/accounts/{accountId}/app-users:
+    get:
+      description: Returns a list of Team App Users associated with the Account
+      operationId: listAccountTeamAppUsers
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Account Team App Users
+      tags:
+      - Account
+      x-doc-tags:
+      - App Users
+  /core/beta/accounts/{accountId}/app-users/{teamAppUserId}:
+    delete:
+      description: Unassign a Team App User from an Account
+      operationId: unAssignAccountTeamAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: teamAppUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Unassign Team App User from Account
+      tags:
+      - Account
+      x-doc-tags:
+      - App Users
+    post:
+      description: Assign a Team App User to an Account. This operation is idempotent; if an App User is already assigned to the Account the assignemnt will be updated with the new role
+      operationId: assignAccountTeamAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: teamAppUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserAssignRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Assign Team App User to Account
+      tags:
+      - Account
+      x-doc-tags:
+      - App Users
+  /core/beta/accounts/{accountId}/connections:
+    get:
+      operationId: listAccountConnections
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: cid
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: subject
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: user
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountConnectionsListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Account Connections
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+  /core/beta/accounts/{accountId}/export:
+    get:
+      operationId: getAccountExport
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountExportResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Export Account Seeds
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+  /core/beta/accounts/{accountId}/info:
+    get:
+      description: Returns Account info
+      operationId: getAccountInfo
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSAcctStats'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Account Info
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+  /core/beta/accounts/{accountId}/jetstream:
+    get:
+      operationId: listJetStreamAssets
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSStreamInfoListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List JetStream Assets
+      tags:
+      - Account
+      x-doc-tags:
+      - JetStream
+  /core/beta/accounts/{accountId}/jetstream/kv-buckets:
+    get:
+      operationId: listKvBuckets
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSKVBucketListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List KV buckets
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: KV Buckets'
+    post:
+      description: Creates KV Bucket
+      operationId: createKvBucket
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JSKVBucketConfig'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSKVBucketViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create KV Bucket
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: KV Buckets'
+  /core/beta/accounts/{accountId}/jetstream/mirrors:
+    get:
+      operationId: listMirrors
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSMirrorInfoListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Mirrors
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: Mirrors'
+    post:
+      description: Creates Mirror
+      operationId: createMirror
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JSMirrorConfigRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSMirrorInfoResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Mirror
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: Mirrors'
+  /core/beta/accounts/{accountId}/jetstream/object-buckets:
+    get:
+      operationId: listObjectBuckets
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSObjectBucketListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Object buckets
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: Object Buckets'
+    post:
+      description: Creates Object Bucket
+      operationId: createObjectBucket
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JSObjectBucketConfig'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSObjectBucketViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Object Bucket
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: Object Buckets'
+  /core/beta/accounts/{accountId}/jetstream/placement-options:
+    get:
+      description: Get available options for JetStream placement
+      operationId: getJetStreamPlacementOptions
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSPlacementOptionsResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get JetStream Placement Options
+      tags:
+      - Account
+      x-doc-tags:
+      - JetStream
+  /core/beta/accounts/{accountId}/jetstream/streams:
+    get:
+      operationId: listStreams
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSStreamInfoListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Streams
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: Streams'
+    post:
+      operationId: createStream
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JSStreamConfigRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSStreamInfoResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Stream
+      tags:
+      - Account
+      x-doc-tags:
+      - 'JetStream: Streams'
+  /core/beta/accounts/{accountId}/metrics:
+    get:
+      description: Returns Account metrics
+      operationId: getAccountMetrics
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountMetrics'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Account Metrics
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+  /core/beta/accounts/{accountId}/nats-core/websocket/view:
+    get:
+      description: 'This endpoint enables connection to NATS over WebSocket using account credentials.
+
+
+        It generates a user JWT from the account signing key and acts as a proxy to establish a connection with the first NATS server defined in a System.
+
+        Options specified in the CONNECT request from client take priority, so the caller should avoid including authentication information in CONNECT to leverage automatic JWT injection.
+
+
+        As a proxy, direct connection to NATS servers may be unavailable for the caller.
+
+        Hence, it''s advised to disregard all server update messages.
+
+        In nats.ws, achieve this by setting ''ignoreClusterUpdates'' to true.'
+      operationId: natsCoreWebsocketViewer
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: subject
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        '101':
+          description: Switching Protocols
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Subscribe to a NATS Core subject over websockets
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+  /core/beta/accounts/{accountId}/nats-user-revocations/{userNkeyPublic}:
+    delete:
+      description: Deletes a Revocation for the given NATS User NKey
+      operationId: deleteNatsUserRevocation
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: userNkeyPublic
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete a for a NATS User NKey
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+    get:
+      description: Get Revocation for the given NATS User NKey
+      operationId: getNatsUserRevocation
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: userNkeyPublic
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserRevocationViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Revocation for a NATS User NKey
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+    put:
+      description: Creates or Updates a Revocation for the given NATS User NKey. All users issued prior to 'before' will be revoked. If 'before' is set to 0, the current timestamp will be used.
+      operationId: createOrUpdateNatsUserRevocation
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: userNkeyPublic
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatsUserRevocationRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserRevocationViewResponse'
+          description: Success
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserRevocationViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create or Update Revocation for a NATS User NKey
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+  /core/beta/accounts/{accountId}/nats-users:
+    get:
+      description: Returns a list of NATS users for the given account
+      operationId: listUsers
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List NATS Users
+      tags:
+      - Account
+      x-doc-tags:
+      - NATS Users
+    post:
+      description: Creates a NATS user for an account
+      operationId: createUser
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatsUserCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create NATS User
+      tags:
+      - Account
+      x-doc-tags:
+      - NATS Users
+  /core/beta/accounts/{accountId}/stream-exports:
+    get:
+      operationId: listStreamExports
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamExportListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Stream Exports
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+    post:
+      description: Creates Stream Export
+      operationId: createStreamExport
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamExportCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamExportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Stream Export
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+  /core/beta/accounts/{accountId}/stream-imports:
+    get:
+      operationId: listStreamImports
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamImportListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Stream Imports
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+    post:
+      description: Creates Stream Import
+      operationId: createStreamImport
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamImportCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamImportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Stream Import
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+  /core/beta/accounts/{accountId}/stream-imports/shared:
+    get:
+      description: List stream exports shared with this account
+      operationId: listStreamExportsShared
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamExportSharedListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Shared Stream Exports
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+  /core/beta/accounts/{accountId}/subject-exports:
+    get:
+      operationId: listSubjectExports
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectExportListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Subject Exports
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+    post:
+      description: Creates Subject Export
+      operationId: createSubjectExport
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectExportCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectExportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Subject Export
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+  /core/beta/accounts/{accountId}/subject-imports:
+    get:
+      operationId: listSubjectImports
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectImportListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Subject Imports
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+    post:
+      description: Creates Subject Import
+      operationId: createSubjectImport
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectImportCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectImportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Subject Import
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+  /core/beta/accounts/{accountId}/subject-imports/shared:
+    get:
+      description: List subject exports shared with this account
+      operationId: listSubjectExportsShared
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectExportSharedListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Shared Subject Exports
+      tags:
+      - Account
+      x-doc-tags:
+      - Sharing
+  /core/beta/accounts/{accountId}/unmanage:
+    delete:
+      description: Unmanage a Account in a system
+      operationId: unmanageAccount
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Unmanage Account
+      tags:
+      - Account
+      x-doc-tags:
+      - Accounts
+components:
+  schemas:
+    JSCommonStreamInfo:
+      properties:
+        alternates:
+          items:
+            $ref: '#/components/schemas/StreamAlternate'
+          type: array
+        cluster:
+          $ref: '#/components/schemas/ClusterInfo'
+        created:
+          format: date-time
+          type: string
+        domain:
+          type: string
+        name:
+          type: string
+        sources:
+          items:
+            $ref: '#/components/schemas/StreamSourceInfo'
+          type: array
+        state:
+          $ref: '#/components/schemas/StreamState'
+        ts:
+          format: date-time
+          type: string
+      required:
+      - created
+      - name
+      - state
+      - ts
+      type: object
+    AccountViewResponse:
+      example:
+        jwt_sync_error: jwt_sync_error
+        auth_type: null
+        connectors: true
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        account_public_key: account_public_key
+        workloads: true
+        user_jwt_expires_in_secs: 7
+        team:
+          name: name
+          id: id
+        nsc_managed: true
+        is_scp_account: true
+        is_system_account: true
+        claims_info:
+          js_enabled: true
+        user_jwt: user_jwt
+        connectors_log_stream: connectors_log_stream
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        jwt_sync_status: null
+        jwt_settings:
+          authorization:
+            allowed_accounts:
+            - allowed_accounts
+            - allowed_accounts
+            auth_users:
+            - auth_users
+            - auth_users
+            xkey: xkey
+          mappings:
+            key:
+            - cluster: cluster
+              subject: subject
+              weight: 26
+            - cluster: cluster
+              subject: subject
+              weight: 26
+          revocations:
+            key: 6
+          limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+          tags:
+          - tags
+          - tags
+        user_cred: user_cred
+        claims:
+          nats:
+            authorization:
+              allowed_accounts:
+              - allowed_accounts
+              - allowed_accounts
+              auth_users:
+              - auth_users
+              - auth_users
+              xkey: xkey
+            default_permissions:
+              sub:
+                allow:
+                - allow
+                - allow
+                deny:
+                - deny
+                - deny
+              resp:
+                max: 0
+                ttl: 6
+              pub:
+                allow:
+                - allow
+                - allow
+                deny:
+                - deny
+                - deny
+            mappings:
+              key:
+              - cluster: cluster
+                subject: subject
+                weight: 26
+              - cluster: cluster
+                subject: subject
+                weight: 26
+            imports:
+            - local_subject: local_subject
+              subject: subject
+              name: name
+              share: true
+              to: to
+              type: null
+              account: account
+              token: token
+            - local_subject: local_subject
+              subject: subject
+              name: name
+              share: true
+              to: to
+              type: null
+              account: account
+              token: token
+            revocations:
+              key: 1
+            exports:
+            - revocations:
+                key: 5
+              account_token_position: 0
+              subject: subject
+              name: name
+              response_type: null
+              token_req: true
+              type: null
+              service_latency:
+                sampling: 23
+                results: results
+              advertise: true
+              response_threshold: 5
+            - revocations:
+                key: 5
+              account_token_position: 0
+              subject: subject
+              name: name
+              response_type: null
+              token_req: true
+              type: null
+              service_latency:
+                sampling: 23
+                results: results
+              advertise: true
+              response_threshold: 5
+            signing_keys: null
+            limits:
+              tiered_limits:
+                key:
+                  max_ack_pending: 2
+                  mem_max_stream_bytes: 4
+                  disk_max_stream_bytes: 9
+                  disk_storage: 3
+                  max_bytes_required: true
+                  streams: 1
+                  mem_storage: 7
+                  consumer: 7
+        name: name
+        workloads_log_stream: workloads_log_stream
+        id: id
+        is_platform_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        claims:
+          $ref: '#/components/schemas/AccountClaims'
+        claims_info:
+          $ref: '#/components/schemas/AccountClaimsInfo'
+        connectors:
+          type: boolean
+        connectors_log_stream:
+          type: string
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        jwt:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/AccountJWTSettings'
+        jwt_sync_error:
+          type: string
+        jwt_sync_status:
+          $ref: '#/components/schemas/JwtSyncStatus'
+        name:
+          type: string
+        nsc_managed:
+          type: boolean
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+        workloads:
+          type: boolean
+        workloads_log_stream:
+          type: string
+      required:
+      - auth_type
+      - connectors
+      - created
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - jwt_sync_error
+      - jwt_sync_status
+      - name
+      - nsc_managed
+      - system
+      - team
+      - user_jwt_expires_in_secs
+      - workloads
+      type: object
+    StreamAlternate:
+      properties:
+        cluster:
+          type: string
+        domain:
+          type: string
+        name:
+          type: string
+      required:
+      - cluster
+      - name
+      type: object
+    SubjectExportListResponse:
+      example:
+        items:
+        - share_sk_public: share_sk_public
+          stream_export_id: stream_export_id
+          created: 2000-01-23 04:56:07+00:00
+          subject: subject
+          jwt_settings:
+            revocations:
+              key: 5
+            account_token_position: 0
+            subject: subject
+            name: name
+            response_type: null
+            token_req: true
+            type: null
+            service_latency:
+              sampling: 23
+              results: results
+            advertise: true
+            response_threshold: 5
+          is_public: true
+          name: name
+          id: id
+          metrics_sampling_percentage: 0
+          metrics_enabled: true
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+        - share_sk_public: share_sk_public
+          stream_export_id: stream_export_id
+          created: 2000-01-23 04:56:07+00:00
+          subject: subject
+          jwt_settings:
+            revocations:
+              key: 5
+            account_token_position: 0
+            subject: subject
+            name: name
+            response_type: null
+            token_req: true
+            type: null
+            service_latency:
+              sampling: 23
+              results: results
+            advertise: true
+            response_threshold: 5
+          is_public: true
+          name: name
+          id: id
+          metrics_sampling_percentage: 0
+          metrics_enabled: true
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SubjectExportViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    RetentionPolicy:
+      enum:
+      - limits
+      - interest
+      - workqueue
+      type: string
+    JSPlacementOptionsResponse:
+      example:
+        num_replicas:
+        - 0
+        - 0
+        clusters:
+        - clusters
+        - clusters
+        tags:
+        - tags
+        - tags
+      properties:
+        clusters:
+          items:
+            type: string
+          type: array
+        num_replicas:
+          items:
+            type: integer
+          type: array
+        tags:
+          items:
+            type: string
+          type: array
+      required:
+      - clusters
+      - num_replicas
+      - tags
+      type: object
+    User:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      - $ref: '#/components/schemas/UserPermissionLimits'
+      description: User defines the user specific data in a user JWT
+      example:
+        issuer_account: issuer_account
+      properties:
+        issuer_account:
+          description: 'IssuerAccount stores the public key for the account the issuer represents.
+
+            When set, the claim was issued by a signing key.'
+          type: string
+      type: object
+    UserLimits:
+      description: Src is a comma separated list of CIDR specifications
+      properties:
+        src:
+          items:
+            type: string
+          type: array
+        times:
+          items:
+            $ref: '#/components/schemas/TimeRange'
+          type: array
+        times_location:
+          type: string
+      type: object
+    SigningKeyGroupListResponse:
+      example:
+        items:
+        - missing_seed: true
+          created: 2000-01-23 04:56:07+00:00
+          disabled_at: 2000-01-23 04:56:07+00:00
+          programmatic: true
+          scope:
+            bearer_token: true
+            allowed_connection_types:
+            - allowed_connection_types
+            - allowed_connection_types
+          is_scoped: true
+          name: name
+          disabled: true
+          id: id
+        - missing_seed: true
+          created: 2000-01-23 04:56:07+00:00
+          disabled_at: 2000-01-23 04:56:07+00:00
+          programmatic: true
+          scope:
+            bearer_token: true
+            allowed_connection_types:
+            - allowed_connection_types
+            - allowed_connection_types
+          is_scoped: true
+          name: name
+          disabled: true
+          id: id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SigningKeyGroupViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    StreamConsumerSource:
+      description: StreamConsumerSource configures the consumer used by a sourced stream.
+      properties:
+        deliver_subject:
+          type: string
+        name:
+          type: string
+      required:
+      - deliver_subject
+      type: object
+    AlertRuleListResponse:
+      example:
+        items:
+        - severity: null
+          created: 2000-01-23 04:56:07+00:00
+          system_id: system_id
+          duration_in_secs: 0
+          message: message
+          threshold_expression_metric: threshold_expression_metric
+          threshold_fixed_value: 1.4658129805029452
+          is_enabled: true
+          account_id: account_id
+          consumer_name: consumer_name
+          rule_type: null
+          stream_name: stream_name
+          metric: metric
+          threshold_operator: threshold_operator
+          id: id
+          threshold_expression_multiplier: 6.027456183070403
+        - severity: null
+          created: 2000-01-23 04:56:07+00:00
+          system_id: system_id
+          duration_in_secs: 0
+          message: message
+          threshold_expression_metric: threshold_expression_metric
+          threshold_fixed_value: 1.4658129805029452
+          is_enabled: true
+          account_id: account_id
+          consumer_name: consumer_name
+          rule_type: null
+          stream_name: stream_name
+          metric: metric
+          threshold_operator: threshold_operator
+          id: id
+          threshold_expression_multiplier: 6.027456183070403
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AlertRuleViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    JSKVBucketListResponse:
+      example:
+        items:
+        - num_values: 2147483647
+          stream_name: stream_name
+          bytes: 2147483647
+          id: id
+          config:
+            metadata:
+              key: metadata
+            mirror:
+              opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            sources:
+            - opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            - opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            max_value_size: 2
+            description: description
+            history: 153
+            max_bytes: 5
+            storage: null
+            bucket: bucket
+            max_age: 5
+            republish:
+              src: src
+              headers_only: true
+              dest: dest
+            num_replicas: 9
+            limit_marker_ttl: 1
+            placement:
+              cluster: cluster
+              tags:
+              - tags
+              - tags
+            compression: false
+        - num_values: 2147483647
+          stream_name: stream_name
+          bytes: 2147483647
+          id: id
+          config:
+            metadata:
+              key: metadata
+            mirror:
+              opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            sources:
+            - opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            - opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            max_value_size: 2
+            description: description
+            history: 153
+            max_bytes: 5
+            storage: null
+            bucket: bucket
+            max_age: 5
+            republish:
+              src: src
+              headers_only: true
+              dest: dest
+            num_replicas: 9
+            limit_marker_ttl: 1
+            placement:
+              cluster: cluster
+              tags:
+              - tags
+              - tags
+            compression: false
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/JSKVBucketViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    Connz:
+      description: Connz represents detailed information on current client connections.
+      example:
+        total: 5
+        offset: 1
+        now: 2000-01-23 04:56:07+00:00
+        limit: 0
+        num_connections: 6
+        server_id: server_id
+        connections:
+        - null
+        - null
+      properties:
+        connections:
+          items:
+            $ref: '#/components/schemas/Connz_connections_inner'
+          type: array
+        limit:
+          type: integer
+        now:
+          format: date-time
+          type: string
+        num_connections:
+          type: integer
+        offset:
+          type: integer
+        server_id:
+          type: string
+        total:
+          type: integer
+      required:
+      - connections
+      - limit
+      - now
+      - num_connections
+      - offset
+      - server_id
+      - total
+      type: object
+    Export:
+      allOf:
+      - $ref: '#/components/schemas/Info'
+      description: Export represents a single export
+      example:
+        revocations:
+          key: 5
+        account_token_position: 0
+        subject: subject
+        name: name
+        response_type: null
+        token_req: true
+        type: null
+        service_latency:
+          sampling: 23
+          results: results
+        advertise: true
+        response_threshold: 5
+      properties:
+        account_token_position:
+          minimum: 0
+          type: integer
+        advertise:
+          type: boolean
+        name:
+          type: string
+        response_threshold:
+          format: int64
+          type: integer
+        response_type:
+          $ref: '#/components/schemas/ResponseType'
+        revocations:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: RevocationList is used to store a mapping of public keys to unix timestamps
+          type: object
+        service_latency:
+          $ref: '#/components/schemas/ServiceLatency'
+        subject:
+          type: string
+        token_req:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    AccountMetrics:
+      example:
+        nats_core_account_bytes_sent: 6.027456183070403
+        nats_core_account_jetstream_enabled: 5.637376656633329
+        nats_core_account_jetstream_memory_used: 7.061401241503109
+        nats_core_account_jetstream_storage_used: 3.616076749251911
+        nats_core_account_leaf_count: 4.145608029883936
+        nats_core_account_jetstream_memory_reserved: 2.3021358869347655
+        nats_core_account_bytes_recv: 0.8008281904610115
+        nats_core_account_jetstream_storage_reserved: 9.301444243932576
+        nats_core_account_msgs_recv: 7.386281948385884
+        nats_core_account_conn_count: 1.4658129805029452
+        nats_core_account_jetstream_consumer_count: 5.962133916683182
+        nats_core_account_jetstream_stream_count: 2.027123023002322
+        nats_core_account_sub_count: 1.0246457001441578
+        nats_core_account_msgs_sent: 1.2315135367772556
+      properties:
+        nats_core_account_bytes_recv:
+          format: double
+          type: number
+        nats_core_account_bytes_sent:
+          format: double
+          type: number
+        nats_core_account_conn_count:
+          format: double
+          type: number
+        nats_core_account_jetstream_consumer_count:
+          format: double
+          type: number
+        nats_core_account_jetstream_enabled:
+          format: double
+          type: number
+        nats_core_account_jetstream_memory_reserved:
+          format: double
+          type: number
+        nats_core_account_jetstream_memory_used:
+          format: double
+          type: number
+        nats_core_account_jetstream_storage_reserved:
+          format: double
+          type: number
+        nats_core_account_jetstream_storage_used:
+          format: double
+          type: number
+        nats_core_account_jetstream_stream_count:
+          format: double
+          type: number
+        nats_core_account_leaf_count:
+          format: double
+          type: number
+        nats_core_account_msgs_recv:
+          format: double
+          type: number
+        nats_core_account_msgs_sent:
+          format: double
+          type: number
+        nats_core_account_sub_count:
+          format: double
+          type: number
+      required:
+      - nats_core_account_bytes_recv
+      - nats_core_account_bytes_sent
+      - nats_core_account_conn_count
+      - nats_core_account_jetstream_consumer_count
+      - nats_core_account_jetstream_enabled
+      - nats_core_account_jetstream_memory_reserved
+      - nats_core_account_jetstream_memory_used
+      - nats_core_account_jetstream_storage_reserved
+      - nats_core_account_jetstream_storage_used
+      - nats_core_account_jetstream_stream_count
+      - nats_core_account_leaf_count
+      - nats_core_account_msgs_recv
+      - nats_core_account_msgs_sent
+      - nats_core_account_sub_count
+      type: object
+    AccountJWTSettingsPatch:
+      example:
+        authorization: null
+        mappings: '{}'
+        revocations: '{}'
+        description: description
+        info_url: info_url
+        limits: null
+        tags:
+        - tags
+        - tags
+      properties:
+        authorization:
+          $ref: '#/components/schemas/AccountJWTSettingsPatch_authorization'
+        description:
+          type:
+          - string
+          - 'null'
+        info_url:
+          type:
+          - string
+          - 'null'
+        limits:
+          $ref: '#/components/schemas/AccountJWTSettingsPatch_limits'
+        mappings:
+          allOf:
+          - $ref: '#/components/schemas/MappingPatch'
+          type:
+          - object
+          - 'null'
+        revocations:
+          allOf:
+          - $ref: '#/components/schemas/RevocationListPatch'
+          type:
+          - object
+          - 'null'
+        tags:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type: object
+    NatsUserCreateRequest:
+      example:
+        sk_group_id: sk_group_id
+        jwt_settings:
+          bearer_token: true
+          data: 2147483647
+          payload: 2147483647
+          subs: 2147483647
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+          tags:
+          - tags
+          - tags
+        name: name
+        jwt_expires_in_secs: 0
+      properties:
+        jwt_expires_in_secs:
+          format: int64
+          type: integer
+        jwt_settings:
+          $ref: '#/components/schemas/NatsCreateUserJwtSettings'
+        name:
+          type: string
+        sk_group_id:
+          type: string
+      required:
+      - name
+      - sk_group_id
+      type: object
+    AccountConnectionsListResponse:
+      example:
+        items:
+        - total: 5
+          offset: 1
+          now: 2000-01-23 04:56:07+00:00
+          limit: 0
+          num_connections: 6
+          server_id: server_id
+          connections:
+          - null
+          - null
+        - total: 5
+          offset: 1
+          now: 2000-01-23 04:56:07+00:00
+          limit: 0
+          num_connections: 6
+          server_id: server_id
+          connections:
+          - null
+          - null
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Connz'
+          type: array
+      required:
+      - items
+      type: object
+    SubjectExportViewResponse:
+      description: '/
+
+        Subject Exports
+
+        /'
+      example:
+        share_sk_public: share_sk_public
+        stream_export_id: stream_export_id
+        created: 2000-01-23 04:56:07+00:00
+        subject: subject
+        jwt_settings:
+          revocations:
+            key: 5
+          account_token_position: 0
+          subject: subject
+          name: name
+          response_type: null
+          token_req: true
+          type: null
+          service_latency:
+            sampling: 23
+            results: results
+          advertise: true
+          response_threshold: 5
+        is_public: true
+        name: name
+        id: id
+        metrics_sampling_percentage: 0
+        metrics_enabled: true
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_public:
+          type: boolean
+        jwt_settings:
+          $ref: '#/components/schemas/Export'
+        metrics_enabled:
+          type: boolean
+        metrics_sampling_percentage:
+          format: int64
+          type: integer
+        name:
+          type:
+          - string
+          - 'null'
+        share_sk_public:
+          type:
+          - string
+          - 'null'
+        stream_export_id:
+          type:
+          - string
+          - 'null'
+        subject:
+          type: string
+      required:
+      - account
+      - created
+      - id
+      - is_public
+      - jwt_settings
+      - metrics_enabled
+      - metrics_sampling_percentage
+      - name
+      - share_sk_public
+      - stream_export_id
+      - subject
+      type: object
+    JetStreamLimits:
+      example:
+        max_ack_pending: 2
+        mem_max_stream_bytes: 4
+        disk_max_stream_bytes: 9
+        disk_storage: 3
+        max_bytes_required: true
+        streams: 1
+        mem_storage: 7
+        consumer: 7
+      properties:
+        consumer:
+          format: int64
+          type: integer
+        disk_max_stream_bytes:
+          format: int64
+          type: integer
+        disk_storage:
+          format: int64
+          type: integer
+        max_ack_pending:
+          format: int64
+          type: integer
+        max_bytes_required:
+          type: boolean
+        mem_max_stream_bytes:
+          format: int64
+          type: integer
+        mem_storage:
+          format: int64
+          type: integer
+        streams:
+          format: int64
+          type: integer
+      type: object
+    StreamSourceInfo_error:
+      allOf:
+      - $ref: '#/components/schemas/JSApiError'
+      type:
+      - object
+      - 'null'
+    ResponseType:
+      description: ResponseType is used to store an export response type
+      enum:
+      - Singleton
+      - Stream
+      - Chunked
+      type: string
+    ExternalAuthorization:
+      example:
+        allowed_accounts:
+        - allowed_accounts
+        - allowed_accounts
+        auth_users:
+        - auth_users
+        - auth_users
+        xkey: xkey
+      properties:
+        allowed_accounts:
+          items:
+            type: string
+          type: array
+        auth_users:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        xkey:
+          type: string
+      required:
+      - auth_users
+      type: object
+    Connz_connections_inner:
+      allOf:
+      - $ref: '#/components/schemas/ConnInfo'
+      type:
+      - object
+      - 'null'
+    AppRoleScope:
+      enum:
+      - App
+      - Team
+      - System
+      - Account
+      - NatsUser
+      type: string
+    AccountClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: AccountClaims defines the body of an account JWT
+      example:
+        nats:
+          authorization:
+            allowed_accounts:
+            - allowed_accounts
+            - allowed_accounts
+            auth_users:
+            - auth_users
+            - auth_users
+            xkey: xkey
+          default_permissions:
+            sub:
+              allow:
+              - allow
+              - allow
+              deny:
+              - deny
+              - deny
+            resp:
+              max: 0
+              ttl: 6
+            pub:
+              allow:
+              - allow
+              - allow
+              deny:
+              - deny
+              - deny
+          mappings:
+            key:
+            - cluster: cluster
+              subject: subject
+              weight: 26
+            - cluster: cluster
+              subject: subject
+              weight: 26
+          imports:
+          - local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          - local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          revocations:
+            key: 1
+          exports:
+          - revocations:
+              key: 5
+            account_token_position: 0
+            subject: subject
+            name: name
+            response_type: null
+            token_req: true
+            type: null
+            service_latency:
+              sampling: 23
+              results: results
+            advertise: true
+            response_threshold: 5
+          - revocations:
+              key: 5
+            account_token_position: 0
+            subject: subject
+            name: name
+            response_type: null
+            token_req: true
+            type: null
+            service_latency:
+              sampling: 23
+              results: results
+            advertise: true
+            response_threshold: 5
+          signing_keys: null
+          limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+      properties:
+        nats:
+          $ref: '#/components/schemas/Account'
+      type: object
+    ConnInfo:
+      description: ConnInfo has detailed information on a per connection basis.
+      properties:
+        account:
+          type: string
+        authorized_user:
+          type: string
+        cid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        idle:
+          type: string
+        in_bytes:
+          format: int64
+          type: integer
+        in_msgs:
+          format: int64
+          type: integer
+        ip:
+          type: string
+        issuer_key:
+          type: string
+        jwt:
+          type: string
+        kind:
+          type: string
+        lang:
+          type: string
+        last_activity:
+          format: date-time
+          type: string
+        mqtt_client:
+          type: string
+        name:
+          type: string
+        name_tag:
+          type: string
+        out_bytes:
+          format: int64
+          type: integer
+        out_msgs:
+          format: int64
+          type: integer
+        pending_bytes:
+          type: integer
+        port:
+          type: integer
+        reason:
+          type: string
+        rtt:
+          type: string
+        start:
+          format: date-time
+          type: string
+        stop:
+          type:
+          - string
+          - 'null'
+        subscriptions:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+        subscriptions_list:
+          items:
+            type: string
+          type: array
+        subscriptions_list_detail:
+          items:
+            $ref: '#/components/schemas/SubDetail'
+          type: array
+        tags:
+          items:
+            type: string
+          type: array
+        tls_cipher_suite:
+          type: string
+        tls_peer_certs:
+          items:
+            $ref: '#/components/schemas/ConnInfo_tls_peer_certs_inner'
+          type: array
+        tls_version:
+          type: string
+        type:
+          type: string
+        uptime:
+          type: string
+        version:
+          type: string
+      required:
+      - cid
+      - idle
+      - in_bytes
+      - in_msgs
+      - ip
+      - last_activity
+      - out_bytes
+      - out_msgs
+      - pending_bytes
+      - port
+      - start
+      - subscriptions
+      - uptime
+      type: object
+    JSStreamInfoListResponse:
+      example:
+        items:
+        - jetstream_type: null
+          id: id
+          config:
+            subjects:
+            - subjects
+            - subjects
+        - jetstream_type: null
+          id: id
+          config:
+            subjects:
+            - subjects
+            - subjects
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/JSStreamInfoResponse'
+          type: array
+      required:
+      - items
+      type: object
+    JSStreamInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonStreamInfo'
+      - required:
+        - config
+        - id
+        - jetstream_type
+      example:
+        jetstream_type: null
+        id: id
+        config:
+          subjects:
+          - subjects
+          - subjects
+      properties:
+        config:
+          $ref: '#/components/schemas/JSStreamConfigRequest'
+        id:
+          type: string
+        jetstream_type:
+          $ref: '#/components/schemas/JSType'
+      type: object
+    SubjectImportCreateRequest:
+      example:
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/Import'
+      required:
+      - jwt_settings
+      type: object
+    ClusterInfo:
+      description: 'ClusterInfo shows information about the underlying set of servers
+
+        that make up the stream or consumer.'
+      example:
+        leader: leader
+        system_account: true
+        replicas:
+        - null
+        - null
+        raft_group: raft_group
+        name: name
+        traffic_account: traffic_account
+        leader_since: leader_since
+      properties:
+        leader:
+          type: string
+        leader_since:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        raft_group:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
+          type: array
+        system_account:
+          type: boolean
+        traffic_account:
+          type: string
+      type: object
+    AccountLimits:
+      properties:
+        conn:
+          format: int64
+          type: integer
+        disallow_bearer:
+          type: boolean
+        exports:
+          format: int64
+          type: integer
+        imports:
+          format: int64
+          type: integer
+        leaf:
+          format: int64
+          type: integer
+        wildcards:
+          type: boolean
+      type: object
+    JetStreamTieredLimitsPatch_value:
+      allOf:
+      - $ref: '#/components/schemas/JetStreamLimits'
+      type:
+      - object
+      - 'null'
+    JetStreamTieredLimitsPatch:
+      additionalProperties:
+        $ref: '#/components/schemas/JetStreamTieredLimitsPatch_value'
+      type: object
+    NatsUserViewResponse:
+      example:
+        sk_group_id: sk_group_id
+        user_public_key: user_public_key
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        team:
+          name: name
+          id: id
+        jwt_expires_at_max: 6
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        jwt_settings:
+          bearer_token: true
+          data: 2147483647
+          payload: 2147483647
+          subs: 2147483647
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+          tags:
+          - tags
+          - tags
+        claims:
+          nats:
+            issuer_account: issuer_account
+        name: name
+        jwt_expires_in_secs: 1
+        id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        claims:
+          $ref: '#/components/schemas/UserClaims'
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt:
+          type: string
+        jwt_expires_at_max:
+          format: int64
+          type: integer
+        jwt_expires_in_secs:
+          format: int64
+          type: integer
+        jwt_settings:
+          $ref: '#/components/schemas/NatsUserJwtSettings'
+        name:
+          type: string
+        sk_group_id:
+          type: string
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        user_public_key:
+          type: string
+      required:
+      - account
+      - claims
+      - created
+      - id
+      - jwt
+      - jwt_expires_at_max
+      - jwt_expires_in_secs
+      - jwt_settings
+      - name
+      - system
+      - team
+      - user_public_key
+      type: object
+    StreamSource:
+      description: StreamSource dictates how streams can source from other streams.
+      example:
+        opt_start_time: opt_start_time
+        external: null
+        opt_start_seq: 2147483647
+        name: name
+        consumer: null
+        filter_subject: filter_subject
+        subject_transforms:
+        - src: src
+          dest: dest
+        - src: src
+          dest: dest
+      properties:
+        consumer:
+          $ref: '#/components/schemas/StreamSource_consumer'
+        external:
+          $ref: '#/components/schemas/StreamSource_external'
+        filter_subject:
+          type: string
+        name:
+          type: string
+        opt_start_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        opt_start_time:
+          type:
+          - string
+          - 'null'
+        subject_transforms:
+          items:
+            $ref: '#/components/schemas/SubjectTransformConfig'
+          type: array
+      required:
+      - name
+      type: object
+    NatsUserInfo:
+      example:
+        user_public_key: user_public_key
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        user_public_key:
+          type: string
+      required:
+      - id
+      - name
+      - user_public_key
+      type: object
+    JSCommonStreamConfig:
+      properties:
+        allow_atomic:
+          type: boolean
+        allow_batched:
+          type: boolean
+        allow_direct:
+          type: boolean
+        allow_msg_counter:
+          type: boolean
+        allow_msg_schedules:
+          type: boolean
+        allow_msg_ttl:
+          type: boolean
+        allow_rollup_hdrs:
+          type: boolean
+        compression:
+          $ref: '#/components/schemas/Compression'
+        consumer_limits:
+          $ref: '#/components/schemas/JSStreamConsumerLimits'
+        deny_delete:
+          type: boolean
+        deny_purge:
+          type: boolean
+        description:
+          type: string
+        discard:
+          $ref: '#/components/schemas/DiscardPolicy'
+        discard_new_per_subject:
+          type: boolean
+        duplicate_window:
+          format: int64
+          type: integer
+        first_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        max_age:
+          format: int64
+          type: integer
+        max_bytes:
+          format: int64
+          type: integer
+        max_consumers:
+          type: integer
+        max_msg_size:
+          format: int32
+          type: integer
+        max_msgs:
+          format: int64
+          type: integer
+        max_msgs_per_subject:
+          format: int64
+          type: integer
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        name:
+          type: string
+        no_ack:
+          type: boolean
+        num_replicas:
+          type: integer
+        persist_mode:
+          $ref: '#/components/schemas/JSPersistMode'
+        placement:
+          $ref: '#/components/schemas/Placement'
+        republish:
+          $ref: '#/components/schemas/RePublish'
+        retention:
+          $ref: '#/components/schemas/RetentionPolicy'
+        sealed:
+          type: boolean
+        sources:
+          items:
+            $ref: '#/components/schemas/StreamSource'
+          type: array
+        storage:
+          $ref: '#/components/schemas/StorageType'
+        subject_delete_marker_ttl:
+          format: int64
+          type: integer
+        subject_transform:
+          $ref: '#/components/schemas/SubjectTransformConfig'
+        template_owner:
+          type: string
+      required:
+      - allow_direct
+      - allow_rollup_hdrs
+      - deny_delete
+      - deny_purge
+      - discard
+      - max_age
+      - max_bytes
+      - max_consumers
+      - max_msgs
+      - max_msgs_per_subject
+      - name
+      - num_replicas
+      - retention
+      - sealed
+      - storage
+      type: object
+    StreamSource_external:
+      allOf:
+      - $ref: '#/components/schemas/ExternalStream'
+      type:
+      - object
+      - 'null'
+    UserExport:
+      example:
+        seed: seed
+        jwt: jwt
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        jwt:
+          type: string
+        name:
+          type: string
+        seed:
+          type: string
+      required:
+      - id
+      - jwt
+      - name
+      - seed
+      type: object
+    ClaimsData:
+      description: ClaimsData is the base struct for all claims
+      properties:
+        aud:
+          type: string
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        iss:
+          type: string
+        jti:
+          type: string
+        name:
+          type: string
+        nbf:
+          format: int64
+          type: integer
+        sub:
+          type: string
+      type: object
+    Permission:
+      description: Permission defines allow/deny subjects
+      example:
+        allow:
+        - allow
+        - allow
+        deny:
+        - deny
+        - deny
+      properties:
+        allow:
+          items:
+            type: string
+          type: array
+        deny:
+          items:
+            type: string
+          type: array
+      type: object
+    JSKVBucketConfig:
+      example:
+        metadata:
+          key: metadata
+        mirror:
+          opt_start_time: opt_start_time
+          external: null
+          opt_start_seq: 2147483647
+          name: name
+          consumer: null
+          filter_subject: filter_subject
+          subject_transforms:
+          - src: src
+            dest: dest
+          - src: src
+            dest: dest
+        sources:
+        - opt_start_time: opt_start_time
+          external: null
+          opt_start_seq: 2147483647
+          name: name
+          consumer: null
+          filter_subject: filter_subject
+          subject_transforms:
+          - src: src
+            dest: dest
+          - src: src
+            dest: dest
+        - opt_start_time: opt_start_time
+          external: null
+          opt_start_seq: 2147483647
+          name: name
+          consumer: null
+          filter_subject: filter_subject
+          subject_transforms:
+          - src: src
+            dest: dest
+          - src: src
+            dest: dest
+        max_value_size: 2
+        description: description
+        history: 153
+        max_bytes: 5
+        storage: null
+        bucket: bucket
+        max_age: 5
+        republish:
+          src: src
+          headers_only: true
+          dest: dest
+        num_replicas: 9
+        limit_marker_ttl: 1
+        placement:
+          cluster: cluster
+          tags:
+          - tags
+          - tags
+        compression: false
+      properties:
+        bucket:
+          type: string
+        compression:
+          default: false
+          type: boolean
+        description:
+          type: string
+        history:
+          default: 1
+          maximum: 255
+          minimum: 0
+          type: integer
+        limit_marker_ttl:
+          format: int64
+          type: integer
+        max_age:
+          format: int64
+          type: integer
+        max_bytes:
+          format: int64
+          type: integer
+        max_value_size:
+          format: int32
+          type: integer
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        mirror:
+          $ref: '#/components/schemas/StreamSource'
+        num_replicas:
+          default: 1
+          type: integer
+        placement:
+          $ref: '#/components/schemas/Placement'
+        republish:
+          $ref: '#/components/schemas/RePublish'
+        sources:
+          items:
+            $ref: '#/components/schemas/StreamSource'
+          type: array
+        storage:
+          $ref: '#/components/schemas/StorageType'
+      required:
+      - bucket
+      - storage
+      type: object
+    StorageType:
+      enum:
+      - file
+      - memory
+      type: string
+    JSObjectBucketViewResponse:
+      example:
+        stream_name: stream_name
+        bytes: 2147483647
+        id: id
+        config:
+          storage: null
+      properties:
+        bytes:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        config:
+          $ref: '#/components/schemas/JSObjectBucketConfig'
+        id:
+          type: string
+        stream_name:
+          type: string
+      required:
+      - bytes
+      - config
+      - id
+      - stream_name
+      type: object
+    NatsUserListResponse:
+      example:
+        items:
+        - sk_group_id: sk_group_id
+          user_public_key: user_public_key
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          team:
+            name: name
+            id: id
+          jwt_expires_at_max: 6
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          jwt_settings:
+            bearer_token: true
+            data: 2147483647
+            payload: 2147483647
+            subs: 2147483647
+            allowed_connection_types:
+            - allowed_connection_types
+            - allowed_connection_types
+            tags:
+            - tags
+            - tags
+          claims:
+            nats:
+              issuer_account: issuer_account
+          name: name
+          jwt_expires_in_secs: 1
+          id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+        - sk_group_id: sk_group_id
+          user_public_key: user_public_key
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          team:
+            name: name
+            id: id
+          jwt_expires_at_max: 6
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          jwt_settings:
+            bearer_token: true
+            data: 2147483647
+            payload: 2147483647
+            subs: 2147483647
+            allowed_connection_types:
+            - allowed_connection_types
+            - allowed_connection_types
+            tags:
+            - tags
+            - tags
+          claims:
+            nats:
+              issuer_account: issuer_account
+          name: name
+          jwt_expires_in_secs: 1
+          id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/NatsUserViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    SigningKeys_inner:
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/SigningKeyScope'
+    JSType:
+      enum:
+      - stream
+      - mirror
+      - kv-bucket
+      - object-bucket
+      type: string
+    AccountJWTSettings:
+      allOf:
+      - $ref: '#/components/schemas/Info'
+      example:
+        authorization:
+          allowed_accounts:
+          - allowed_accounts
+          - allowed_accounts
+          auth_users:
+          - auth_users
+          - auth_users
+          xkey: xkey
+        mappings:
+          key:
+          - cluster: cluster
+            subject: subject
+            weight: 26
+          - cluster: cluster
+            subject: subject
+            weight: 26
+        revocations:
+          key: 6
+        limits:
+          tiered_limits:
+            key:
+              max_ack_pending: 2
+              mem_max_stream_bytes: 4
+              disk_max_stream_bytes: 9
+              disk_storage: 3
+              max_bytes_required: true
+              streams: 1
+              mem_storage: 7
+              consumer: 7
+        tags:
+        - tags
+        - tags
+      properties:
+        authorization:
+          $ref: '#/components/schemas/ExternalAuthorization'
+        limits:
+          $ref: '#/components/schemas/OperatorLimits'
+        mappings:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/WeightedMapping'
+            type: array
+          type: object
+        revocations:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: RevocationList is used to store a mapping of public keys to unix timestamps
+          type: object
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Account:
+      allOf:
+      - $ref: '#/components/schemas/Info'
+      - $ref: '#/components/schemas/GenericFields'
+      description: Account holds account specific claims data
+      example:
+        authorization:
+          allowed_accounts:
+          - allowed_accounts
+          - allowed_accounts
+          auth_users:
+          - auth_users
+          - auth_users
+          xkey: xkey
+        default_permissions:
+          sub:
+            allow:
+            - allow
+            - allow
+            deny:
+            - deny
+            - deny
+          resp:
+            max: 0
+            ttl: 6
+          pub:
+            allow:
+            - allow
+            - allow
+            deny:
+            - deny
+            - deny
+        mappings:
+          key:
+          - cluster: cluster
+            subject: subject
+            weight: 26
+          - cluster: cluster
+            subject: subject
+            weight: 26
+        imports:
+        - local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        - local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        revocations:
+          key: 1
+        exports:
+        - revocations:
+            key: 5
+          account_token_position: 0
+          subject: subject
+          name: name
+          response_type: null
+          token_req: true
+          type: null
+          service_latency:
+            sampling: 23
+            results: results
+          advertise: true
+          response_threshold: 5
+        - revocations:
+            key: 5
+          account_token_position: 0
+          subject: subject
+          name: name
+          response_type: null
+          token_req: true
+          type: null
+          service_latency:
+            sampling: 23
+            results: results
+          advertise: true
+          response_threshold: 5
+        signing_keys: null
+        limits:
+          tiered_limits:
+            key:
+              max_ack_pending: 2
+              mem_max_stream_bytes: 4
+              disk_max_stream_bytes: 9
+              disk_storage: 3
+              max_bytes_required: true
+              streams: 1
+              mem_storage: 7
+              consumer: 7
+      properties:
+        authorization:
+          $ref: '#/components/schemas/ExternalAuthorization'
+        default_permissions:
+          $ref: '#/components/schemas/Permissions'
+        exports:
+          description: Exports is a slice of exports
+          items:
+            $ref: '#/components/schemas/Export'
+          type: array
+        imports:
+          description: Imports is a list of import structs
+          items:
+            $ref: '#/components/schemas/Import'
+          type: array
+        limits:
+          $ref: '#/components/schemas/OperatorLimits'
+        mappings:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/WeightedMapping'
+            type: array
+          type: object
+        revocations:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: RevocationList is used to store a mapping of public keys to unix timestamps
+          type: object
+        signing_keys:
+          $ref: '#/components/schemas/SigningKeys'
+      type: object
+    AccountUpdateRequest:
+      example:
+        user_secret: user_secret
+        auth_type: null
+        connectors: true
+        connectors_log_stream: connectors_log_stream
+        jwt_settings:
+          authorization: null
+          mappings: '{}'
+          revocations: '{}'
+          description: description
+          info_url: info_url
+          limits: null
+          tags:
+          - tags
+          - tags
+        user_cred: user_cred
+        name: name
+        workloads: true
+        user_jwt_expires_in_secs: 0
+        workloads_log_stream: workloads_log_stream
+      properties:
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        connectors:
+          type: boolean
+        connectors_log_stream:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/AccountJWTSettingsPatch'
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+        user_secret:
+          type: string
+        workloads:
+          type: boolean
+        workloads_log_stream:
+          type: string
+      type: object
+    SubjectExportSharedListResponse:
+      example:
+        items:
+        - jwt_settings:
+            local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          export_id: export_id
+        - jwt_settings:
+            local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          export_id: export_id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SubjectExportSharedViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    JSPersistMode:
+      enum:
+      - default
+      - async
+      type: string
+    StreamSourceInfo:
+      description: StreamSourceInfo shows information about an upstream stream source.
+      example:
+        external: null
+        lag: 2147483647
+        name: name
+        active: 0
+        error: null
+        filter_subject: filter_subject
+        subject_transforms:
+        - src: src
+          dest: dest
+        - src: src
+          dest: dest
+      properties:
+        active:
+          format: int64
+          type: integer
+        error:
+          $ref: '#/components/schemas/StreamSourceInfo_error'
+        external:
+          $ref: '#/components/schemas/StreamSource_external'
+        filter_subject:
+          type: string
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        subject_transforms:
+          items:
+            $ref: '#/components/schemas/SubjectTransformConfig'
+          type: array
+      required:
+      - active
+      - lag
+      - name
+      type: object
+    AlertRuleBaseCreateRequest:
+      example:
+        severity: null
+        metric: metric
+        threshold_operator: null
+        duration_in_secs: 0
+        threshold_expression_multiplier: 6.027456183070403
+        message: message
+        threshold_expression_metric: null
+        threshold_fixed_value: 1.4658129805029452
+      properties:
+        duration_in_secs:
+          type: integer
+        message:
+          type: string
+        metric:
+          type: string
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        threshold_expression_metric:
+          $ref: '#/components/schemas/AlertRuleThresholdMetric'
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          $ref: '#/components/schemas/AlertRuleOperator'
+      required:
+      - duration_in_secs
+      - message
+      - metric
+      - severity
+      - threshold_operator
+      type: object
+    JSApiError:
+      description: JSApiError retains the existing schema name; the upstream Go type is now ApiError.
+      properties:
+        code:
+          type: integer
+        description:
+          type: string
+        err_code:
+          maximum: 65535
+          minimum: 0
+          type: integer
+      required:
+      - code
+      type: object
+    PromSampleValue:
+      example:
+        value: 1.4658129805029452
+        timestamp: 6
+      properties:
+        timestamp:
+          format: int64
+          type: integer
+        value:
+          format: double
+          type: number
+      required:
+      - timestamp
+      - value
+      type: object
+    AlertRuleType:
+      enum:
+      - SystemDefault
+      - System
+      - AccountDefault
+      - Account
+      - Stream
+      - Consumer
+      type: string
+    RePublish:
+      description: RePublish allows a source subject to be mapped to a destination subject for republishing.
+      example:
+        src: src
+        headers_only: true
+        dest: dest
+      properties:
+        dest:
+          type: string
+        headers_only:
+          type: boolean
+        src:
+          type: string
+      required:
+      - dest
+      type: object
+    StreamImportListResponse:
+      example:
+        items:
+        - remote_account_nkey_public: remote_account_nkey_public
+          account_id: account_id
+          deliver_subject: deliver_subject
+          stream_name: stream_name
+          created: 2000-01-23 04:56:07+00:00
+          js_subject_prefix: js_subject_prefix
+          id: id
+        - remote_account_nkey_public: remote_account_nkey_public
+          account_id: account_id
+          deliver_subject: deliver_subject
+          stream_name: stream_name
+          created: 2000-01-23 04:56:07+00:00
+          js_subject_prefix: js_subject_prefix
+          id: id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/StreamImportViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    DiscardPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/streams.go
+      enum:
+      - old
+      - new
+      type: string
+    SigningKeys:
+      description: 'SigningKeys an array of either String or #SigningKeyScope'
+      items:
+        $ref: '#/components/schemas/SigningKeys_inner'
+      type: array
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
+    AlertRuleAccountCreateRequest:
+      allOf:
+      - $ref: '#/components/schemas/AlertRuleBaseCreateRequest'
+      - required:
+        - rule_type
+      example:
+        consumer_name: consumer_name
+        rule_type: Account
+        stream_name: stream_name
+      properties:
+        consumer_name:
+          type: string
+        rule_type:
+          enum:
+          - Account
+          - Stream
+          - Consumer
+          type: string
+        stream_name:
+          type: string
+      type: object
+    ObjectStoreConfig:
+      description: ObjectStoreConfig is the config for the object store.
+      properties:
+        bucket:
+          type: string
+        compression:
+          description: Enable underlying stream compression.
+          type: boolean
+        description:
+          type: string
+        max_age:
+          format: int64
+          type: integer
+        max_bytes:
+          format: int64
+          type: integer
+        metadata:
+          additionalProperties:
+            type: string
+          description: Bucket-specific metadata
+          type: object
+        num_replicas:
+          type: integer
+        placement:
+          $ref: '#/components/schemas/Placement'
+        storage:
+          $ref: '#/components/schemas/StorageType'
+      required:
+      - bucket
+      type: object
+    PeerInfo:
+      description: 'PeerInfo shows information about all the peers in the cluster that
+
+        are supporting the stream or consumer.'
+      properties:
+        active:
+          format: int64
+          type: integer
+        current:
+          type: boolean
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        offline:
+          type: boolean
+        peer:
+          type: string
+      required:
+      - active
+      - current
+      - name
+      - peer
+      type: object
+    AccountExportResponse:
+      example:
+        seed: seed
+        jwt: jwt
+        name: name
+        signing_key_groups:
+        - name: name
+          signing_keys:
+          - seed: seed
+            id: id
+          - seed: seed
+            id: id
+        - name: name
+          signing_keys:
+          - seed: seed
+            id: id
+          - seed: seed
+            id: id
+        id: id
+        users:
+        - seed: seed
+          jwt: jwt
+          name: name
+          id: id
+        - seed: seed
+          jwt: jwt
+          name: name
+          id: id
+      properties:
+        id:
+          type: string
+        jwt:
+          type: string
+        name:
+          type: string
+        seed:
+          type: string
+        signing_key_groups:
+          items:
+            $ref: '#/components/schemas/SigningKeyGroupExport'
+          type: array
+        users:
+          items:
+            $ref: '#/components/schemas/UserExport'
+          type: array
+      required:
+      - id
+      type: object
+    AlertRuleUpdateRequest:
+      example:
+        is_enabled: true
+        severity: null
+        threshold_operator: null
+        duration_in_secs: 0
+        threshold_expression_multiplier: 6.027456183070403
+        message: message
+        threshold_expression_metric: null
+        threshold_fixed_value: 1.4658129805029452
+      properties:
+        duration_in_secs:
+          type: integer
+        is_enabled:
+          type: boolean
+        message:
+          type: string
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        threshold_expression_metric:
+          $ref: '#/components/schemas/AlertRuleThresholdMetric'
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          $ref: '#/components/schemas/AlertRuleOperator'
+      type: object
+    SigningKeyExport:
+      example:
+        seed: seed
+        id: id
+      properties:
+        id:
+          type: string
+        seed:
+          type: string
+      required:
+      - id
+      - seed
+      type: object
+    SigningKeyGroupExport:
+      example:
+        name: name
+        signing_keys:
+        - seed: seed
+          id: id
+        - seed: seed
+          id: id
+      properties:
+        name:
+          type: string
+        signing_keys:
+          items:
+            $ref: '#/components/schemas/SigningKeyExport'
+          type: array
+      required:
+      - name
+      - signing_keys
+      type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
+    SigningKeyScopeType:
+      enum:
+      - user_scope
+      type: string
+    StreamExportListResponse:
+      example:
+        items:
+        - account_id: account_id
+          stream_name: stream_name
+          created: 2000-01-23 04:56:07+00:00
+          js_subject_prefix: js_subject_prefix
+          is_public: true
+          deliver_subject_prefix: deliver_subject_prefix
+          id: id
+        - account_id: account_id
+          stream_name: stream_name
+          created: 2000-01-23 04:56:07+00:00
+          js_subject_prefix: js_subject_prefix
+          is_public: true
+          deliver_subject_prefix: deliver_subject_prefix
+          id: id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/StreamExportViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    SubjectTransformConfig:
+      description: 'SubjectTransformConfig is for applying a subject transform (to matching messages) before doing anything else
+
+        when a new message is received'
+      example:
+        src: src
+        dest: dest
+      properties:
+        dest:
+          type: string
+        src:
+          type: string
+      required:
+      - dest
+      - src
+      type: object
+    UserClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: UserClaims defines a user JWT
+      example:
+        nats:
+          issuer_account: issuer_account
+      properties:
+        nats:
+          $ref: '#/components/schemas/User'
+      type: object
+    StreamState_lost:
+      allOf:
+      - $ref: '#/components/schemas/LostStreamData'
+      type:
+      - object
+      - 'null'
+    StreamExportSharedListResponse:
+      example:
+        items:
+        - remote_account_nkey_public: remote_account_nkey_public
+          stream_name: stream_name
+          js_subject_prefix: js_subject_prefix
+          is_public: true
+          deliver_subject_prefix: deliver_subject_prefix
+        - remote_account_nkey_public: remote_account_nkey_public
+          stream_name: stream_name
+          js_subject_prefix: js_subject_prefix
+          is_public: true
+          deliver_subject_prefix: deliver_subject_prefix
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/StreamExportSharedViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    JwtSyncStatus:
+      enum:
+      - InProgress
+      - Complete
+      - Failed
+      type: string
+    OperatorLimits:
+      allOf:
+      - $ref: '#/components/schemas/NatsLimits'
+      - $ref: '#/components/schemas/AccountLimits'
+      - $ref: '#/components/schemas/JetStreamLimits'
+      description: OperatorLimits are used to limit access by an account
+      example:
+        tiered_limits:
+          key:
+            max_ack_pending: 2
+            mem_max_stream_bytes: 4
+            disk_max_stream_bytes: 9
+            disk_storage: 3
+            max_bytes_required: true
+            streams: 1
+            mem_storage: 7
+            consumer: 7
+      properties:
+        tiered_limits:
+          additionalProperties:
+            $ref: '#/components/schemas/JetStreamLimits'
+          type: object
+      type: object
+    NatsUserJwtSettings:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      description: 'Set correct allowed values
+
+        extention of jwt.#UserPermissionsLimits'
+      example:
+        bearer_token: true
+        data: 2147483647
+        payload: 2147483647
+        subs: 2147483647
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+        tags:
+        - tags
+        - tags
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+        data:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        payload:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        subs:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    NatsCreateUserJwtSettings:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      description: 'used to provide default values for create requests
+
+        extention of jwt.#UserPermissionsLimits'
+      example:
+        bearer_token: true
+        data: 2147483647
+        payload: 2147483647
+        subs: 2147483647
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+        tags:
+        - tags
+        - tags
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+        data:
+          default: -1
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        payload:
+          default: -1
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        subs:
+          default: -1
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    AlertRuleOperator:
+      enum:
+      - Greater Than
+      - Less Than
+      - Greater Than Or Equal
+      - Less Than Or Equal
+      - Equal
+      - Not Equal
+      type: string
+    AppUserAssignListResponse:
+      example:
+        items:
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppUserAssignResponse'
+          type: array
+      required:
+      - items
+      type: object
+    WeightedMapping:
+      description: Mapping for publishes
+      example:
+        cluster: cluster
+        subject: subject
+        weight: 26
+      properties:
+        cluster:
+          type: string
+        subject:
+          type: string
+        weight:
+          maximum: 255
+          minimum: 0
+          type: integer
+      required:
+      - subject
+      type: object
+    JetStreamAPIStats:
+      example:
+        total: 2147483647
+        level: 6
+        errors: 2147483647
+        inflight: 2147483647
+      properties:
+        errors:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        inflight:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        level:
+          type: integer
+        total:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      required:
+      - errors
+      - level
+      - total
+      type: object
+    ResponsePermission:
+      description: 'ResponsePermission can be used to allow responses to any reply subject
+
+        that is received on a valid subscription.'
+      example:
+        max: 0
+        ttl: 6
+      properties:
+        max:
+          type: integer
+        ttl:
+          format: int64
+          type: integer
+      required:
+      - max
+      - ttl
+      type: object
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    StreamImportCreateRequest:
+      example:
+        remote_account_nkey_public: remote_account_nkey_public
+        stream_name: stream_name
+        js_subject_prefix: js_subject_prefix
+        is_public: true
+        deliver_subject_prefix: deliver_subject_prefix
+      properties:
+        deliver_subject_prefix:
+          type: string
+        is_public:
+          type: boolean
+        js_subject_prefix:
+          type: string
+        remote_account_nkey_public:
+          type: string
+        stream_name:
+          type: string
+      required:
+      - deliver_subject_prefix
+      - is_public
+      - js_subject_prefix
+      - remote_account_nkey_public
+      - stream_name
+      type: object
+    SigningKeyGroupCreateResponse:
+      allOf:
+      - $ref: '#/components/schemas/SigningKeyGroupViewResponse'
+      example:
+        seed: seed
+      properties:
+        seed:
+          type: string
+      type: object
+    Import:
+      description: Import describes a mapping from another account into this one
+      example:
+        local_subject: local_subject
+        subject: subject
+        name: name
+        share: true
+        to: to
+        type: null
+        account: account
+        token: token
+      properties:
+        account:
+          type: string
+        local_subject:
+          description: 'Local subject used to subscribe (for streams) and publish (for services) to.
+
+            This value only needs setting if you want to change the value of Subject.
+
+            If the value of Subject ends in > then LocalSubject needs to end in > as well.
+
+            LocalSubject can contain $<number> wildcard references where number references the nth wildcard in Subject.
+
+            The sum of wildcard reference and * tokens needs to match the number of * token in Subject.'
+          type: string
+        name:
+          type: string
+        share:
+          type: boolean
+        subject:
+          description: 'Subject field in an import is always from the perspective of the
+
+            initial publisher - in the case of a stream it is the account owning
+
+            the stream (the exporter), and in the case of a service it is the
+
+            account making the request (the importer).'
+          type: string
+        to:
+          description: 'Deprecated: use LocalSubject instead
+
+            To field in an import is always from the perspective of the subscriber
+
+            in the case of a stream it is the client of the stream (the importer),
+
+            from the perspective of a service, it is the subscription waiting for
+
+            requests (the exporter). If the field is empty, it will default to the
+
+            value in the Subject field.'
+          type: string
+        token:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    SubDetail:
+      description: SubDetail is for verbose information for subscriptions.
+      properties:
+        account:
+          type: string
+        cid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        max:
+          format: int64
+          type: integer
+        msgs:
+          format: int64
+          type: integer
+        qgroup:
+          type: string
+        sid:
+          type: string
+        subject:
+          type: string
+      required:
+      - cid
+      - msgs
+      - sid
+      - subject
+      type: object
+    Permissions:
+      description: Permissions are used to restrict subject access, either on a user or for everyone on a server by default
+      example:
+        sub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+        resp:
+          max: 0
+          ttl: 6
+        pub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+      properties:
+        pub:
+          $ref: '#/components/schemas/Permission'
+        resp:
+          $ref: '#/components/schemas/ResponsePermission'
+        sub:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    StreamSource_consumer:
+      allOf:
+      - $ref: '#/components/schemas/StreamConsumerSource'
+      type:
+      - object
+      - 'null'
+    GenericFields:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          description: ClaimType is used to indicate the type of JWT being stored in a Claim
+          type: string
+        version:
+          type: integer
+      type: object
+    Info:
+      properties:
+        description:
+          type: string
+        info_url:
+          type: string
+      type: object
+    ServiceLatency:
+      description: "ServiceLatency is used when observing and exported service for\nlatency measurements.\nSampling 1-100, represents sampling rate, defaults to 100.\nResults is the subject where the latency metrics are published.\nA metric will be defined by the nats-server's ServiceLatency. Time durations\nare in nanoseconds.\nsee https://github.com/nats-io/nats-server/blob/main/server/accounts.go#L524\ne.g.\n{\n \"app\": \"dlc22\",\n \"start\": \"2019-09-16T21:46:23.636869585-07:00\",\n \"svc\": 219732,\n \"nats\": {\n   \"req\": 320415,\n   \"resp\": 228268,\n   \"sys\": 0\n },\n \"total\": 768415\n}"
+      example:
+        sampling: 23
+        results: results
+      properties:
+        results:
+          type: string
+        sampling:
+          maximum: 100
+          minimum: 0
+          type: integer
+      required:
+      - results
+      - sampling
+      type: object
+    NatsUserRevocationViewResponse:
+      example:
+        user_nkey_public: user_nkey_public
+        account_id: account_id
+        before: 0
+        created: 2000-01-23 04:56:07+00:00
+        account_sk_id: account_sk_id
+      properties:
+        account_id:
+          type: string
+        account_sk_id:
+          type: string
+        before:
+          format: int64
+          type: integer
+        created:
+          format: date-time
+          type: string
+        user_nkey_public:
+          type: string
+      required:
+      - account_id
+      - before
+      - created
+      - user_nkey_public
+      type: object
+    SubjectExportSharedViewResponse:
+      example:
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        export_id: export_id
+      properties:
+        export_id:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/Import'
+      required:
+      - export_id
+      - jwt_settings
+      type: object
+    JSObjectBucketListResponse:
+      example:
+        items:
+        - stream_name: stream_name
+          bytes: 2147483647
+          id: id
+          config:
+            storage: null
+        - stream_name: stream_name
+          bytes: 2147483647
+          id: id
+          config:
+            storage: null
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/JSObjectBucketViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    AppUserType:
+      enum:
+      - Person
+      - AppServiceAccount
+      - TeamServiceAccount
+      type: string
+    JetStreamAccountStats:
+      description: JetStreamAccountStats returns current statistics about the account's JetStream usage.
+      example:
+        tiers:
+          key:
+            memory: 2147483647
+            reserved_storage: 2147483647
+            streams: 1
+            reserved_memory: 2147483647
+            consumers: 0
+            storage: 2147483647
+            limits:
+              max_ack_pending: 6
+              memory_max_stream_bytes: 7
+              max_consumers: 1
+              max_streams: 2
+              max_bytes_required: true
+              max_storage: 5
+              storage_max_stream_bytes: 9
+              max_memory: 5
+        domain: domain
+        JetStreamTier:
+          memory: 2147483647
+          reserved_storage: 2147483647
+          streams: 1
+          reserved_memory: 2147483647
+          consumers: 0
+          storage: 2147483647
+          limits:
+            max_ack_pending: 6
+            memory_max_stream_bytes: 7
+            max_consumers: 1
+            max_streams: 2
+            max_bytes_required: true
+            max_storage: 5
+            storage_max_stream_bytes: 9
+            max_memory: 5
+        api:
+          total: 2147483647
+          level: 6
+          errors: 2147483647
+          inflight: 2147483647
+      properties:
+        JetStreamTier:
+          $ref: '#/components/schemas/JetStreamTier'
+        api:
+          $ref: '#/components/schemas/JetStreamAPIStats'
+        domain:
+          type: string
+        tiers:
+          additionalProperties:
+            $ref: '#/components/schemas/JetStreamTier'
+          type: object
+      required:
+      - JetStreamTier
+      - api
+      type: object
+    StreamExportSharedViewResponse:
+      example:
+        remote_account_nkey_public: remote_account_nkey_public
+        stream_name: stream_name
+        js_subject_prefix: js_subject_prefix
+        is_public: true
+        deliver_subject_prefix: deliver_subject_prefix
+      properties:
+        deliver_subject_prefix:
+          type: string
+        is_public:
+          type: boolean
+        js_subject_prefix:
+          type: string
+        remote_account_nkey_public:
+          type: string
+        stream_name:
+          type: string
+      required:
+      - deliver_subject_prefix
+      - is_public
+      - js_subject_prefix
+      - remote_account_nkey_public
+      - stream_name
+      type: object
+    JSMirrorConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonStreamConfig'
+      - required:
+        - mirror
+        - mirror_direct
+      example:
+        mirror:
+          opt_start_time: opt_start_time
+          external: null
+          opt_start_seq: 2147483647
+          name: name
+          consumer: null
+          filter_subject: filter_subject
+          subject_transforms:
+          - src: src
+            dest: dest
+          - src: src
+            dest: dest
+        mirror_direct: true
+      properties:
+        mirror:
+          $ref: '#/components/schemas/StreamSource'
+        mirror_direct:
+          type: boolean
+      type: object
+    OperatorLimitsPatch:
+      properties:
+        conn:
+          format: int64
+          type: integer
+        consumer:
+          format: int64
+          type: integer
+        data:
+          format: int64
+          type: integer
+        disallow_bearer:
+          type: boolean
+        disk_max_stream_bytes:
+          format: int64
+          type: integer
+        disk_storage:
+          format: int64
+          type: integer
+        exports:
+          format: int64
+          type: integer
+        imports:
+          format: int64
+          type: integer
+        leaf:
+          format: int64
+          type: integer
+        max_ack_pending:
+          format: int64
+          type: integer
+        max_bytes_required:
+          type: boolean
+        mem_max_stream_bytes:
+          format: int64
+          type: integer
+        mem_storage:
+          format: int64
+          type: integer
+        payload:
+          format: int64
+          type: integer
+        streams:
+          format: int64
+          type: integer
+        subs:
+          format: int64
+          type: integer
+        tiered_limits:
+          allOf:
+          - $ref: '#/components/schemas/JetStreamTieredLimitsPatch'
+          type:
+          - object
+          - 'null'
+        wildcards:
+          type: boolean
+      type: object
+    JetStreamTier:
+      example:
+        memory: 2147483647
+        reserved_storage: 2147483647
+        streams: 1
+        reserved_memory: 2147483647
+        consumers: 0
+        storage: 2147483647
+        limits:
+          max_ack_pending: 6
+          memory_max_stream_bytes: 7
+          max_consumers: 1
+          max_streams: 2
+          max_bytes_required: true
+          max_storage: 5
+          storage_max_stream_bytes: 9
+          max_memory: 5
+      properties:
+        consumers:
+          type: integer
+        limits:
+          $ref: '#/components/schemas/JetStreamAccountLimits'
+        memory:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        reserved_memory:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        reserved_storage:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        storage:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        streams:
+          type: integer
+      required:
+      - consumers
+      - limits
+      - memory
+      - reserved_memory
+      - reserved_storage
+      - storage
+      - streams
+      type: object
+    AccountInfo:
+      example:
+        user_jwt: user_jwt
+        auth_type: null
+        user_cred: user_cred
+        account_public_key: account_public_key
+        name: name
+        user_jwt_expires_in_secs: 0
+        id: id
+        is_platform_account: true
+        is_scp_account: true
+        is_system_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - auth_type
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - name
+      - user_jwt_expires_in_secs
+      type: object
+    StreamState:
+      properties:
+        bytes:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        consumer_count:
+          type: integer
+        deleted:
+          items:
+            maximum: 18446744073709551615
+            minimum: 0
+            type: integer
+          type: array
+        first_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        first_ts:
+          format: date-time
+          type: string
+        last_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        last_ts:
+          format: date-time
+          type: string
+        lost:
+          $ref: '#/components/schemas/StreamState_lost'
+        messages:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        num_deleted:
+          type: integer
+        num_subjects:
+          type: integer
+        subjects:
+          additionalProperties:
+            maximum: 18446744073709551615
+            minimum: 0
+            type: integer
+          type: object
+      required:
+      - bytes
+      - consumer_count
+      - first_seq
+      - first_ts
+      - last_seq
+      - last_ts
+      - messages
+      type: object
+    SystemManagedBy:
+      enum:
+      - byon
+      - sdkube
+      type: string
+    AlertRuleThresholdMetric:
+      enum:
+      - account.max_connections
+      - account.max_consumers
+      - account.max_bytes
+      - account.max_exports
+      - account.max_imports
+      - account.max_jwt_expiry
+      - account.max_msg_payload
+      - account.max_streams
+      - account.max_subscriptions
+      - account.JS_max_file
+      - account.JS_max_memory
+      - system.JS_max_memory
+      - system.JS_max_file
+      type: string
+    AlertViewResponse:
+      example:
+        severity: null
+        closed_at: 2000-01-23 04:56:07+00:00
+        created: 2000-01-23 04:56:07+00:00
+        system_id: system_id
+        metric_value: 0.8008281904610115
+        message: message
+        alert_rule:
+          severity: null
+          created: 2000-01-23 04:56:07+00:00
+          system_id: system_id
+          duration_in_secs: 0
+          message: message
+          threshold_expression_metric: threshold_expression_metric
+          threshold_fixed_value: 1.4658129805029452
+          is_enabled: true
+          account_id: account_id
+          consumer_name: consumer_name
+          rule_type: null
+          stream_name: stream_name
+          metric: metric
+          threshold_operator: threshold_operator
+          id: id
+          threshold_expression_multiplier: 6.027456183070403
+        sample_values:
+        - value: 1.4658129805029452
+          timestamp: 6
+        - value: 1.4658129805029452
+          timestamp: 6
+        is_acknowledged: true
+        account_id: account_id
+        consumer_name: consumer_name
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        stream_name: stream_name
+        threshold_value: 5.962133916683182
+        AcknowledgedByAppUserID: AcknowledgedByAppUserID
+        id: id
+        is_firing: true
+        alert_rule_id: alert_rule_id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+        acknowledged_at: 2000-01-23 04:56:07+00:00
+        is_closed: true
+      properties:
+        AcknowledgedByAppUserID:
+          type: string
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        account_id:
+          type: string
+        acknowledged_at:
+          format: date-time
+          type: string
+        alert_rule:
+          $ref: '#/components/schemas/AlertRuleViewResponse'
+        alert_rule_id:
+          type: string
+        closed_at:
+          format: date-time
+          type: string
+        consumer_name:
+          type: string
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_acknowledged:
+          type: boolean
+        is_closed:
+          type: boolean
+        is_firing:
+          type: boolean
+        message:
+          type: string
+        metric_value:
+          format: double
+          type: number
+        sample_values:
+          items:
+            $ref: '#/components/schemas/PromSampleValue'
+          type: array
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        stream_name:
+          type: string
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        system_id:
+          type: string
+        threshold_value:
+          format: double
+          type: number
+      required:
+      - alert_rule
+      - alert_rule_id
+      - created
+      - id
+      - is_acknowledged
+      - is_closed
+      - is_firing
+      - message
+      - metric_value
+      - sample_values
+      - severity
+      - threshold_value
+      type: object
+    AccountJWTSettingsPatch_limits:
+      allOf:
+      - $ref: '#/components/schemas/OperatorLimitsPatch'
+      type:
+      - object
+      - 'null'
+    JSStreamConsumerLimits:
+      properties:
+        inactive_threshold:
+          format: int64
+          type: integer
+        max_ack_pending:
+          type: integer
+      type: object
+    TLSPeerCert:
+      description: TLSPeerCert contains basic information about a TLS peer certificate
+      properties:
+        cert_sha256:
+          type: string
+        spki_sha256:
+          type: string
+        subject:
+          type: string
+      type: object
+    JSKVBucketViewResponse:
+      example:
+        num_values: 2147483647
+        stream_name: stream_name
+        bytes: 2147483647
+        id: id
+        config:
+          metadata:
+            key: metadata
+          mirror:
+            opt_start_time: opt_start_time
+            external: null
+            opt_start_seq: 2147483647
+            name: name
+            consumer: null
+            filter_subject: filter_subject
+            subject_transforms:
+            - src: src
+              dest: dest
+            - src: src
+              dest: dest
+          sources:
+          - opt_start_time: opt_start_time
+            external: null
+            opt_start_seq: 2147483647
+            name: name
+            consumer: null
+            filter_subject: filter_subject
+            subject_transforms:
+            - src: src
+              dest: dest
+            - src: src
+              dest: dest
+          - opt_start_time: opt_start_time
+            external: null
+            opt_start_seq: 2147483647
+            name: name
+            consumer: null
+            filter_subject: filter_subject
+            subject_transforms:
+            - src: src
+              dest: dest
+            - src: src
+              dest: dest
+          max_value_size: 2
+          description: description
+          history: 153
+          max_bytes: 5
+          storage: null
+          bucket: bucket
+          max_age: 5
+          republish:
+            src: src
+            headers_only: true
+            dest: dest
+          num_replicas: 9
+          limit_marker_ttl: 1
+          placement:
+            cluster: cluster
+            tags:
+            - tags
+            - tags
+          compression: false
+      properties:
+        bytes:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        config:
+          $ref: '#/components/schemas/JSKVBucketConfig'
+        id:
+          type: string
+        num_values:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        stream_name:
+          type: string
+      required:
+      - bytes
+      - config
+      - id
+      - num_values
+      - stream_name
+      type: object
+    JSMirrorInfoListResponse:
+      example:
+        items:
+        - shared: true
+          mirror:
+            external: null
+            lag: 2147483647
+            name: name
+            active: 0
+            error: null
+            filter_subject: filter_subject
+            subject_transforms:
+            - src: src
+              dest: dest
+            - src: src
+              dest: dest
+          id: id
+          config:
+            mirror:
+              opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            mirror_direct: true
+        - shared: true
+          mirror:
+            external: null
+            lag: 2147483647
+            name: name
+            active: 0
+            error: null
+            filter_subject: filter_subject
+            subject_transforms:
+            - src: src
+              dest: dest
+            - src: src
+              dest: dest
+          id: id
+          config:
+            mirror:
+              opt_start_time: opt_start_time
+              external: null
+              opt_start_seq: 2147483647
+              name: name
+              consumer: null
+              filter_subject: filter_subject
+              subject_transforms:
+              - src: src
+                dest: dest
+              - src: src
+                dest: dest
+            mirror_direct: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/JSMirrorInfoResponse'
+          type: array
+      required:
+      - items
+      type: object
+    JSMirrorInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonStreamInfo'
+      - required:
+        - config
+        - id
+        - shared
+      example:
+        shared: true
+        mirror:
+          external: null
+          lag: 2147483647
+          name: name
+          active: 0
+          error: null
+          filter_subject: filter_subject
+          subject_transforms:
+          - src: src
+            dest: dest
+          - src: src
+            dest: dest
+        id: id
+        config:
+          mirror:
+            opt_start_time: opt_start_time
+            external: null
+            opt_start_seq: 2147483647
+            name: name
+            consumer: null
+            filter_subject: filter_subject
+            subject_transforms:
+            - src: src
+              dest: dest
+            - src: src
+              dest: dest
+          mirror_direct: true
+      properties:
+        config:
+          $ref: '#/components/schemas/JSMirrorConfigRequest'
+        id:
+          type: string
+        mirror:
+          $ref: '#/components/schemas/StreamSourceInfo'
+        shared:
+          type: boolean
+      type: object
+    Placement:
+      description: Placement describes stream placement requirements for a stream or leader.
+      example:
+        cluster: cluster
+        tags:
+        - tags
+        - tags
+      properties:
+        cluster:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    JSAcctStats:
+      $ref: '#/components/schemas/JetStreamAccountStats'
+    SubjectImportListResponse:
+      example:
+        items:
+        - remote_account_nkey_public: remote_account_nkey_public
+          remote_subject: remote_subject
+          created: 2000-01-23 04:56:07+00:00
+          jwt_settings:
+            local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          name: name
+          id: id
+        - remote_account_nkey_public: remote_account_nkey_public
+          remote_subject: remote_subject
+          created: 2000-01-23 04:56:07+00:00
+          jwt_settings:
+            local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          name: name
+          id: id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SubjectImportViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    AlertRuleSeverity:
+      enum:
+      - Info
+      - Warn
+      - Error
+      - Critical
+      type: string
+    StreamExportCreateRequest:
+      example:
+        stream_name: stream_name
+        is_public: true
+      properties:
+        is_public:
+          type: boolean
+        stream_name:
+          type: string
+      required:
+      - is_public
+      - stream_name
+      type: object
+    StreamExportViewResponse:
+      description: '/
+
+        Stream export
+
+        /'
+      example:
+        account_id: account_id
+        stream_name: stream_name
+        created: 2000-01-23 04:56:07+00:00
+        js_subject_prefix: js_subject_prefix
+        is_public: true
+        deliver_subject_prefix: deliver_subject_prefix
+        id: id
+      properties:
+        account_id:
+          type: string
+        created:
+          format: date-time
+          type: string
+        deliver_subject_prefix:
+          type: string
+        id:
+          type: string
+        is_public:
+          type: boolean
+        js_subject_prefix:
+          type: string
+        stream_name:
+          type: string
+      required:
+      - account_id
+      - created
+      - deliver_subject_prefix
+      - id
+      - is_public
+      - js_subject_prefix
+      - stream_name
+      type: object
+    TimeRange:
+      description: TimeRange is used to represent a start and end time
+      properties:
+        end:
+          type: string
+        start:
+          type: string
+      type: object
+    ConnInfo_tls_peer_certs_inner:
+      allOf:
+      - $ref: '#/components/schemas/TLSPeerCert'
+      type:
+      - object
+      - 'null'
+    NatsLimits:
+      properties:
+        data:
+          format: int64
+          type: integer
+        payload:
+          format: int64
+          type: integer
+        subs:
+          format: int64
+          type: integer
+      type: object
+    SubjectExportCreateRequest:
+      example:
+        jwt_settings:
+          revocations:
+            key: 5
+          account_token_position: 0
+          subject: subject
+          name: name
+          response_type: null
+          token_req: true
+          type: null
+          service_latency:
+            sampling: 23
+            results: results
+          advertise: true
+          response_threshold: 5
+        metrics_sampling_percentage: 0
+        metrics_enabled: true
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/Export'
+        metrics_enabled:
+          type: boolean
+        metrics_sampling_percentage:
+          format: int64
+          type: integer
+      required:
+      - jwt_settings
+      - metrics_enabled
+      - metrics_sampling_percentage
+      type: object
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    ExternalAuthorizationPatch:
+      properties:
+        allowed_accounts:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        auth_users:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        xkey:
+          type: string
+      type: object
+    SigningKeyGroupViewResponse:
+      example:
+        missing_seed: true
+        created: 2000-01-23 04:56:07+00:00
+        disabled_at: 2000-01-23 04:56:07+00:00
+        programmatic: true
+        scope:
+          bearer_token: true
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+        is_scoped: true
+        name: name
+        disabled: true
+        id: id
+      properties:
+        created:
+          format: date-time
+          type: string
+        disabled:
+          type: boolean
+        disabled_at:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_scoped:
+          type: boolean
+        missing_seed:
+          type: boolean
+        name:
+          type: string
+        programmatic:
+          type: boolean
+        scope:
+          $ref: '#/components/schemas/UserPermissionLimits'
+      required:
+      - created
+      - disabled
+      - id
+      - is_scoped
+      - missing_seed
+      - name
+      - programmatic
+      type: object
+    SubjectImportViewResponse:
+      description: '/
+
+        Subject Imports
+
+        /'
+      example:
+        remote_account_nkey_public: remote_account_nkey_public
+        remote_subject: remote_subject
+        created: 2000-01-23 04:56:07+00:00
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        name: name
+        id: id
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/Import'
+        name:
+          type: string
+        remote_account_nkey_public:
+          type: string
+        remote_subject:
+          type: string
+      required:
+      - created
+      - id
+      - jwt_settings
+      - name
+      - remote_account_nkey_public
+      - remote_subject
+      type: object
+    SigningKeyScope:
+      properties:
+        key:
+          type: string
+        kind:
+          $ref: '#/components/schemas/SigningKeyScopeType'
+        role:
+          type: string
+        template:
+          $ref: '#/components/schemas/UserPermissionLimits'
+      required:
+      - key
+      - kind
+      - role
+      - template
+      type: object
+    Compression:
+      enum:
+      - none
+      - s2
+      type: string
+    SystemInfo:
+      example:
+        jetstream_enabled: true
+        http_gateway_url: http_gateway_url
+        is_tenant: true
+        connection_type: null
+        managed_by: null
+        config_mode: true
+        server_urls: server_urls
+        user_jwt_expires_in_secs: 7
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        name: name
+        id: id
+        state: null
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        http_gateway_url:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        name:
+          type: string
+        server_urls:
+          type: string
+        state:
+          $ref: '#/components/schemas/SystemState'
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - name
+      - state
+      - user_jwt_expires_in_secs
+      type: object
+    JSStreamConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonStreamConfig'
+      example:
+        subjects:
+        - subjects
+        - subjects
+      properties:
+        subjects:
+          items:
+            type: string
+          type: array
+      type: object
+    AppUserAssignRequest:
+      example:
+        role_id: role_id
+      properties:
+        role_id:
+          type: string
+      required:
+      - role_id
+      type: object
+    AppUserAssignResponse:
+      example:
+        role_name: role_name
+        nats_user:
+          user_public_key: user_public_key
+          name: name
+          id: id
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        app_user:
+          identifier: identifier
+          name: name
+          id: id
+          type: null
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        scope: null
+        team_app_user:
+          role_name: role_name
+          role_id: role_id
+          pending_invitation: true
+          id: id
+        resource_id: resource_id
+        team:
+          name: name
+          id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        app_user:
+          $ref: '#/components/schemas/AppUserInfo'
+        created:
+          format: date-time
+          type: string
+        nats_user:
+          $ref: '#/components/schemas/NatsUserInfo'
+        resource_id:
+          type: string
+        role_id:
+          type: string
+        role_name:
+          type: string
+        scope:
+          $ref: '#/components/schemas/AppRoleScope'
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        team_app_user:
+          $ref: '#/components/schemas/TeamAppUserInfo'
+      required:
+      - app_user
+      - created
+      - resource_id
+      - role_id
+      - role_name
+      - scope
+      - team_app_user
+      type: object
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
+      type: string
+    NatsUserRevocationRequest:
+      example:
+        before: 0
+      properties:
+        before:
+          format: int64
+          type: integer
+      required:
+      - before
+      type: object
+    AppUserInfo:
+      example:
+        identifier: identifier
+        name: name
+        id: id
+        type: null
+      properties:
+        id:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - id
+      - name
+      - type
+      type: object
+    RevocationListPatch:
+      additionalProperties:
+        maximum: 9223372036854775807
+        minimum: -9223372036854775808
+        type:
+        - integer
+        - 'null'
+      type: object
+    JetStreamAccountLimits:
+      example:
+        max_ack_pending: 6
+        memory_max_stream_bytes: 7
+        max_consumers: 1
+        max_streams: 2
+        max_bytes_required: true
+        max_storage: 5
+        storage_max_stream_bytes: 9
+        max_memory: 5
+      properties:
+        max_ack_pending:
+          type: integer
+        max_bytes_required:
+          type: boolean
+        max_consumers:
+          type: integer
+        max_memory:
+          format: int64
+          type: integer
+        max_storage:
+          format: int64
+          type: integer
+        max_streams:
+          type: integer
+        memory_max_stream_bytes:
+          format: int64
+          type: integer
+        storage_max_stream_bytes:
+          format: int64
+          type: integer
+      required:
+      - max_ack_pending
+      - max_bytes_required
+      - max_consumers
+      - max_memory
+      - max_storage
+      - max_streams
+      - memory_max_stream_bytes
+      - storage_max_stream_bytes
+      type: object
+    TeamInfo:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    MappingPatch:
+      additionalProperties:
+        items:
+          $ref: '#/components/schemas/WeightedMapping'
+        type:
+        - array
+        - 'null'
+      type: object
+    SigningKeyGroupCreateRequest:
+      example:
+        seed: seed
+        programmatic: false
+        scope:
+          bearer_token: true
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+        name: name
+      properties:
+        name:
+          type: string
+        programmatic:
+          default: false
+          type: boolean
+        scope:
+          $ref: '#/components/schemas/UserPermissionLimits'
+        seed:
+          type: string
+      required:
+      - name
+      - programmatic
+      type: object
+    AccountJWTSettingsPatch_authorization:
+      allOf:
+      - $ref: '#/components/schemas/ExternalAuthorizationPatch'
+      type:
+      - object
+      - 'null'
+    AlertRuleViewResponse:
+      example:
+        severity: null
+        created: 2000-01-23 04:56:07+00:00
+        system_id: system_id
+        duration_in_secs: 0
+        message: message
+        threshold_expression_metric: threshold_expression_metric
+        threshold_fixed_value: 1.4658129805029452
+        is_enabled: true
+        account_id: account_id
+        consumer_name: consumer_name
+        rule_type: null
+        stream_name: stream_name
+        metric: metric
+        threshold_operator: threshold_operator
+        id: id
+        threshold_expression_multiplier: 6.027456183070403
+      properties:
+        account_id:
+          type: string
+        consumer_name:
+          type: string
+        created:
+          format: date-time
+          type: string
+        duration_in_secs:
+          type: integer
+        id:
+          type: string
+        is_enabled:
+          type: boolean
+        message:
+          type: string
+        metric:
+          type: string
+        rule_type:
+          $ref: '#/components/schemas/AlertRuleType'
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        stream_name:
+          type: string
+        system_id:
+          type: string
+        threshold_expression_metric:
+          type: string
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          type: string
+      required:
+      - created
+      - duration_in_secs
+      - id
+      - is_enabled
+      - message
+      - metric
+      - rule_type
+      - severity
+      - threshold_operator
+      type: object
+    JSObjectBucketConfig:
+      allOf:
+      - $ref: '#/components/schemas/ObjectStoreConfig'
+      example:
+        storage: null
+      properties:
+        storage:
+          $ref: '#/components/schemas/StorageType'
+      type: object
+    StreamImportViewResponse:
+      description: '/
+
+        Stream Import
+
+        /'
+      example:
+        remote_account_nkey_public: remote_account_nkey_public
+        account_id: account_id
+        deliver_subject: deliver_subject
+        stream_name: stream_name
+        created: 2000-01-23 04:56:07+00:00
+        js_subject_prefix: js_subject_prefix
+        id: id
+      properties:
+        account_id:
+          type: string
+        created:
+          format: date-time
+          type: string
+        deliver_subject:
+          type: string
+        id:
+          type: string
+        js_subject_prefix:
+          type: string
+        remote_account_nkey_public:
+          type: string
+        stream_name:
+          type: string
+      required:
+      - account_id
+      - created
+      - deliver_subject
+      - id
+      - js_subject_prefix
+      - remote_account_nkey_public
+      - stream_name
+      type: object
+    UserPermissionLimits:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      - $ref: '#/components/schemas/NatsLimits'
+      example:
+        bearer_token: true
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+      type: object
+    ExternalStream:
+      description: ExternalStream allows you to qualify access to a stream source in another account.
+      properties:
+        api:
+          type: string
+        deliver:
+          type: string
+      required:
+      - api
+      - deliver
+      type: object
+    TeamAppUserInfo:
+      example:
+        role_name: role_name
+        role_id: role_id
+        pending_invitation: true
+        id: id
+      properties:
+        id:
+          type: string
+        pending_invitation:
+          type: boolean
+        role_id:
+          type: string
+        role_name:
+          type: string
+      required:
+      - id
+      - pending_invitation
+      - role_id
+      - role_name
+      type: object
+    AccountClaimsInfo:
+      example:
+        js_enabled: true
+      properties:
+        js_enabled:
+          type: boolean
+      required:
+      - js_enabled
+      type: object
+    LostStreamData:
+      description: LostStreamData indicates msgs that have been lost during file checks and recover due to corruption
+      properties:
+        bytes:
+          description: How many bytes were lost
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        msgs:
+          description: Message IDs of lost messages
+          items:
+            maximum: 18446744073709551615
+            minimum: 0
+            type: integer
+          type: array
+      required:
+      - bytes
+      - msgs
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

@@ -1,0 +1,159 @@
+openapi: 3.2.0
+info:
+  title: NATS HTTP Gateway ObjectStore API
+  description: 'This is the API for interacting with NATS and NATS
+
+    based services using HTTP.'
+  version: 1.0.0
+servers:
+- url: https://api.ngs.global/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: ObjectStore API
+paths:
+  /obj/{bucket}/{key}:
+    parameters:
+    - in: path
+      name: bucket
+      description: Bucket name
+      required: true
+      style: simple
+      explode: false
+      schema:
+        maximum: 1
+        minimum: 1
+        type: string
+    - in: path
+      name: key
+      description: Key name
+      required: true
+      style: simple
+      explode: false
+      schema:
+        maximum: 1
+        minimum: 1
+        type: string
+    - name: metaOnly
+      in: query
+      required: false
+      explode: true
+      description: if true, only the metadata of the object is returned, the body will not contain any data
+      schema:
+        type: boolean
+    get:
+      operationId: SimpleObjGet
+      tags:
+      - ObjectStore API
+      responses:
+        '200':
+          headers:
+            X-Nats-Obj-Name:
+              schema:
+                type: string
+              description: the name of the entry
+            X-Nats-Obj-Bucket:
+              schema:
+                type: string
+              description: the name of the bucket
+            X-Nats-Obj-Nuid:
+              schema:
+                type: string
+              description: the identifier that used to store the entry's data
+            X-Nats-Obj-Size:
+              schema:
+                type: number
+                format: uint64
+              description: the size of the entry's data in bytes
+            X-Nats-Obj-Mod-Time:
+              schema:
+                type: date-time
+              description: date when the entry was last modified
+            X-Nats-Obj-Chunks:
+              schema:
+                type: number
+                format: uint32
+              description: the number of chunks used to store the entry
+            X-Nats-Obj-Digest:
+              schema:
+                type: string
+              description: the Base64 encoded SHA-256 digest of the entry's data
+            X-Nats-Obj-Description:
+              schema:
+                type: string
+              description: the description of the entry
+            X-Nats-Obj-Max-Chunk-Size:
+              schema:
+                type: number
+              description: the maximum size in bytes of a single chunk
+            X-Nats-Obj-Link-Bucket:
+              schema:
+                type: string
+              description: if set, the name of the bucket containing the entry
+            X-Nats-Obj-Link-Name:
+              schema:
+                type: string
+              description: if set, the name of the entry as stored in a different bucket
+            X-Nats-Obj-Deleted:
+              schema:
+                type: boolean
+              description: if true, the entry is marked as deleted
+          description: success response body is payload, and metadata is HTTP headers
+          content:
+            application/text:
+              schema:
+                type: string
+                format: binary
+                x-content-type: application/text
+        '400':
+          description: Invalid Request
+        '404':
+          description: Key not found
+      summary: Simple obj get
+      x-summary-source: derived
+    put:
+      tags:
+      - ObjectStore API
+      summary: Adds or updates an existing entry at an optional revision
+      operationId: SimpleObjPutEntry
+      parameters:
+      - in: query
+        name: previousRevision
+        required: false
+        description: the expected previous revision. If specified and the key is not at the specified revision the operation fails.
+        schema:
+          type: number
+          format: uint64
+      requestBody:
+        content:
+          application/text:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Revision returned by the server
+          content:
+            application/text:
+              schema:
+                type: string
+                format: uint64
+        '400':
+          description: Invalid Request
+    delete:
+      tags:
+      - ObjectStore API
+      summary: Delete an entry
+      operationId: SimpleObjDeleteEntry
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid Request
+        '404':
+          description: Key not found
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header

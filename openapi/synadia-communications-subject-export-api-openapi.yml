@@ -1,0 +1,691 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Subject Export API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: subject-export
+paths:
+  /core/beta/subject-exports/{subjectExportId}:
+    delete:
+      operationId: deleteSubjectExport
+      parameters:
+      - explode: false
+        in: path
+        name: subjectExportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete Subject Export
+      tags:
+      - subject-export
+      x-doc-tags:
+      - Sharing
+    get:
+      description: Returns Subject Export info
+      operationId: getSubjectExport
+      parameters:
+      - explode: false
+        in: path
+        name: subjectExportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectExportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Subject Export
+      tags:
+      - subject-export
+      x-doc-tags:
+      - Sharing
+    patch:
+      operationId: updateSubjectExport
+      parameters:
+      - explode: false
+        in: path
+        name: subjectExportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectExportUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectExportViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Subject Export
+      tags:
+      - subject-export
+      x-doc-tags:
+      - Sharing
+  /core/beta/subject-exports/{subjectExportId}/shares:
+    get:
+      description: List subject shares for this export
+      operationId: listSubjectShares
+      parameters:
+      - explode: false
+        in: path
+        name: subjectExportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectShareListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Subject Shares
+      tags:
+      - subject-export
+      x-doc-tags:
+      - Sharing
+    post:
+      description: Creates Subject Shares
+      operationId: createSubjectShares
+      parameters:
+      - explode: false
+        in: path
+        name: subjectExportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubjectShareCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubjectShareViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Subject Shares
+      tags:
+      - subject-export
+      x-doc-tags:
+      - Sharing
+  /core/beta/subject-exports/{subjectExportId}/shares/{targetAccountNKeyPublic}:
+    delete:
+      description: Revokes the share for account
+      operationId: deleteSubjectShare
+      parameters:
+      - explode: false
+        in: path
+        name: subjectExportId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: targetAccountNKeyPublic
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete Subject Share
+      tags:
+      - subject-export
+      x-doc-tags:
+      - Sharing
+components:
+  schemas:
+    SubjectExportUpdateRequest:
+      example:
+        jwt_settings:
+          revocations: '{}'
+          account_token_position: 0
+          subject: subject
+          name: name
+          description: description
+          response_type: null
+          token_req: true
+          type: null
+          service_latency: null
+          advertise: true
+          info_url: info_url
+          response_threshold: 2147483647
+        metrics_sampling_percentage: 1
+        metrics_enabled: true
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/ExportPatch'
+        metrics_enabled:
+          type: boolean
+        metrics_sampling_percentage:
+          format: int64
+          type: integer
+      type: object
+    ActivationClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: ActivationClaims holds the data specific to an activation JWT
+      example:
+        nats:
+          kind: null
+          subject: subject
+          issuer_account: issuer_account
+      properties:
+        nats:
+          $ref: '#/components/schemas/Activation'
+      type: object
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    ClaimsData:
+      description: ClaimsData is the base struct for all claims
+      properties:
+        aud:
+          type: string
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        iss:
+          type: string
+        jti:
+          type: string
+        name:
+          type: string
+        nbf:
+          format: int64
+          type: integer
+        sub:
+          type: string
+      type: object
+    SubjectShareListResponse:
+      example:
+        items:
+        - subject_export_id: subject_export_id
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          id: id
+          target_account_nkey_public: target_account_nkey_public
+          jwt_claims:
+            nats:
+              kind: null
+              subject: subject
+              issuer_account: issuer_account
+        - subject_export_id: subject_export_id
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          id: id
+          target_account_nkey_public: target_account_nkey_public
+          jwt_claims:
+            nats:
+              kind: null
+              subject: subject
+              issuer_account: issuer_account
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SubjectShareViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    SubjectShareViewResponse:
+      description: '/
+
+        Subject Shares
+
+        /'
+      example:
+        subject_export_id: subject_export_id
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        id: id
+        target_account_nkey_public: target_account_nkey_public
+        jwt_claims:
+          nats:
+            kind: null
+            subject: subject
+            issuer_account: issuer_account
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt:
+          type: string
+        jwt_claims:
+          $ref: '#/components/schemas/ActivationClaims'
+        subject_export_id:
+          type: string
+        target_account_nkey_public:
+          type: string
+      required:
+      - created
+      - id
+      - jwt
+      - jwt_claims
+      - subject_export_id
+      - target_account_nkey_public
+      type: object
+    Export:
+      allOf:
+      - $ref: '#/components/schemas/Info'
+      description: Export represents a single export
+      example:
+        revocations:
+          key: 5
+        account_token_position: 0
+        subject: subject
+        name: name
+        response_type: null
+        token_req: true
+        type: null
+        service_latency:
+          sampling: 23
+          results: results
+        advertise: true
+        response_threshold: 5
+      properties:
+        account_token_position:
+          minimum: 0
+          type: integer
+        advertise:
+          type: boolean
+        name:
+          type: string
+        response_threshold:
+          format: int64
+          type: integer
+        response_type:
+          $ref: '#/components/schemas/ResponseType'
+        revocations:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: RevocationList is used to store a mapping of public keys to unix timestamps
+          type: object
+        service_latency:
+          $ref: '#/components/schemas/ServiceLatency'
+        subject:
+          type: string
+        token_req:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    SubjectExportViewResponse:
+      description: '/
+
+        Subject Exports
+
+        /'
+      example:
+        share_sk_public: share_sk_public
+        stream_export_id: stream_export_id
+        created: 2000-01-23 04:56:07+00:00
+        subject: subject
+        jwt_settings:
+          revocations:
+            key: 5
+          account_token_position: 0
+          subject: subject
+          name: name
+          response_type: null
+          token_req: true
+          type: null
+          service_latency:
+            sampling: 23
+            results: results
+          advertise: true
+          response_threshold: 5
+        is_public: true
+        name: name
+        id: id
+        metrics_sampling_percentage: 0
+        metrics_enabled: true
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_public:
+          type: boolean
+        jwt_settings:
+          $ref: '#/components/schemas/Export'
+        metrics_enabled:
+          type: boolean
+        metrics_sampling_percentage:
+          format: int64
+          type: integer
+        name:
+          type:
+          - string
+          - 'null'
+        share_sk_public:
+          type:
+          - string
+          - 'null'
+        stream_export_id:
+          type:
+          - string
+          - 'null'
+        subject:
+          type: string
+      required:
+      - account
+      - created
+      - id
+      - is_public
+      - jwt_settings
+      - metrics_enabled
+      - metrics_sampling_percentage
+      - name
+      - share_sk_public
+      - stream_export_id
+      - subject
+      type: object
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
+      type: string
+    ResponseType:
+      description: ResponseType is used to store an export response type
+      enum:
+      - Singleton
+      - Stream
+      - Chunked
+      type: string
+    GenericFields:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          description: ClaimType is used to indicate the type of JWT being stored in a Claim
+          type: string
+        version:
+          type: integer
+      type: object
+    Info:
+      properties:
+        description:
+          type: string
+        info_url:
+          type: string
+      type: object
+    SubjectShareCreateRequest:
+      example:
+        target_account_nkey_public: target_account_nkey_public
+      properties:
+        target_account_nkey_public:
+          type: string
+      required:
+      - target_account_nkey_public
+      type: object
+    ServiceLatency:
+      description: "ServiceLatency is used when observing and exported service for\nlatency measurements.\nSampling 1-100, represents sampling rate, defaults to 100.\nResults is the subject where the latency metrics are published.\nA metric will be defined by the nats-server's ServiceLatency. Time durations\nare in nanoseconds.\nsee https://github.com/nats-io/nats-server/blob/main/server/accounts.go#L524\ne.g.\n{\n \"app\": \"dlc22\",\n \"start\": \"2019-09-16T21:46:23.636869585-07:00\",\n \"svc\": 219732,\n \"nats\": {\n   \"req\": 320415,\n   \"resp\": 228268,\n   \"sys\": 0\n },\n \"total\": 768415\n}"
+      example:
+        sampling: 23
+        results: results
+      properties:
+        results:
+          type: string
+        sampling:
+          maximum: 100
+          minimum: 0
+          type: integer
+      required:
+      - results
+      - sampling
+      type: object
+    RevocationListPatch:
+      additionalProperties:
+        maximum: 9223372036854775807
+        minimum: -9223372036854775808
+        type:
+        - integer
+        - 'null'
+      type: object
+    Activation:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      description: Activation defines the custom parts of an activation claim
+      example:
+        kind: null
+        subject: subject
+        issuer_account: issuer_account
+      properties:
+        issuer_account:
+          description: 'IssuerAccount stores the public key for the account the issuer represents.
+
+            When set, the claim was issued by a signing key.'
+          type: string
+        kind:
+          $ref: '#/components/schemas/ExportType'
+        subject:
+          type: string
+      type: object
+    ExportPatch_service_latency:
+      allOf:
+      - $ref: '#/components/schemas/ServiceLatencyPatch'
+      type:
+      - object
+      - 'null'
+    AccountInfo:
+      example:
+        user_jwt: user_jwt
+        auth_type: null
+        user_cred: user_cred
+        account_public_key: account_public_key
+        name: name
+        user_jwt_expires_in_secs: 0
+        id: id
+        is_platform_account: true
+        is_scp_account: true
+        is_system_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - auth_type
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - name
+      - user_jwt_expires_in_secs
+      type: object
+    ExportPatch:
+      example:
+        revocations: '{}'
+        account_token_position: 0
+        subject: subject
+        name: name
+        description: description
+        response_type: null
+        token_req: true
+        type: null
+        service_latency: null
+        advertise: true
+        info_url: info_url
+        response_threshold: 2147483647
+      properties:
+        account_token_position:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+        advertise:
+          type: boolean
+        description:
+          type:
+          - string
+          - 'null'
+        info_url:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        response_threshold:
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          type:
+          - integer
+          - 'null'
+        response_type:
+          $ref: '#/components/schemas/ResponseType'
+        revocations:
+          allOf:
+          - $ref: '#/components/schemas/RevocationListPatch'
+          type:
+          - object
+          - 'null'
+        service_latency:
+          $ref: '#/components/schemas/ExportPatch_service_latency'
+        subject:
+          type: string
+        token_req:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    ServiceLatencyPatch:
+      properties:
+        results:
+          type: string
+        sampling:
+          maximum: 100
+          minimum: 0
+          type: integer
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

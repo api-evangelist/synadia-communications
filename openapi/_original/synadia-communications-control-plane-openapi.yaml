@@ -1,3 +1,5 @@
+# x-archived-from: synadia-communications-control-plane-openapi.yaml
+# x-archived-on: 2026-09-16
 openapi: 3.0.0
 info:
   description: API for Synadia Control Plane / Synadia Cloud

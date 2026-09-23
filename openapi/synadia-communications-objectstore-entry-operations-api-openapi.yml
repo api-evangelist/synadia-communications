@@ -1,0 +1,211 @@
+openapi: 3.2.0
+info:
+  title: NATS HTTP Gateway ObjectStore Entry Operations API
+  description: 'This is the API for interacting with NATS and NATS
+
+    based services using HTTP.'
+  version: 1.0.0
+servers:
+- url: https://api.ngs.global/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: ObjectStore Entry Operations
+paths:
+  /objm/buckets/{bucket}/keys/{key}:
+    parameters:
+    - in: path
+      name: bucket
+      description: Bucket name
+      required: true
+      style: simple
+      explode: false
+      schema:
+        maximum: 1
+        minimum: 1
+        type: string
+    - in: path
+      name: key
+      description: Key name
+      required: true
+      style: simple
+      explode: false
+      schema:
+        maximum: 1
+        minimum: 1
+        type: string
+    get:
+      operationId: ObjGetEntry
+      tags:
+      - ObjectStore Entry Operations
+      responses:
+        '200':
+          headers:
+            X-Nats-Obj-Name:
+              schema:
+                type: string
+              description: the name of the entry
+            X-Nats-Obj-Bucket:
+              schema:
+                type: string
+              description: the name of the bucket
+            X-Nats-Obj-Nuid:
+              schema:
+                type: string
+              description: the identifier that used to store the entry's data
+            X-Nats-Obj-Size:
+              schema:
+                type: number
+                format: uint64
+              description: the size of the entry's data in bytes
+            X-Nats-Obj-Mod-Time:
+              schema:
+                type: date-time
+              description: date when the entry was last modified
+            X-Nats-Obj-Chunks:
+              schema:
+                type: number
+                format: uint32
+              description: the number of chunks used to store the entry
+            X-Nats-Obj-Digest:
+              schema:
+                type: string
+              description: the Base64 encoded SHA-256 digest of the entry's data
+            X-Nats-Obj-Description:
+              schema:
+                type: string
+              description: the description of the entry
+            X-Nats-Obj-Max-Chunk-Size:
+              schema:
+                type: number
+              description: the maximum size in bytes of a single chunk
+            X-Nats-Obj-Link-Bucket:
+              schema:
+                type: string
+              description: if set, the name of the bucket containing the entry
+            X-Nats-Obj-Link-Name:
+              schema:
+                type: string
+              description: if set, the name of the entry as stored in a different bucket
+            X-Nats-Obj-Deleted:
+              schema:
+                type: boolean
+              description: if true, the entry is marked as deleted
+          description: success response body is payload, and metadata is HTTP headers
+          content:
+            application/text:
+              schema:
+                type: string
+                format: binary
+                x-content-type: application/text
+        '400':
+          description: Invalid Request
+        '404':
+          description: Key not found
+      summary: Obj get entry
+      x-summary-source: derived
+    put:
+      tags:
+      - ObjectStore Entry Operations
+      summary: Adds or updates an entry to the object store,
+      operationId: ObjCreateEntry
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+          application/text:
+            schema:
+              type: string
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '200':
+          description: ObjectInfo Response
+          content:
+            application/json:
+              schema:
+                x-content-type: application/json
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  metadata:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    x-schema-name: Metadata
+                  link:
+                    type: object
+                    properties:
+                      bucket:
+                        type: string
+                      name:
+                        type: string
+                  max_chunk_size:
+                    type: number
+                    format: uint32
+                  bucket:
+                    type: string
+                  nuid:
+                    type: string
+                  size:
+                    type: number
+                    format: uint64
+                  mtime:
+                    type: string
+                    format: date-time
+                  chunks:
+                    type: number
+                    format: uint32
+                  digest:
+                    type: string
+                  deleted:
+                    type: boolean
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    delete:
+      tags:
+      - ObjectStore Entry Operations
+      summary: Delete an entry
+      operationId: ObjDeleteEntry
+      parameters:
+      - name: purge
+        in: query
+        description: Purges the deleted entry
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Key not found
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header

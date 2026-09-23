@@ -1,0 +1,466 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Push Consumer API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: push-consumer
+paths:
+  /core/beta/consumers/push/{consumerId}:
+    delete:
+      operationId: deletePushConsumer
+      parameters:
+      - explode: false
+        in: path
+        name: consumerId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete Push Consumer
+      tags:
+      - push-consumer
+      x-doc-tags:
+      - JetStream
+    get:
+      description: Returns JetStream push consumer info
+      operationId: getPushConsumerInfo
+      parameters:
+      - explode: false
+        in: path
+        name: consumerId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSPushConsumerInfoResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Push Consumer
+      tags:
+      - push-consumer
+      x-doc-tags:
+      - JetStream
+    patch:
+      operationId: updatePushConsumer
+      parameters:
+      - explode: false
+        in: path
+        name: consumerId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JSPushConsumerUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSPushConsumerInfoResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Push Consumer
+      tags:
+      - push-consumer
+      x-doc-tags:
+      - JetStream
+components:
+  schemas:
+    SequenceInfo:
+      description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
+      example:
+        consumer_seq: 2147483647
+        last_active: last_active
+        stream_seq: 2147483647
+      properties:
+        consumer_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        last_active:
+          type:
+          - string
+          - 'null'
+        stream_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      required:
+      - consumer_seq
+      - stream_seq
+      type: object
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
+    AckPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
+      enum:
+      - none
+      - all
+      - explicit
+      - flow_control
+      type: string
+    JSPushConsumerConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
+      example:
+        deliver_group: deliver_group
+        deliver_subject: deliver_subject
+        rate_limit_bps: 2147483647
+        headers_only: true
+        flow_control: true
+        idle_heartbeat: 0
+      properties:
+        deliver_group:
+          type: string
+        deliver_subject:
+          description: Push based options.
+          type: string
+        flow_control:
+          type: boolean
+        headers_only:
+          type: boolean
+        idle_heartbeat:
+          format: int64
+          type: integer
+        rate_limit_bps:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      type: object
+    ReplayPolicy:
+      enum:
+      - instant
+      - original
+      type: string
+    JSCommonConsumerConfigRequest:
+      properties:
+        ack_policy:
+          $ref: '#/components/schemas/AckPolicy'
+        ack_wait:
+          format: int64
+          type: integer
+        backoff:
+          items:
+            format: int64
+            type: integer
+          type: array
+        deliver_policy:
+          $ref: '#/components/schemas/DeliverPolicy'
+        description:
+          type: string
+        direct:
+          type: boolean
+        durable_name:
+          type: string
+        filter_subjects:
+          items:
+            type: string
+          type: array
+        inactive_threshold:
+          format: int64
+          type: integer
+        max_ack_pending:
+          type: integer
+        max_deliver:
+          type: integer
+        mem_storage:
+          type: boolean
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        name:
+          type: string
+        num_replicas:
+          type: integer
+        opt_start_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        opt_start_time:
+          format: date-time
+          type: string
+        pause_until:
+          format: date-time
+          type: string
+        replay_policy:
+          $ref: '#/components/schemas/ReplayPolicy'
+        sample_freq:
+          type: string
+      required:
+      - ack_policy
+      - deliver_policy
+      - num_replicas
+      - replay_policy
+      type: object
+    ClusterInfo:
+      description: 'ClusterInfo shows information about the underlying set of servers
+
+        that make up the stream or consumer.'
+      example:
+        leader: leader
+        system_account: true
+        replicas:
+        - null
+        - null
+        raft_group: raft_group
+        name: name
+        traffic_account: traffic_account
+        leader_since: leader_since
+      properties:
+        leader:
+          type: string
+        leader_since:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        raft_group:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
+          type: array
+        system_account:
+          type: boolean
+        traffic_account:
+          type: string
+      type: object
+    PeerInfo:
+      description: 'PeerInfo shows information about all the peers in the cluster that
+
+        are supporting the stream or consumer.'
+      properties:
+        active:
+          format: int64
+          type: integer
+        current:
+          type: boolean
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        offline:
+          type: boolean
+        peer:
+          type: string
+      required:
+      - active
+      - current
+      - name
+      - peer
+      type: object
+    JSPushConsumerUpdateRequest:
+      example:
+        metadata:
+          key: metadata
+        deliver_subject: deliver_subject
+        rate_limit_bps: 2147483647
+        backoff:
+        - 6
+        - 6
+        ack_wait: 0
+        description: description
+        max_deliver: 5
+        filter_subjects:
+        - filter_subjects
+        - filter_subjects
+        max_ack_pending: 5
+        sample_freq: sample_freq
+        num_replicas: 2
+        inactive_threshold: 1
+        headers_only: true
+      properties:
+        ack_wait:
+          format: int64
+          type: integer
+        backoff:
+          items:
+            format: int64
+            type: integer
+          type: array
+        deliver_subject:
+          type: string
+        description:
+          type: string
+        filter_subjects:
+          items:
+            type: string
+          type: array
+        headers_only:
+          type: boolean
+        inactive_threshold:
+          format: int64
+          type: integer
+        max_ack_pending:
+          type: integer
+        max_deliver:
+          type: integer
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        num_replicas:
+          type: integer
+        rate_limit_bps:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        sample_freq:
+          type: string
+      type: object
+    DeliverPolicy:
+      enum:
+      - all
+      - last
+      - new
+      - by_start_sequence
+      - by_start_time
+      - last_per_subject
+      type: string
+    JSPushConsumerInfoResponse:
+      example:
+        cluster:
+          leader: leader
+          system_account: true
+          replicas:
+          - null
+          - null
+          raft_group: raft_group
+          name: name
+          traffic_account: traffic_account
+          leader_since: leader_since
+        num_redelivered: 5
+        paused: true
+        created: 2000-01-23 04:56:07+00:00
+        num_pending: 2147483647
+        pause_remaining: 2
+        delivered:
+          consumer_seq: 2147483647
+          last_active: last_active
+          stream_seq: 2147483647
+        num_ack_pending: 1
+        push_bound: true
+        stream_name: stream_name
+        name: name
+        id: id
+        config:
+          deliver_group: deliver_group
+          deliver_subject: deliver_subject
+          rate_limit_bps: 2147483647
+          headers_only: true
+          flow_control: true
+          idle_heartbeat: 0
+        ack_floor:
+          consumer_seq: 2147483647
+          last_active: last_active
+          stream_seq: 2147483647
+        ts: 2000-01-23 04:56:07+00:00
+      properties:
+        ack_floor:
+          $ref: '#/components/schemas/SequenceInfo'
+        cluster:
+          $ref: '#/components/schemas/ClusterInfo'
+        config:
+          $ref: '#/components/schemas/JSPushConsumerConfigRequest'
+        created:
+          format: date-time
+          type: string
+        delivered:
+          $ref: '#/components/schemas/SequenceInfo'
+        id:
+          type: string
+        name:
+          type: string
+        num_ack_pending:
+          type: integer
+        num_pending:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        num_redelivered:
+          type: integer
+        pause_remaining:
+          format: int64
+          type: integer
+        paused:
+          type: boolean
+        push_bound:
+          type: boolean
+        stream_name:
+          type: string
+        ts:
+          format: date-time
+          type: string
+      required:
+      - ack_floor
+      - created
+      - delivered
+      - id
+      - name
+      - num_ack_pending
+      - num_pending
+      - num_redelivered
+      - stream_name
+      - ts
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

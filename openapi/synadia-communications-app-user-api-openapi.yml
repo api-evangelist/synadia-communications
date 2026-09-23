@@ -1,0 +1,671 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud App User API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: app-user
+paths:
+  /core/beta/app-users/{appUserId}:
+    delete:
+      operationId: deleteAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: appUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete App User
+      tags:
+      - app-user
+      x-doc-tags:
+      - App Users
+    get:
+      operationId: getAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: appUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get App User
+      tags:
+      - app-user
+      x-doc-tags:
+      - App Users
+    patch:
+      operationId: updateAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: appUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserUpdateResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update App User
+      tags:
+      - app-user
+      x-doc-tags:
+      - App Users
+  /core/beta/app-users/{appUserId}/roles:
+    get:
+      description: List an App User's Roles
+      operationId: listAppUserRoles
+      parameters:
+      - explode: false
+        in: path
+        name: appUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Roles
+      tags:
+      - app-user
+      x-doc-tags:
+      - App Users
+  /core/beta/app-users/{appUserId}/teams/{teamId}:
+    post:
+      description: Assign an App User to a Team. This operation is idempotent; if an App User is already assigned to a Team the assignment will be updated with the new role
+      operationId: assignTeamAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: appUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: teamId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserAssignRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Assign App User to Team
+      tags:
+      - app-user
+      x-doc-tags:
+      - App Users
+components:
+  schemas:
+    AppUserViewResponse:
+      example:
+        role_name: role_name
+        identifier: identifier
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        pending_creation: true
+        name: name
+        id: id
+        last_active: last_active
+        type: null
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        identifier:
+          type: string
+        last_active:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        pending_creation:
+          type: boolean
+        role_id:
+          type: string
+        role_name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - created
+      - id
+      - name
+      - pending_creation
+      - role_id
+      - role_name
+      - type
+      type: object
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
+      type: string
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    NatsUserInfo:
+      example:
+        user_public_key: user_public_key
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        user_public_key:
+          type: string
+      required:
+      - id
+      - name
+      - user_public_key
+      type: object
+    AppRoleScope:
+      enum:
+      - App
+      - Team
+      - System
+      - Account
+      - NatsUser
+      type: string
+    SystemInfo:
+      example:
+        jetstream_enabled: true
+        http_gateway_url: http_gateway_url
+        is_tenant: true
+        connection_type: null
+        managed_by: null
+        config_mode: true
+        server_urls: server_urls
+        user_jwt_expires_in_secs: 7
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        name: name
+        id: id
+        state: null
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        http_gateway_url:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        name:
+          type: string
+        server_urls:
+          type: string
+        state:
+          $ref: '#/components/schemas/SystemState'
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - name
+      - state
+      - user_jwt_expires_in_secs
+      type: object
+    AppUserUpdateResponse:
+      allOf:
+      - $ref: '#/components/schemas/AppUserViewResponse'
+      example:
+        reset_password_link: reset_password_link
+      properties:
+        reset_password_link:
+          type: string
+      type: object
+    AccountInfo:
+      example:
+        user_jwt: user_jwt
+        auth_type: null
+        user_cred: user_cred
+        account_public_key: account_public_key
+        name: name
+        user_jwt_expires_in_secs: 0
+        id: id
+        is_platform_account: true
+        is_scp_account: true
+        is_system_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - auth_type
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - name
+      - user_jwt_expires_in_secs
+      type: object
+    AppUserInfo:
+      example:
+        identifier: identifier
+        name: name
+        id: id
+        type: null
+      properties:
+        id:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - id
+      - name
+      - type
+      type: object
+    SystemManagedBy:
+      enum:
+      - byon
+      - sdkube
+      type: string
+    AppUserUpdateRequest:
+      example:
+        role_id: role_id
+        name: name
+        reset_password: true
+      properties:
+        name:
+          type: string
+        reset_password:
+          type: boolean
+        role_id:
+          type: string
+      type: object
+    AppUserAssignResponse:
+      example:
+        role_name: role_name
+        nats_user:
+          user_public_key: user_public_key
+          name: name
+          id: id
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        app_user:
+          identifier: identifier
+          name: name
+          id: id
+          type: null
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        scope: null
+        team_app_user:
+          role_name: role_name
+          role_id: role_id
+          pending_invitation: true
+          id: id
+        resource_id: resource_id
+        team:
+          name: name
+          id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        app_user:
+          $ref: '#/components/schemas/AppUserInfo'
+        created:
+          format: date-time
+          type: string
+        nats_user:
+          $ref: '#/components/schemas/NatsUserInfo'
+        resource_id:
+          type: string
+        role_id:
+          type: string
+        role_name:
+          type: string
+        scope:
+          $ref: '#/components/schemas/AppRoleScope'
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        team_app_user:
+          $ref: '#/components/schemas/TeamAppUserInfo'
+      required:
+      - app_user
+      - created
+      - resource_id
+      - role_id
+      - role_name
+      - scope
+      - team_app_user
+      type: object
+    AppUserAssignRequest:
+      example:
+        role_id: role_id
+      properties:
+        role_id:
+          type: string
+      required:
+      - role_id
+      type: object
+    AppUserType:
+      enum:
+      - Person
+      - AppServiceAccount
+      - TeamServiceAccount
+      type: string
+    TeamInfo:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    TeamAppUserInfo:
+      example:
+        role_name: role_name
+        role_id: role_id
+        pending_invitation: true
+        id: id
+      properties:
+        id:
+          type: string
+        pending_invitation:
+          type: boolean
+        role_id:
+          type: string
+        role_name:
+          type: string
+      required:
+      - id
+      - pending_invitation
+      - role_id
+      - role_name
+      type: object
+    AppUserAssignListResponse:
+      example:
+        items:
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppUserAssignResponse'
+          type: array
+      required:
+      - items
+      type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

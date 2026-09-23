@@ -1,0 +1,162 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Personal Access Token…
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: Personal Access Token
+paths:
+  /core/beta/personal-access-tokens/{tokenId}:
+    delete:
+      operationId: deletePersonalAccessToken
+      parameters:
+      - explode: false
+        in: path
+        name: tokenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete Personal Access Token
+      tags:
+      - Personal Access Token
+      x-doc-tags:
+      - Session
+    get:
+      operationId: getPersonalAccessToken
+      parameters:
+      - explode: false
+        in: path
+        name: tokenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAccessTokenViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Personal Access Token
+      tags:
+      - Personal Access Token
+      x-doc-tags:
+      - Session
+    patch:
+      operationId: updatePersonalAccessToken
+      parameters:
+      - explode: false
+        in: path
+        name: tokenId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserAccessTokenUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAccessTokenViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Personal Access Token
+      tags:
+      - Personal Access Token
+      x-doc-tags:
+      - Session
+components:
+  schemas:
+    AppUserAccessTokenUpdateRequest:
+      example:
+        expires: 2000-01-23 04:56:07+00:00
+        never_expires: true
+        name: name
+      properties:
+        expires:
+          format: date-time
+          type: string
+        name:
+          type: string
+        never_expires:
+          type: boolean
+      type: object
+    AppUserAccessTokenViewResponse:
+      example:
+        expires: expires
+        created: 2000-01-23 04:56:07+00:00
+        name: name
+        id: id
+        last_active: last_active
+      properties:
+        created:
+          format: date-time
+          type: string
+        expires:
+          type:
+          - string
+          - 'null'
+        id:
+          type: string
+        last_active:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+      required:
+      - created
+      - id
+      - name
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

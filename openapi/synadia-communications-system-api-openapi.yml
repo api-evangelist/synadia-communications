@@ -1,0 +1,7491 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud System API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: System
+paths:
+  /core/beta/systems/{systemId}:
+    delete:
+      description: Deletes System
+      operationId: deleteSystem
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete System
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+    get:
+      description: Returns a System by ID
+      operationId: getSystem
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get System
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+    patch:
+      description: Updates a System
+      operationId: updateSystem
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: To test the backend connection without updating the system, pass test_connection=true in query parameter.
+        explode: true
+        in: query
+        name: test_connection
+        required: false
+        schema:
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update System
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/accounts:
+    get:
+      operationId: listAccounts
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Accounts
+      tags:
+      - System
+      x-doc-tags:
+      - Accounts
+    post:
+      operationId: createAccount
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create Account
+      tags:
+      - System
+      x-doc-tags:
+      - Accounts
+  /core/beta/systems/{systemId}/accounts-overview-metrics:
+    get:
+      operationId: listAccountsOverviewMetrics
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsOverviewListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Accounts overview metrics
+      tags:
+      - System
+      x-doc-tags:
+      - Accounts
+  /core/beta/systems/{systemId}/agent-tokens:
+    get:
+      operationId: listAgentTokens
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentTokenListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Agent Tokens
+      tags:
+      - System
+      x-doc-tags:
+      - Accounts
+    post:
+      description: Rotate token to connect a dataplane agent
+      operationId: rotateAgentToken
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentTokenRotateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentTokenRotateResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Rotate Agent Token
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/agent-tokens/current:
+    get:
+      description: Get the Current Agent Token
+      operationId: getCurrentAgentToken
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentTokenCurrentResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Current Agent Token
+      tags:
+      - System
+      x-doc-tags:
+      - App Users
+  /core/beta/systems/{systemId}/alert-rules:
+    get:
+      operationId: listSystemAlertRules
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List System Alert Rules
+      tags:
+      - System
+      x-doc-tags:
+      - Alerts
+    post:
+      operationId: createSystemAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRuleSystemCreateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create System Alert Rule
+      tags:
+      - System
+      x-doc-tags:
+      - Alerts
+  /core/beta/systems/{systemId}/alert-rules/{alertRuleId}:
+    delete:
+      description: Delete System Alert rule
+      operationId: deleteSystemAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete System Alert Rule
+      tags:
+      - System
+      x-doc-tags:
+      - Alerts
+    get:
+      operationId: getSystemAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get System Alert Rule
+      tags:
+      - System
+      x-doc-tags:
+      - Alerts
+    patch:
+      operationId: updateSystemAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlertRuleUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertRuleViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update System Alert Rules
+      tags:
+      - System
+      x-doc-tags:
+      - Alerts
+  /core/beta/systems/{systemId}/alert-rules/{alertRuleId}/run:
+    get:
+      description: Run System Alert Rule and return an alert object if the rule condition is met
+      operationId: runSystemAlertRule
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: alertRuleId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AlertViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Run System Alert Rule
+      tags:
+      - System
+      x-doc-tags:
+      - Alerts
+  /core/beta/systems/{systemId}/app-users:
+    get:
+      description: Returns a list of Team App Users associated with the System
+      operationId: listSystemTeamAppUsers
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List System Team App Users
+      tags:
+      - System
+      x-doc-tags:
+      - App Users
+  /core/beta/systems/{systemId}/app-users/{teamAppUserId}:
+    delete:
+      description: Unassign a Team App User from a System
+      operationId: unAssignSystemTeamAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: teamAppUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Unassign Team App User from System
+      tags:
+      - System
+      x-doc-tags:
+      - App Users
+    post:
+      description: Assign a Team App User to a System. This operation is idempotent; if an App User is already assigned to the System the assignment will be updated with the new role
+      operationId: assignSystemTeamAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: teamAppUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserAssignRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Assign Team App User to System
+      tags:
+      - System
+      x-doc-tags:
+      - App Users
+  /core/beta/systems/{systemId}/audit/jobs:
+    get:
+      description: Returns a list of recent audit jobs for the system, ordered by creation time (most recent first)
+      operationId: listSystemAuditJobs
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditJobListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Audit Jobs
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/audit/jobs/{jobId}:
+    get:
+      description: Returns the current status of an asynchronous audit job
+      operationId: getSystemAuditJobStatus
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditJobResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Audit Job Status
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/audit/jobs/{jobId}/result:
+    get:
+      description: Returns the analyzed audit results for a completed job
+      operationId: getSystemAuditJobResult
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditHealthResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Audit Job Result
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/audit/run:
+    post:
+      description: Starts an asynchronous system audit check and returns job tracking information
+      operationId: runSystemAuditCheck
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuditJobRequest'
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditJobResponse'
+          description: Accepted
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Run System Audit Check
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/auth-callout:
+    get:
+      description: List Auth Callout Configs for the System
+      operationId: listAuthCalloutConfigs
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthCalloutConfigListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Auth Callout Configs
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+    post:
+      description: Saves an auth callout config for the system
+      operationId: enableAuthCallout
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCalloutEnableRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Enable Auth Callout For System
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/auth-callout/authenticators:
+    get:
+      description: Get a list of authenticators available for use
+      operationId: listAuthCalloutAuthenticators
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthCalloutAuthenticatorsListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get List of Available Authenticators
+      tags:
+      - System
+      x-doc-tags:
+      - Auth Callout
+  /core/beta/systems/{systemId}/bulk/shares:
+    post:
+      description: allows sharing streams/exports across multiple accounts at once
+      operationId: bulkShare
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkShareRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Share assets across accounts
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/connections:
+    get:
+      operationId: listConnections
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: account
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: cid
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: subject
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: number
+        style: form
+      - explode: true
+        in: query
+        name: user
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemConnectionsListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Connections
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/export:
+    get:
+      operationId: getSystemExport
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemExportResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Export System Seeds
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/health/check:
+    get:
+      description: Returns overall health status of all servers in the system, similar to 'nats server report health'
+      operationId: getSystemHealthCheck
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthCheckResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get System Health Check
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/health/clusters:
+    get:
+      description: Returns cluster-level aggregated metrics and status information
+      operationId: getSystemHealthClusters
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClusterOverviewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Cluster Overview
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/health/jetstream:
+    get:
+      description: Returns JetStream health and usage statistics across all servers, similar to 'nats server report jetstream'
+      operationId: getSystemHealthJetstream
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JetStreamReportResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get JetStream Health Report
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/health/servers:
+    get:
+      description: Returns a list of all NATS servers in the system with their current status, similar to 'nats server ls'
+      operationId: getSystemHealthServers
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get System Server List
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/import-account:
+    post:
+      description: Imports an existing account
+      operationId: importAccount
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemAccountImportRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Import Account
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/import-user:
+    post:
+      description: Imports an existing NATS user
+      operationId: importUser
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemUserImportRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Import User
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/info/accounts:
+    get:
+      description: List info for Accounts within a System. Allows a user with access to a single account in a system to list info for all accounts in that system
+      operationId: listSystemInfoAccounts
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountInfoListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List System Accounts Info
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/info/servers:
+    get:
+      description: List info for NATS Servers within a System
+      operationId: listSystemInfoServers
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsServerInfoListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List System Servers info
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/jwt-sync:
+    post:
+      description: Use this endpoint to re-issue all JWTs. This endpoint just marks all account JWTs for renewal. The actual renewal takes place asynchronously and may take a while depending on the number of accounts.
+      operationId: systemJWTSync
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Re-sync JWTs of all accounts in this system
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/limits:
+    get:
+      description: Get system total and allocated limits
+      operationId: getSystemLimits
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemLimitsResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get System Limits
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/nats-clusters:
+    get:
+      description: List cluster information
+      operationId: listClusters
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsClusterListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Clusters
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/platform-components:
+    patch:
+      description: Update the different platform components config
+      operationId: updatePlatformComponents
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformComponentsUpdateRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update Platform Components for System
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/platform-components/{id}/tokens:
+    get:
+      description: Retrieves an access token for the platform component
+      operationId: getComponentToken
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformComponentTokenViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get a component access token
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/prometheus-metrics:
+    get:
+      operationId: getSystemPrometheusMetrics
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Prometheus Metrics
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/servers:
+    get:
+      description: List server information
+      operationId: listServers
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsServerListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Servers
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+  /core/beta/systems/{systemId}/unmanage:
+    delete:
+      description: Same as deleting a system but skips purging system and accounts from NATS
+      operationId: unmanageSystem
+      parameters:
+      - explode: false
+        in: path
+        name: systemId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Unmanage System
+      tags:
+      - System
+      x-doc-tags:
+      - Systems
+components:
+  schemas:
+    AuditHealthResponse:
+      example:
+        duration: duration
+        summary:
+          passed_checks: 6
+          total_checks: 2
+          skipped_checks: 5
+          failed_checks: 0
+          warning_checks: 7
+          server_count: 1
+          stream_count: 5
+        checks:
+        - code: code
+          suite: suite
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        - code: code
+          suite: suite
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        system_id: system_id
+        status: healthy
+        timestamp: 2000-01-23 04:56:07+00:00
+      properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/AuditCheckResult'
+          type: array
+        duration:
+          type: string
+        status:
+          enum:
+          - healthy
+          - warning
+          - critical
+          type: string
+        summary:
+          $ref: '#/components/schemas/AuditSummary'
+        system_id:
+          type: string
+        timestamp:
+          format: date-time
+          type: string
+      required:
+      - checks
+      - status
+      - summary
+      - system_id
+      - timestamp
+      type: object
+    AccountViewResponse:
+      example:
+        jwt_sync_error: jwt_sync_error
+        auth_type: null
+        connectors: true
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        account_public_key: account_public_key
+        workloads: true
+        user_jwt_expires_in_secs: 7
+        team:
+          name: name
+          id: id
+        nsc_managed: true
+        is_scp_account: true
+        is_system_account: true
+        claims_info:
+          js_enabled: true
+        user_jwt: user_jwt
+        connectors_log_stream: connectors_log_stream
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        jwt_sync_status: null
+        jwt_settings:
+          authorization:
+            allowed_accounts:
+            - allowed_accounts
+            - allowed_accounts
+            auth_users:
+            - auth_users
+            - auth_users
+            xkey: xkey
+          mappings:
+            key:
+            - cluster: cluster
+              subject: subject
+              weight: 26
+            - cluster: cluster
+              subject: subject
+              weight: 26
+          revocations:
+            key: 6
+          limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+          tags:
+          - tags
+          - tags
+        user_cred: user_cred
+        claims:
+          nats:
+            authorization:
+              allowed_accounts:
+              - allowed_accounts
+              - allowed_accounts
+              auth_users:
+              - auth_users
+              - auth_users
+              xkey: xkey
+            default_permissions:
+              sub:
+                allow:
+                - allow
+                - allow
+                deny:
+                - deny
+                - deny
+              resp:
+                max: 0
+                ttl: 6
+              pub:
+                allow:
+                - allow
+                - allow
+                deny:
+                - deny
+                - deny
+            mappings:
+              key:
+              - cluster: cluster
+                subject: subject
+                weight: 26
+              - cluster: cluster
+                subject: subject
+                weight: 26
+            imports:
+            - local_subject: local_subject
+              subject: subject
+              name: name
+              share: true
+              to: to
+              type: null
+              account: account
+              token: token
+            - local_subject: local_subject
+              subject: subject
+              name: name
+              share: true
+              to: to
+              type: null
+              account: account
+              token: token
+            revocations:
+              key: 1
+            exports:
+            - revocations:
+                key: 5
+              account_token_position: 0
+              subject: subject
+              name: name
+              response_type: null
+              token_req: true
+              type: null
+              service_latency:
+                sampling: 23
+                results: results
+              advertise: true
+              response_threshold: 5
+            - revocations:
+                key: 5
+              account_token_position: 0
+              subject: subject
+              name: name
+              response_type: null
+              token_req: true
+              type: null
+              service_latency:
+                sampling: 23
+                results: results
+              advertise: true
+              response_threshold: 5
+            signing_keys: null
+            limits:
+              tiered_limits:
+                key:
+                  max_ack_pending: 2
+                  mem_max_stream_bytes: 4
+                  disk_max_stream_bytes: 9
+                  disk_storage: 3
+                  max_bytes_required: true
+                  streams: 1
+                  mem_storage: 7
+                  consumer: 7
+        name: name
+        workloads_log_stream: workloads_log_stream
+        id: id
+        is_platform_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        claims:
+          $ref: '#/components/schemas/AccountClaims'
+        claims_info:
+          $ref: '#/components/schemas/AccountClaimsInfo'
+        connectors:
+          type: boolean
+        connectors_log_stream:
+          type: string
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        jwt:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/AccountJWTSettings'
+        jwt_sync_error:
+          type: string
+        jwt_sync_status:
+          $ref: '#/components/schemas/JwtSyncStatus'
+        name:
+          type: string
+        nsc_managed:
+          type: boolean
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+        workloads:
+          type: boolean
+        workloads_log_stream:
+          type: string
+      required:
+      - auth_type
+      - connectors
+      - created
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - jwt_sync_error
+      - jwt_sync_status
+      - name
+      - nsc_managed
+      - system
+      - team
+      - user_jwt_expires_in_secs
+      - workloads
+      type: object
+    TenantLimits:
+      example:
+        data:
+          total_sent: 2
+          gateway_sent: 5
+          route_received: 7
+          route_sent: 9
+          client_received: 0
+          client_sent: 6
+          leaf_sent: 2
+          leaf_received: 5
+          gateway_received: 1
+          total_received: 3
+        workloads:
+          container: 1
+          function: 1
+        num_connectors: 7
+        num_accounts: 4
+        resource_limits:
+          tiered_limits:
+            key:
+              max_ack_pending: 2
+              mem_max_stream_bytes: 4
+              disk_max_stream_bytes: 9
+              disk_storage: 3
+              max_bytes_required: true
+              streams: 1
+              mem_storage: 7
+              consumer: 7
+      properties:
+        data:
+          $ref: '#/components/schemas/DataLimits'
+        num_accounts:
+          type:
+          - integer
+          - 'null'
+        num_connectors:
+          type:
+          - integer
+          - 'null'
+        resource_limits:
+          $ref: '#/components/schemas/OperatorLimits'
+        workloads:
+          $ref: '#/components/schemas/WorkloadLimits'
+      required:
+      - num_accounts
+      - num_connectors
+      - resource_limits
+      - workloads
+      type: object
+    HealthSummary:
+      example:
+        critical: 6
+        total_errors: 5
+        healthy: 5
+        total_servers: 2
+        degraded: 1
+      properties:
+        critical:
+          type: integer
+        degraded:
+          type: integer
+        healthy:
+          type: integer
+        total_errors:
+          type: integer
+        total_servers:
+          type: integer
+      required:
+      - critical
+      - degraded
+      - healthy
+      - total_errors
+      - total_servers
+      type: object
+    RaftReplica:
+      example:
+        offline: true
+        current: true
+        lag: 6
+        peer: peer
+        name: name
+        active_ns: 0
+      properties:
+        active_ns:
+          type: integer
+        current:
+          type: boolean
+        lag:
+          type: integer
+        name:
+          type: string
+        offline:
+          type: boolean
+        peer:
+          type: string
+      required:
+      - active_ns
+      - current
+      - lag
+      - name
+      - offline
+      - peer
+      type: object
+    User:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      - $ref: '#/components/schemas/UserPermissionLimits'
+      description: User defines the user specific data in a user JWT
+      example:
+        issuer_account: issuer_account
+      properties:
+        issuer_account:
+          description: 'IssuerAccount stores the public key for the account the issuer represents.
+
+            When set, the claim was issued by a signing key.'
+          type: string
+      type: object
+    ClusterOverview:
+      example:
+        jetstream_enabled: true
+        gateways:
+        - inbound: 0
+          outbound: 6
+          name: name
+        - inbound: 0
+          outbound: 6
+          name: name
+        incoming_gateways: 1
+        total_connections: 2
+        total_cpu_percent: 7.061401241503109
+        nodes:
+        - nodes
+        - nodes
+        total_memory_bytes: 9
+        name: name
+        outgoing_gateways: 5
+        node_count: 5
+        total_routes: 3
+      properties:
+        gateways:
+          items:
+            $ref: '#/components/schemas/GatewayConnection'
+          type: array
+        incoming_gateways:
+          type: integer
+        jetstream_enabled:
+          type: boolean
+        name:
+          type: string
+        node_count:
+          type: integer
+        nodes:
+          items:
+            type: string
+          type: array
+        outgoing_gateways:
+          type: integer
+        total_connections:
+          type: integer
+        total_cpu_percent:
+          type: number
+        total_memory_bytes:
+          type: integer
+        total_routes:
+          type: integer
+      required:
+      - incoming_gateways
+      - jetstream_enabled
+      - name
+      - node_count
+      - nodes
+      - outgoing_gateways
+      - total_connections
+      - total_cpu_percent
+      - total_memory_bytes
+      - total_routes
+      type: object
+    UserLimits:
+      description: Src is a comma separated list of CIDR specifications
+      properties:
+        src:
+          items:
+            type: string
+          type: array
+        times:
+          items:
+            $ref: '#/components/schemas/TimeRange'
+          type: array
+        times_location:
+          type: string
+      type: object
+    JetStreamVarz_meta:
+      allOf:
+      - $ref: '#/components/schemas/MetaClusterInfo'
+      type:
+      - object
+      - 'null'
+    SystemLimitsResponse:
+      example:
+        total:
+          data:
+            total_sent: 2
+            gateway_sent: 5
+            route_received: 7
+            route_sent: 9
+            client_received: 0
+            client_sent: 6
+            leaf_sent: 2
+            leaf_received: 5
+            gateway_received: 1
+            total_received: 3
+          workloads:
+            container: 1
+            function: 1
+          num_connectors: 7
+          num_accounts: 4
+          resource_limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+        available:
+          data:
+            total_sent: 2
+            gateway_sent: 5
+            route_received: 7
+            route_sent: 9
+            client_received: 0
+            client_sent: 6
+            leaf_sent: 2
+            leaf_received: 5
+            gateway_received: 1
+            total_received: 3
+          workloads:
+            container: 1
+            function: 1
+          num_connectors: 7
+          num_accounts: 4
+          resource_limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+        allocated:
+          data:
+            total_sent: 2
+            gateway_sent: 5
+            route_received: 7
+            route_sent: 9
+            client_received: 0
+            client_sent: 6
+            leaf_sent: 2
+            leaf_received: 5
+            gateway_received: 1
+            total_received: 3
+          workloads:
+            container: 1
+            function: 1
+          num_connectors: 7
+          num_accounts: 4
+          resource_limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+      properties:
+        allocated:
+          $ref: '#/components/schemas/TenantLimits'
+        available:
+          $ref: '#/components/schemas/TenantLimits'
+        total:
+          $ref: '#/components/schemas/TenantLimits'
+      required:
+      - allocated
+      - available
+      - total
+      type: object
+    AlertRuleListResponse:
+      example:
+        items:
+        - severity: null
+          created: 2000-01-23 04:56:07+00:00
+          system_id: system_id
+          duration_in_secs: 0
+          message: message
+          threshold_expression_metric: threshold_expression_metric
+          threshold_fixed_value: 1.4658129805029452
+          is_enabled: true
+          account_id: account_id
+          consumer_name: consumer_name
+          rule_type: null
+          stream_name: stream_name
+          metric: metric
+          threshold_operator: threshold_operator
+          id: id
+          threshold_expression_multiplier: 6.027456183070403
+        - severity: null
+          created: 2000-01-23 04:56:07+00:00
+          system_id: system_id
+          duration_in_secs: 0
+          message: message
+          threshold_expression_metric: threshold_expression_metric
+          threshold_fixed_value: 1.4658129805029452
+          is_enabled: true
+          account_id: account_id
+          consumer_name: consumer_name
+          rule_type: null
+          stream_name: stream_name
+          metric: metric
+          threshold_operator: threshold_operator
+          id: id
+          threshold_expression_multiplier: 6.027456183070403
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AlertRuleViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    Connz:
+      description: Connz represents detailed information on current client connections.
+      example:
+        total: 5
+        offset: 1
+        now: 2000-01-23 04:56:07+00:00
+        limit: 0
+        num_connections: 6
+        server_id: server_id
+        connections:
+        - null
+        - null
+      properties:
+        connections:
+          items:
+            $ref: '#/components/schemas/Connz_connections_inner'
+          type: array
+        limit:
+          type: integer
+        now:
+          format: date-time
+          type: string
+        num_connections:
+          type: integer
+        offset:
+          type: integer
+        server_id:
+          type: string
+        total:
+          type: integer
+      required:
+      - connections
+      - limit
+      - now
+      - num_connections
+      - offset
+      - server_id
+      - total
+      type: object
+    AuthCalloutConfigListResponse:
+      example:
+        items:
+        - xkey_public: xkey_public
+          control_account_id: control_account_id
+          system_id: system_id
+          id: id
+        - xkey_public: xkey_public
+          control_account_id: control_account_id
+          system_id: system_id
+          id: id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AuthCalloutConfig'
+          type: array
+      required:
+      - items
+      type: object
+    Export:
+      allOf:
+      - $ref: '#/components/schemas/Info'
+      description: Export represents a single export
+      example:
+        revocations:
+          key: 5
+        account_token_position: 0
+        subject: subject
+        name: name
+        response_type: null
+        token_req: true
+        type: null
+        service_latency:
+          sampling: 23
+          results: results
+        advertise: true
+        response_threshold: 5
+      properties:
+        account_token_position:
+          minimum: 0
+          type: integer
+        advertise:
+          type: boolean
+        name:
+          type: string
+        response_threshold:
+          format: int64
+          type: integer
+        response_type:
+          $ref: '#/components/schemas/ResponseType'
+        revocations:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: RevocationList is used to store a mapping of public keys to unix timestamps
+          type: object
+        service_latency:
+          $ref: '#/components/schemas/ServiceLatency'
+        subject:
+          type: string
+        token_req:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    AlertRuleSystemCreateRequest:
+      $ref: '#/components/schemas/AlertRuleBaseCreateRequest'
+    AccountOverviewResponse:
+      example:
+        account_public_key: account_public_key
+        metrics:
+          JetStreamR1StorageUsed: 1.4658129805029452
+          BytesReceived: 0.8008281904610115
+          NumLeafNodes: 2.3021358869347655
+          NumConnections: 5.637376656633329
+          NumMessagesSent: 9.301444243932576
+          BytesSent: 6.027456183070403
+          JetStreamR3StorageUsed: 5.962133916683182
+          NumMessagesReceived: 7.061401241503109
+      properties:
+        account_public_key:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/AccountOverviewResponse_metrics'
+      required:
+      - account_public_key
+      - metrics
+      type: object
+    JetStreamLimits:
+      example:
+        max_ack_pending: 2
+        mem_max_stream_bytes: 4
+        disk_max_stream_bytes: 9
+        disk_storage: 3
+        max_bytes_required: true
+        streams: 1
+        mem_storage: 7
+        consumer: 7
+      properties:
+        consumer:
+          format: int64
+          type: integer
+        disk_max_stream_bytes:
+          format: int64
+          type: integer
+        disk_storage:
+          format: int64
+          type: integer
+        max_ack_pending:
+          format: int64
+          type: integer
+        max_bytes_required:
+          type: boolean
+        mem_max_stream_bytes:
+          format: int64
+          type: integer
+        mem_storage:
+          format: int64
+          type: integer
+        streams:
+          format: int64
+          type: integer
+      type: object
+    ResponseType:
+      description: ResponseType is used to store an export response type
+      enum:
+      - Singleton
+      - Stream
+      - Chunked
+      type: string
+    ServerHealthInfo:
+      example:
+        cluster: cluster
+        server: server
+        status_code: 0
+        domain: domain
+        errors:
+        - error: error
+          type: type
+        - error: error
+          type: type
+        status: ok
+      properties:
+        cluster:
+          type: string
+        domain:
+          type: string
+        errors:
+          items:
+            $ref: '#/components/schemas/HealthError'
+          type: array
+        server:
+          type: string
+        status:
+          enum:
+          - ok
+          - error
+          type: string
+        status_code:
+          type: integer
+      required:
+      - cluster
+      - server
+      - status
+      - status_code
+      type: object
+    ExternalAuthorization:
+      example:
+        allowed_accounts:
+        - allowed_accounts
+        - allowed_accounts
+        auth_users:
+        - auth_users
+        - auth_users
+        xkey: xkey
+      properties:
+        allowed_accounts:
+          items:
+            type: string
+          type: array
+        auth_users:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        xkey:
+          type: string
+      required:
+      - auth_users
+      type: object
+    Connz_connections_inner:
+      allOf:
+      - $ref: '#/components/schemas/ConnInfo'
+      type:
+      - object
+      - 'null'
+    SystemAccountImportRequest:
+      example:
+        seed: seed
+        jwt: jwt
+        signing_keys:
+        - signing_keys
+        - signing_keys
+      properties:
+        jwt:
+          type: string
+        seed:
+          type: string
+        signing_keys:
+          items:
+            type: string
+          type: array
+      required:
+      - jwt
+      - seed
+      type: object
+    AccountClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: AccountClaims defines the body of an account JWT
+      example:
+        nats:
+          authorization:
+            allowed_accounts:
+            - allowed_accounts
+            - allowed_accounts
+            auth_users:
+            - auth_users
+            - auth_users
+            xkey: xkey
+          default_permissions:
+            sub:
+              allow:
+              - allow
+              - allow
+              deny:
+              - deny
+              - deny
+            resp:
+              max: 0
+              ttl: 6
+            pub:
+              allow:
+              - allow
+              - allow
+              deny:
+              - deny
+              - deny
+          mappings:
+            key:
+            - cluster: cluster
+              subject: subject
+              weight: 26
+            - cluster: cluster
+              subject: subject
+              weight: 26
+          imports:
+          - local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          - local_subject: local_subject
+            subject: subject
+            name: name
+            share: true
+            to: to
+            type: null
+            account: account
+            token: token
+          revocations:
+            key: 1
+          exports:
+          - revocations:
+              key: 5
+            account_token_position: 0
+            subject: subject
+            name: name
+            response_type: null
+            token_req: true
+            type: null
+            service_latency:
+              sampling: 23
+              results: results
+            advertise: true
+            response_threshold: 5
+          - revocations:
+              key: 5
+            account_token_position: 0
+            subject: subject
+            name: name
+            response_type: null
+            token_req: true
+            type: null
+            service_latency:
+              sampling: 23
+              results: results
+            advertise: true
+            response_threshold: 5
+          signing_keys: null
+          limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+      properties:
+        nats:
+          $ref: '#/components/schemas/Account'
+      type: object
+    ClusterOverviewResponse:
+      description: Cluster Overview Response
+      example:
+        summary:
+          total_connections: 7
+          total_clusters: 6
+          total_nodes: 4
+          total_routes: 5
+          total_gateways: 1
+        checks:
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        system_id: system_id
+        raft_summary:
+          empty_wal_groups: 2
+          healthy_groups: 4
+          leaderless_groups: 7
+          out_of_sync_groups: 1
+          total_groups: 1
+          wal_error_groups: 1
+        clusters:
+        - jetstream_enabled: true
+          gateways:
+          - inbound: 0
+            outbound: 6
+            name: name
+          - inbound: 0
+            outbound: 6
+            name: name
+          incoming_gateways: 1
+          total_connections: 2
+          total_cpu_percent: 7.061401241503109
+          nodes:
+          - nodes
+          - nodes
+          total_memory_bytes: 9
+          name: name
+          outgoing_gateways: 5
+          node_count: 5
+          total_routes: 3
+        - jetstream_enabled: true
+          gateways:
+          - inbound: 0
+            outbound: 6
+            name: name
+          - inbound: 0
+            outbound: 6
+            name: name
+          incoming_gateways: 1
+          total_connections: 2
+          total_cpu_percent: 7.061401241503109
+          nodes:
+          - nodes
+          - nodes
+          total_memory_bytes: 9
+          name: name
+          outgoing_gateways: 5
+          node_count: 5
+          total_routes: 3
+        timestamp: timestamp
+      properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/ChecksSummary'
+          type: array
+        clusters:
+          items:
+            $ref: '#/components/schemas/ClusterOverview'
+          type: array
+        raft_summary:
+          $ref: '#/components/schemas/RaftSummary'
+        summary:
+          $ref: '#/components/schemas/ClusterOverviewSummary'
+        system_id:
+          type: string
+        timestamp:
+          type: string
+      required:
+      - clusters
+      - summary
+      - system_id
+      - timestamp
+      type: object
+    AppRoleScope:
+      enum:
+      - App
+      - Team
+      - System
+      - Account
+      - NatsUser
+      type: string
+    BulkShareType:
+      enum:
+      - stream
+      - subject
+      type: string
+    NatsAlertingConfigPatch:
+      properties:
+        account:
+          type: string
+        receivers:
+          items:
+            $ref: '#/components/schemas/NatsAlertingConfigPatch_receivers_inner'
+          type:
+          - array
+          - 'null'
+        subject:
+          type: string
+      type: object
+    ConnInfo:
+      description: ConnInfo has detailed information on a per connection basis.
+      properties:
+        account:
+          type: string
+        authorized_user:
+          type: string
+        cid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        idle:
+          type: string
+        in_bytes:
+          format: int64
+          type: integer
+        in_msgs:
+          format: int64
+          type: integer
+        ip:
+          type: string
+        issuer_key:
+          type: string
+        jwt:
+          type: string
+        kind:
+          type: string
+        lang:
+          type: string
+        last_activity:
+          format: date-time
+          type: string
+        mqtt_client:
+          type: string
+        name:
+          type: string
+        name_tag:
+          type: string
+        out_bytes:
+          format: int64
+          type: integer
+        out_msgs:
+          format: int64
+          type: integer
+        pending_bytes:
+          type: integer
+        port:
+          type: integer
+        reason:
+          type: string
+        rtt:
+          type: string
+        start:
+          format: date-time
+          type: string
+        stop:
+          type:
+          - string
+          - 'null'
+        subscriptions:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+        subscriptions_list:
+          items:
+            type: string
+          type: array
+        subscriptions_list_detail:
+          items:
+            $ref: '#/components/schemas/SubDetail'
+          type: array
+        tags:
+          items:
+            type: string
+          type: array
+        tls_cipher_suite:
+          type: string
+        tls_peer_certs:
+          items:
+            $ref: '#/components/schemas/ConnInfo_tls_peer_certs_inner'
+          type: array
+        tls_version:
+          type: string
+        type:
+          type: string
+        uptime:
+          type: string
+        version:
+          type: string
+      required:
+      - cid
+      - idle
+      - in_bytes
+      - in_msgs
+      - ip
+      - last_activity
+      - out_bytes
+      - out_msgs
+      - pending_bytes
+      - port
+      - start
+      - subscriptions
+      - uptime
+      type: object
+    SystemUserImportRequest:
+      example:
+        credential: credential
+        seed: seed
+        jwt: jwt
+      properties:
+        credential:
+          type: string
+        jwt:
+          type: string
+        seed:
+          type: string
+      type: object
+    TLSMode:
+      enum:
+      - Auto
+      - Require
+      - Implicit
+      type: string
+    NatsServerInfoListResponse:
+      example:
+        items:
+        - cluster: cluster
+          ver: ver
+          domain: domain
+          host: host
+          name: name
+          id: id
+          time: 2000-01-23 04:56:07+00:00
+          jetstream: true
+          seq: 2147483647
+          tags:
+          - tags
+          - tags
+        - cluster: cluster
+          ver: ver
+          domain: domain
+          host: host
+          name: name
+          id: id
+          time: 2000-01-23 04:56:07+00:00
+          jetstream: true
+          seq: 2147483647
+          tags:
+          - tags
+          - tags
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ServerInfo'
+          type: array
+      required:
+      - items
+      type: object
+    SlowConsumerStats:
+      example:
+        gateways: 9
+        routes: 2
+        clients: 7
+        leafs: 3
+      properties:
+        clients:
+          type: integer
+        gateways:
+          type: integer
+        leafs:
+          type: integer
+        routes:
+          type: integer
+      required:
+      - clients
+      - gateways
+      - leafs
+      - routes
+      type: object
+    ClusterInfo:
+      description: 'ClusterInfo shows information about the underlying set of servers
+
+        that make up the stream or consumer.'
+      example:
+        leader: leader
+        system_account: true
+        replicas:
+        - null
+        - null
+        raft_group: raft_group
+        name: name
+        traffic_account: traffic_account
+        leader_since: leader_since
+      properties:
+        leader:
+          type: string
+        leader_since:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        raft_group:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
+          type: array
+        system_account:
+          type: boolean
+        traffic_account:
+          type: string
+      type: object
+    AccountLimits:
+      properties:
+        conn:
+          format: int64
+          type: integer
+        disallow_bearer:
+          type: boolean
+        exports:
+          format: int64
+          type: integer
+        imports:
+          format: int64
+          type: integer
+        leaf:
+          format: int64
+          type: integer
+        wildcards:
+          type: boolean
+      type: object
+    ServerStats_routes_inner:
+      allOf:
+      - $ref: '#/components/schemas/RouteStat'
+      type:
+      - object
+      - 'null'
+    NatsUserViewResponse:
+      example:
+        sk_group_id: sk_group_id
+        user_public_key: user_public_key
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        team:
+          name: name
+          id: id
+        jwt_expires_at_max: 6
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        jwt_settings:
+          bearer_token: true
+          data: 2147483647
+          payload: 2147483647
+          subs: 2147483647
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+          tags:
+          - tags
+          - tags
+        claims:
+          nats:
+            issuer_account: issuer_account
+        name: name
+        jwt_expires_in_secs: 1
+        id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        claims:
+          $ref: '#/components/schemas/UserClaims'
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt:
+          type: string
+        jwt_expires_at_max:
+          format: int64
+          type: integer
+        jwt_expires_in_secs:
+          format: int64
+          type: integer
+        jwt_settings:
+          $ref: '#/components/schemas/NatsUserJwtSettings'
+        name:
+          type: string
+        sk_group_id:
+          type: string
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        user_public_key:
+          type: string
+      required:
+      - account
+      - claims
+      - created
+      - id
+      - jwt
+      - jwt_expires_at_max
+      - jwt_expires_in_secs
+      - jwt_settings
+      - name
+      - system
+      - team
+      - user_public_key
+      type: object
+    NatsUserInfo:
+      example:
+        user_public_key: user_public_key
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        user_public_key:
+          type: string
+      required:
+      - id
+      - name
+      - user_public_key
+      type: object
+    LeafInfo:
+      description: LeafInfo has detailed information on each remote leafnode connection.
+      properties:
+        account:
+          type: string
+        in_bytes:
+          format: int64
+          type: integer
+        in_msgs:
+          format: int64
+          type: integer
+        ip:
+          type: string
+        is_spoke:
+          type: boolean
+        name:
+          type: string
+        out_bytes:
+          format: int64
+          type: integer
+        out_msgs:
+          format: int64
+          type: integer
+        port:
+          type: integer
+        rtt:
+          type: string
+        subscriptions:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+        subscriptions_list:
+          items:
+            type: string
+          type: array
+      required:
+      - account
+      - in_bytes
+      - in_msgs
+      - ip
+      - name
+      - out_bytes
+      - out_msgs
+      - port
+      - subscriptions
+      type: object
+    ReceiverConfig:
+      $ref: '#/components/schemas/SlackReceiverConfig'
+    SystemUpdateRequest_nats_alerting_config:
+      allOf:
+      - $ref: '#/components/schemas/NatsAlertingConfigPatch'
+      type:
+      - object
+      - 'null'
+    UserExport:
+      example:
+        seed: seed
+        jwt: jwt
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        jwt:
+          type: string
+        name:
+          type: string
+        seed:
+          type: string
+      required:
+      - id
+      - jwt
+      - name
+      - seed
+      type: object
+    ClaimsData:
+      description: ClaimsData is the base struct for all claims
+      properties:
+        aud:
+          type: string
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        iss:
+          type: string
+        jti:
+          type: string
+        name:
+          type: string
+        nbf:
+          format: int64
+          type: integer
+        sub:
+          type: string
+      type: object
+    NatsServer:
+      allOf:
+      - $ref: '#/components/schemas/ServerStatsMsg'
+      example:
+        leaf_nodes:
+          leafnodes: 5
+          leafs:
+          - null
+          - null
+          now: 2000-01-23 04:56:07+00:00
+          server_id: server_id
+      properties:
+        leaf_nodes:
+          $ref: '#/components/schemas/Leafz'
+      type: object
+    Permission:
+      description: Permission defines allow/deny subjects
+      example:
+        allow:
+        - allow
+        - allow
+        deny:
+        - deny
+        - deny
+      properties:
+        allow:
+          items:
+            type: string
+          type: array
+        deny:
+          items:
+            type: string
+          type: array
+      type: object
+    SystemDirectConnectionOpts:
+      example:
+        tls_client_key: tls_client_key
+        tls_mode: null
+        override_urls: override_urls
+        tls_client_cert: tls_client_cert
+        tls_insecure_skip_verify: false
+        tls_ca_certs: tls_ca_certs
+      properties:
+        override_urls:
+          type: string
+        tls_ca_certs:
+          type: string
+        tls_client_cert:
+          type: string
+        tls_client_key:
+          type: string
+        tls_insecure_skip_verify:
+          default: false
+          type: boolean
+        tls_mode:
+          $ref: '#/components/schemas/TLSMode'
+      required:
+      - tls_insecure_skip_verify
+      - tls_mode
+      type: object
+    ServerListInfo:
+      example:
+        cluster: cluster
+        gateways: 5
+        slow_consumer_stats:
+          gateways: 9
+          routes: 2
+          clients: 7
+          leafs: 3
+        subscriptions: 7
+        uptime_ns: 1
+        memory_bytes: 5
+        jetstream: true
+        version: version
+        routes: 2
+        start_time: start_time
+        cores: 6
+        host: host
+        name: name
+        slow_consumers: 4
+        id: id
+        connections: 0
+        jetstream_domain: jetstream_domain
+        cpu_percent: 1.4658129805029452
+      properties:
+        cluster:
+          type: string
+        connections:
+          type: integer
+        cores:
+          type: integer
+        cpu_percent:
+          type: number
+        gateways:
+          type: integer
+        host:
+          type: string
+        id:
+          type: string
+        jetstream:
+          type: boolean
+        jetstream_domain:
+          type: string
+        memory_bytes:
+          type: integer
+        name:
+          type: string
+        routes:
+          type: integer
+        slow_consumer_stats:
+          $ref: '#/components/schemas/SlowConsumerStats'
+        slow_consumers:
+          type: integer
+        start_time:
+          type: string
+        subscriptions:
+          type: integer
+        uptime_ns:
+          type: integer
+        version:
+          type: string
+      required:
+      - connections
+      - cores
+      - cpu_percent
+      - gateways
+      - host
+      - id
+      - jetstream
+      - memory_bytes
+      - name
+      - routes
+      - slow_consumers
+      - start_time
+      - subscriptions
+      - uptime_ns
+      - version
+      type: object
+    NatsAlertingConfigPatch_receivers_inner_config:
+      properties:
+        channel:
+          type: string
+        token:
+          type: string
+      required:
+      - channel
+      - token
+      type: object
+    SystemUpdateRequest:
+      example:
+        jetstream_enabled: true
+        connection_type: null
+        log_forwarding_opts: null
+        operator_jwt: operator_jwt
+        name: name
+        nats_alerting_config: null
+        jetstream_domain: jetstream_domain
+        url: url
+        direct_connection_opts: null
+      properties:
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        direct_connection_opts:
+          $ref: '#/components/schemas/SystemUpdateRequest_direct_connection_opts'
+        jetstream_domain:
+          type:
+          - string
+          - 'null'
+        jetstream_enabled:
+          type: boolean
+        log_forwarding_opts:
+          $ref: '#/components/schemas/SystemUpdateRequest_log_forwarding_opts'
+        name:
+          type: string
+        nats_alerting_config:
+          $ref: '#/components/schemas/SystemUpdateRequest_nats_alerting_config'
+        operator_jwt:
+          type: string
+        url:
+          type: string
+      type: object
+    NatsClusterListResponse:
+      example:
+        items:
+        - incoming_gateways: 6
+          servers:
+          - leaf_nodes:
+              leafnodes: 5
+              leafs:
+              - null
+              - null
+              now: 2000-01-23 04:56:07+00:00
+              server_id: server_id
+          - leaf_nodes:
+              leafnodes: 5
+              leafs:
+              - null
+              - null
+              now: 2000-01-23 04:56:07+00:00
+              server_id: server_id
+          name: name
+          outgoing_gateways: 5
+          node_count: 1
+          connections: 0
+        - incoming_gateways: 6
+          servers:
+          - leaf_nodes:
+              leafnodes: 5
+              leafs:
+              - null
+              - null
+              now: 2000-01-23 04:56:07+00:00
+              server_id: server_id
+          - leaf_nodes:
+              leafnodes: 5
+              leafs:
+              - null
+              - null
+              now: 2000-01-23 04:56:07+00:00
+              server_id: server_id
+          name: name
+          outgoing_gateways: 5
+          node_count: 1
+          connections: 0
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/NatsCluster'
+          type: array
+      required:
+      - items
+      type: object
+    AuthCalloutEnableRequest:
+      example:
+        control_account: control_account
+      properties:
+        control_account:
+          type: string
+      required:
+      - control_account
+      type: object
+    WorkloadLimits:
+      example:
+        container: 1
+        function: 1
+      properties:
+        container:
+          type: integer
+        function:
+          type: integer
+      required:
+      - container
+      - function
+      type: object
+    SigningKeys_inner:
+      oneOf:
+      - type: string
+      - $ref: '#/components/schemas/SigningKeyScope'
+    AccountJWTSettings:
+      allOf:
+      - $ref: '#/components/schemas/Info'
+      example:
+        authorization:
+          allowed_accounts:
+          - allowed_accounts
+          - allowed_accounts
+          auth_users:
+          - auth_users
+          - auth_users
+          xkey: xkey
+        mappings:
+          key:
+          - cluster: cluster
+            subject: subject
+            weight: 26
+          - cluster: cluster
+            subject: subject
+            weight: 26
+        revocations:
+          key: 6
+        limits:
+          tiered_limits:
+            key:
+              max_ack_pending: 2
+              mem_max_stream_bytes: 4
+              disk_max_stream_bytes: 9
+              disk_storage: 3
+              max_bytes_required: true
+              streams: 1
+              mem_storage: 7
+              consumer: 7
+        tags:
+        - tags
+        - tags
+      properties:
+        authorization:
+          $ref: '#/components/schemas/ExternalAuthorization'
+        limits:
+          $ref: '#/components/schemas/OperatorLimits'
+        mappings:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/WeightedMapping'
+            type: array
+          type: object
+        revocations:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: RevocationList is used to store a mapping of public keys to unix timestamps
+          type: object
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    Account:
+      allOf:
+      - $ref: '#/components/schemas/Info'
+      - $ref: '#/components/schemas/GenericFields'
+      description: Account holds account specific claims data
+      example:
+        authorization:
+          allowed_accounts:
+          - allowed_accounts
+          - allowed_accounts
+          auth_users:
+          - auth_users
+          - auth_users
+          xkey: xkey
+        default_permissions:
+          sub:
+            allow:
+            - allow
+            - allow
+            deny:
+            - deny
+            - deny
+          resp:
+            max: 0
+            ttl: 6
+          pub:
+            allow:
+            - allow
+            - allow
+            deny:
+            - deny
+            - deny
+        mappings:
+          key:
+          - cluster: cluster
+            subject: subject
+            weight: 26
+          - cluster: cluster
+            subject: subject
+            weight: 26
+        imports:
+        - local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        - local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        revocations:
+          key: 1
+        exports:
+        - revocations:
+            key: 5
+          account_token_position: 0
+          subject: subject
+          name: name
+          response_type: null
+          token_req: true
+          type: null
+          service_latency:
+            sampling: 23
+            results: results
+          advertise: true
+          response_threshold: 5
+        - revocations:
+            key: 5
+          account_token_position: 0
+          subject: subject
+          name: name
+          response_type: null
+          token_req: true
+          type: null
+          service_latency:
+            sampling: 23
+            results: results
+          advertise: true
+          response_threshold: 5
+        signing_keys: null
+        limits:
+          tiered_limits:
+            key:
+              max_ack_pending: 2
+              mem_max_stream_bytes: 4
+              disk_max_stream_bytes: 9
+              disk_storage: 3
+              max_bytes_required: true
+              streams: 1
+              mem_storage: 7
+              consumer: 7
+      properties:
+        authorization:
+          $ref: '#/components/schemas/ExternalAuthorization'
+        default_permissions:
+          $ref: '#/components/schemas/Permissions'
+        exports:
+          description: Exports is a slice of exports
+          items:
+            $ref: '#/components/schemas/Export'
+          type: array
+        imports:
+          description: Imports is a list of import structs
+          items:
+            $ref: '#/components/schemas/Import'
+          type: array
+        limits:
+          $ref: '#/components/schemas/OperatorLimits'
+        mappings:
+          additionalProperties:
+            items:
+              $ref: '#/components/schemas/WeightedMapping'
+            type: array
+          type: object
+        revocations:
+          additionalProperties:
+            format: int64
+            type: integer
+          description: RevocationList is used to store a mapping of public keys to unix timestamps
+          type: object
+        signing_keys:
+          $ref: '#/components/schemas/SigningKeys'
+      type: object
+    ServerSummary:
+      example:
+        total_slow_consumers: 4
+        total_connections: 6
+        jetstream_servers: 1
+        total_memory_bytes: 7
+        total_clusters: 1
+        total_servers: 1
+        total_subscriptions: 5
+      properties:
+        jetstream_servers:
+          type: integer
+        total_clusters:
+          type: integer
+        total_connections:
+          type: integer
+        total_memory_bytes:
+          type: integer
+        total_servers:
+          type: integer
+        total_slow_consumers:
+          type: integer
+        total_subscriptions:
+          type: integer
+      required:
+      - jetstream_servers
+      - total_clusters
+      - total_connections
+      - total_memory_bytes
+      - total_servers
+      - total_slow_consumers
+      - total_subscriptions
+      type: object
+    MetaClusterInfo:
+      description: MetaClusterInfo shows information about the meta group.
+      properties:
+        cluster_size:
+          type: integer
+        leader:
+          type: string
+        name:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
+          type: array
+      required:
+      - cluster_size
+      type: object
+    AlertRuleBaseCreateRequest:
+      example:
+        severity: null
+        metric: metric
+        threshold_operator: null
+        duration_in_secs: 0
+        threshold_expression_multiplier: 6.027456183070403
+        message: message
+        threshold_expression_metric: null
+        threshold_fixed_value: 1.4658129805029452
+      properties:
+        duration_in_secs:
+          type: integer
+        message:
+          type: string
+        metric:
+          type: string
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        threshold_expression_metric:
+          $ref: '#/components/schemas/AlertRuleThresholdMetric'
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          $ref: '#/components/schemas/AlertRuleOperator'
+      required:
+      - duration_in_secs
+      - message
+      - metric
+      - severity
+      - threshold_operator
+      type: object
+    PromSampleValue:
+      example:
+        value: 1.4658129805029452
+        timestamp: 6
+      properties:
+        timestamp:
+          format: int64
+          type: integer
+        value:
+          format: double
+          type: number
+      required:
+      - timestamp
+      - value
+      type: object
+    AlertRuleType:
+      enum:
+      - SystemDefault
+      - System
+      - AccountDefault
+      - Account
+      - Stream
+      - Consumer
+      type: string
+    SigningKeys:
+      description: 'SigningKeys an array of either String or #SigningKeyScope'
+      items:
+        $ref: '#/components/schemas/SigningKeys_inner'
+      type: array
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
+    ServerStats:
+      description: ServerStats hold various statistics that we will periodically send out.
+      example:
+        gateways:
+        - null
+        - null
+        subscriptions: 870642708
+        start: 2000-01-23 04:56:07+00:00
+        cpu: 5.637376656633329
+        received:
+          msgs: 9
+          bytes: 7
+        jetstream: null
+        sent:
+          msgs: 9
+          bytes: 7
+        routes:
+        - null
+        - null
+        total_connections: 2147483647
+        cores: 5
+        mem: 2
+        active_accounts: 0
+        slow_consumers: 3
+        active_servers: 6
+        connections: 1
+      properties:
+        active_accounts:
+          type: integer
+        active_servers:
+          type: integer
+        connections:
+          type: integer
+        cores:
+          type: integer
+        cpu:
+          format: double
+          type: number
+        gateways:
+          items:
+            $ref: '#/components/schemas/ServerStats_gateways_inner'
+          type: array
+        jetstream:
+          $ref: '#/components/schemas/ServerStats_jetstream'
+        mem:
+          format: int64
+          type: integer
+        received:
+          $ref: '#/components/schemas/DataStats'
+        routes:
+          items:
+            $ref: '#/components/schemas/ServerStats_routes_inner'
+          type: array
+        sent:
+          $ref: '#/components/schemas/DataStats'
+        slow_consumers:
+          format: int64
+          type: integer
+        start:
+          format: date-time
+          type: string
+        subscriptions:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+        total_connections:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      required:
+      - active_accounts
+      - connections
+      - cores
+      - cpu
+      - mem
+      - received
+      - sent
+      - slow_consumers
+      - start
+      - subscriptions
+      - total_connections
+      type: object
+    PeerInfo:
+      description: 'PeerInfo shows information about all the peers in the cluster that
+
+        are supporting the stream or consumer.'
+      properties:
+        active:
+          format: int64
+          type: integer
+        current:
+          type: boolean
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        offline:
+          type: boolean
+        peer:
+          type: string
+      required:
+      - active
+      - current
+      - name
+      - peer
+      type: object
+    AccountExportResponse:
+      example:
+        seed: seed
+        jwt: jwt
+        name: name
+        signing_key_groups:
+        - name: name
+          signing_keys:
+          - seed: seed
+            id: id
+          - seed: seed
+            id: id
+        - name: name
+          signing_keys:
+          - seed: seed
+            id: id
+          - seed: seed
+            id: id
+        id: id
+        users:
+        - seed: seed
+          jwt: jwt
+          name: name
+          id: id
+        - seed: seed
+          jwt: jwt
+          name: name
+          id: id
+      properties:
+        id:
+          type: string
+        jwt:
+          type: string
+        name:
+          type: string
+        seed:
+          type: string
+        signing_key_groups:
+          items:
+            $ref: '#/components/schemas/SigningKeyGroupExport'
+          type: array
+        users:
+          items:
+            $ref: '#/components/schemas/UserExport'
+          type: array
+      required:
+      - id
+      type: object
+    RaftMetaInfo:
+      example:
+        leader: leader
+        size: 1
+        replicas:
+        - offline: true
+          current: true
+          lag: 6
+          peer: peer
+          name: name
+          active_ns: 0
+        - offline: true
+          current: true
+          lag: 6
+          peer: peer
+          name: name
+          active_ns: 0
+      properties:
+        leader:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/RaftReplica'
+          type: array
+        size:
+          type: integer
+      required:
+      - leader
+      - replicas
+      - size
+      type: object
+    AlertRuleUpdateRequest:
+      example:
+        is_enabled: true
+        severity: null
+        threshold_operator: null
+        duration_in_secs: 0
+        threshold_expression_multiplier: 6.027456183070403
+        message: message
+        threshold_expression_metric: null
+        threshold_fixed_value: 1.4658129805029452
+      properties:
+        duration_in_secs:
+          type: integer
+        is_enabled:
+          type: boolean
+        message:
+          type: string
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        threshold_expression_metric:
+          $ref: '#/components/schemas/AlertRuleThresholdMetric'
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          $ref: '#/components/schemas/AlertRuleOperator'
+      type: object
+    SigningKeyExport:
+      example:
+        seed: seed
+        id: id
+      properties:
+        id:
+          type: string
+        seed:
+          type: string
+      required:
+      - id
+      - seed
+      type: object
+    SigningKeyGroupExport:
+      example:
+        name: name
+        signing_keys:
+        - seed: seed
+          id: id
+        - seed: seed
+          id: id
+      properties:
+        name:
+          type: string
+        signing_keys:
+          items:
+            $ref: '#/components/schemas/SigningKeyExport'
+          type: array
+      required:
+      - name
+      - signing_keys
+      type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
+    DataStats:
+      description: DataStats reports how may msg and bytes. Applicable for both sent and received.
+      example:
+        msgs: 9
+        bytes: 7
+      properties:
+        bytes:
+          format: int64
+          type: integer
+        msgs:
+          format: int64
+          type: integer
+      required:
+      - bytes
+      - msgs
+      type: object
+    BulkShareRequest:
+      example:
+        target_accounts:
+        - local_subject: local_subject
+          id: id
+          auto_accept: false
+        - local_subject: local_subject
+          id: id
+          auto_accept: false
+        id: id
+        type: null
+      properties:
+        id:
+          type: string
+        target_accounts:
+          items:
+            $ref: '#/components/schemas/BulkShareTarget'
+          type: array
+        type:
+          $ref: '#/components/schemas/BulkShareType'
+      required:
+      - id
+      - target_accounts
+      - type
+      type: object
+    JetStreamVarz_stats:
+      allOf:
+      - $ref: '#/components/schemas/JetStreamStats'
+      type:
+      - object
+      - 'null'
+    SigningKeyScopeType:
+      enum:
+      - user_scope
+      type: string
+    PlatformComponentsUpdateRequest:
+      example:
+        type: null
+        config: null
+        enabled: true
+      properties:
+        config:
+          $ref: '#/components/schemas/PlatformComponentConfigs'
+        enabled:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/PlatformComponentType'
+      required:
+      - enabled
+      - type
+      type: object
+    ServerInfo:
+      description: ServerInfo identifies remote servers.
+      example:
+        cluster: cluster
+        ver: ver
+        domain: domain
+        host: host
+        name: name
+        id: id
+        time: 2000-01-23 04:56:07+00:00
+        jetstream: true
+        seq: 2147483647
+        tags:
+        - tags
+        - tags
+      properties:
+        cluster:
+          type: string
+        domain:
+          type: string
+        host:
+          type: string
+        id:
+          type: string
+        jetstream:
+          type: boolean
+        name:
+          type: string
+        seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+        time:
+          format: date-time
+          type: string
+        ver:
+          type: string
+      required:
+      - host
+      - id
+      - jetstream
+      - name
+      - seq
+      - time
+      - ver
+      type: object
+    HealthError:
+      example:
+        error: error
+        type: type
+      properties:
+        error:
+          type: string
+        type:
+          type: string
+      required:
+      - error
+      - type
+      type: object
+    UserClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: UserClaims defines a user JWT
+      example:
+        nats:
+          issuer_account: issuer_account
+      properties:
+        nats:
+          $ref: '#/components/schemas/User'
+      type: object
+    AuditJobResponse:
+      example:
+        duration: duration
+        job_id: job_id
+        system_id: system_id
+        created_at: 2000-01-23 04:56:07+00:00
+        message: message
+        status: queued
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        duration:
+          type: string
+        job_id:
+          type: string
+        message:
+          type: string
+        status:
+          enum:
+          - queued
+          - running
+          - completed
+          - failed
+          type: string
+        system_id:
+          type: string
+      required:
+      - created_at
+      - duration
+      - job_id
+      - status
+      - system_id
+      type: object
+    JwtSyncStatus:
+      enum:
+      - InProgress
+      - Complete
+      - Failed
+      type: string
+    OperatorLimits:
+      allOf:
+      - $ref: '#/components/schemas/NatsLimits'
+      - $ref: '#/components/schemas/AccountLimits'
+      - $ref: '#/components/schemas/JetStreamLimits'
+      description: OperatorLimits are used to limit access by an account
+      example:
+        tiered_limits:
+          key:
+            max_ack_pending: 2
+            mem_max_stream_bytes: 4
+            disk_max_stream_bytes: 9
+            disk_storage: 3
+            max_bytes_required: true
+            streams: 1
+            mem_storage: 7
+            consumer: 7
+      properties:
+        tiered_limits:
+          additionalProperties:
+            $ref: '#/components/schemas/JetStreamLimits'
+          type: object
+      type: object
+    NatsUserJwtSettings:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      description: 'Set correct allowed values
+
+        extention of jwt.#UserPermissionsLimits'
+      example:
+        bearer_token: true
+        data: 2147483647
+        payload: 2147483647
+        subs: 2147483647
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+        tags:
+        - tags
+        - tags
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+        data:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        payload:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        subs:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    AlertRuleOperator:
+      enum:
+      - Greater Than
+      - Less Than
+      - Greater Than Or Equal
+      - Less Than Or Equal
+      - Equal
+      - Not Equal
+      type: string
+    AccountInfoListResponse:
+      example:
+        items:
+        - user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+        - user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AccountInfo'
+          type: array
+      required:
+      - items
+      type: object
+    JetStreamSummary:
+      example:
+        total_file_bytes: 6
+        total_streams: 4
+        total_memory_bytes: 7
+        total_bytes: 1
+        total_api_requests: 1
+        total_consumers: 1
+        total_messages: 1
+      properties:
+        total_api_requests:
+          type: integer
+        total_bytes:
+          type: integer
+        total_consumers:
+          type: integer
+        total_file_bytes:
+          type: integer
+        total_memory_bytes:
+          type: integer
+        total_messages:
+          type: integer
+        total_streams:
+          type: integer
+      required:
+      - total_api_requests
+      - total_bytes
+      - total_consumers
+      - total_file_bytes
+      - total_memory_bytes
+      - total_messages
+      - total_streams
+      type: object
+    Operator:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      description: Operator specific claims
+      example:
+        system_account: system_account
+        signing_keys:
+        - signing_keys
+        - signing_keys
+        strict_signing_key_usage: true
+        operator_service_urls:
+        - operator_service_urls
+        - operator_service_urls
+        assert_server_version: assert_server_version
+        account_server_url: account_server_url
+      properties:
+        account_server_url:
+          description: 'AccountServerURL is a partial URL like "https://host.domain.org:<port>/jwt/v1"
+
+            tools will use the prefix and build queries by appending /accounts/<account_id>
+
+            or /operator to the path provided. Note this assumes that the account server
+
+            can handle requests in a account-server compatible way. See
+
+            https://github.com/nats-io/account-server.'
+          type: string
+        assert_server_version:
+          description: Min Server version
+          type: string
+        operator_service_urls:
+          description: 'A list of NATS urls (tls://host:port) where tools can connect to the server
+
+            using proper credentials.'
+          items:
+            type: string
+          type: array
+        signing_keys:
+          description: 'Slice of other operator NKeys that can be used to sign on behalf of the main
+
+            operator identity.'
+          items:
+            type: string
+          type: array
+        strict_signing_key_usage:
+          description: Signing of subordinate objects will require signing keys
+          type: boolean
+        system_account:
+          description: Identity of the system account
+          type: string
+      type: object
+    JetStreamReportResponse:
+      description: JetStream Report Response - equivalent to 'nats server report jetstream'
+      example:
+        raft_meta:
+          leader: leader
+          size: 1
+          replicas:
+          - offline: true
+            current: true
+            lag: 6
+            peer: peer
+            name: name
+            active_ns: 0
+          - offline: true
+            current: true
+            lag: 6
+            peer: peer
+            name: name
+            active_ns: 0
+        summary:
+          total_file_bytes: 6
+          total_streams: 4
+          total_memory_bytes: 7
+          total_bytes: 1
+          total_api_requests: 1
+          total_consumers: 1
+          total_messages: 1
+        checks:
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        servers:
+        - cluster: cluster
+          server: server
+          pending: 4
+          streams: 7
+          file_bytes: 9
+          api_total: 5
+          memory_bytes: 3
+          is_leader: true
+          api_errors: 5
+          bytes: 2
+          domain: domain
+          messages: 2
+          consumers: 7
+        - cluster: cluster
+          server: server
+          pending: 4
+          streams: 7
+          file_bytes: 9
+          api_total: 5
+          memory_bytes: 3
+          is_leader: true
+          api_errors: 5
+          bytes: 2
+          domain: domain
+          messages: 2
+          consumers: 7
+        system_id: system_id
+        timestamp: timestamp
+      properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/ChecksSummary'
+          type: array
+        raft_meta:
+          $ref: '#/components/schemas/RaftMetaInfo'
+        servers:
+          items:
+            $ref: '#/components/schemas/JetStreamServerInfo'
+          type: array
+        summary:
+          $ref: '#/components/schemas/JetStreamSummary'
+        system_id:
+          type: string
+        timestamp:
+          type: string
+      required:
+      - servers
+      - summary
+      - system_id
+      - timestamp
+      type: object
+    WeightedMapping:
+      description: Mapping for publishes
+      example:
+        cluster: cluster
+        subject: subject
+        weight: 26
+      properties:
+        cluster:
+          type: string
+        subject:
+          type: string
+        weight:
+          maximum: 255
+          minimum: 0
+          type: integer
+      required:
+      - subject
+      type: object
+    JetStreamConfig:
+      description: 'JetStreamConfig determines this server''s configuration.
+
+        MaxMemory and MaxStore are in bytes.'
+      properties:
+        compress_ok:
+          type: boolean
+        domain:
+          type: string
+        max_memory:
+          format: int64
+          type: integer
+        max_storage:
+          format: int64
+          type: integer
+        store_dir:
+          type: string
+      required:
+      - max_memory
+      - max_storage
+      type: object
+    JetStreamAPIStats:
+      example:
+        total: 2147483647
+        level: 6
+        errors: 2147483647
+        inflight: 2147483647
+      properties:
+        errors:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        inflight:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        level:
+          type: integer
+        total:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      required:
+      - errors
+      - level
+      - total
+      type: object
+    ResponsePermission:
+      description: 'ResponsePermission can be used to allow responses to any reply subject
+
+        that is received on a valid subscription.'
+      example:
+        max: 0
+        ttl: 6
+      properties:
+        max:
+          type: integer
+        ttl:
+          format: int64
+          type: integer
+      required:
+      - max
+      - ttl
+      type: object
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    GatewayConnection:
+      example:
+        inbound: 0
+        outbound: 6
+        name: name
+      properties:
+        inbound:
+          type: integer
+        name:
+          type: string
+        outbound:
+          type: integer
+      required:
+      - inbound
+      - name
+      - outbound
+      type: object
+    AppUserAssignListResponse:
+      example:
+        items:
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppUserAssignResponse'
+          type: array
+      required:
+      - items
+      type: object
+    AuditSummary:
+      example:
+        passed_checks: 6
+        total_checks: 2
+        skipped_checks: 5
+        failed_checks: 0
+        warning_checks: 7
+        server_count: 1
+        stream_count: 5
+      properties:
+        failed_checks:
+          type: integer
+        passed_checks:
+          type: integer
+        server_count:
+          type: integer
+        skipped_checks:
+          type: integer
+        stream_count:
+          type: integer
+        total_checks:
+          type: integer
+        warning_checks:
+          type: integer
+      required:
+      - failed_checks
+      - passed_checks
+      - server_count
+      - skipped_checks
+      - stream_count
+      - total_checks
+      - warning_checks
+      type: object
+    AuditCheckResult:
+      example:
+        code: code
+        suite: suite
+        examples:
+        - examples
+        - examples
+        name: name
+        description: description
+        status: pass
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        examples:
+          items:
+            type: string
+          type: array
+        name:
+          type: string
+        status:
+          enum:
+          - pass
+          - warning
+          - fail
+          - skip
+          - unknown
+          type: string
+        suite:
+          type: string
+      required:
+      - code
+      - description
+      - name
+      - status
+      - suite
+      type: object
+    BulkShareTarget:
+      example:
+        local_subject: local_subject
+        id: id
+        auto_accept: false
+      properties:
+        auto_accept:
+          default: false
+          type: boolean
+        id:
+          type: string
+        local_subject:
+          type: string
+      required:
+      - auto_accept
+      - id
+      - local_subject
+      type: object
+    SubDetail:
+      description: SubDetail is for verbose information for subscriptions.
+      properties:
+        account:
+          type: string
+        cid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        max:
+          format: int64
+          type: integer
+        msgs:
+          format: int64
+          type: integer
+        qgroup:
+          type: string
+        sid:
+          type: string
+        subject:
+          type: string
+      required:
+      - cid
+      - msgs
+      - sid
+      - subject
+      type: object
+    Import:
+      description: Import describes a mapping from another account into this one
+      example:
+        local_subject: local_subject
+        subject: subject
+        name: name
+        share: true
+        to: to
+        type: null
+        account: account
+        token: token
+      properties:
+        account:
+          type: string
+        local_subject:
+          description: 'Local subject used to subscribe (for streams) and publish (for services) to.
+
+            This value only needs setting if you want to change the value of Subject.
+
+            If the value of Subject ends in > then LocalSubject needs to end in > as well.
+
+            LocalSubject can contain $<number> wildcard references where number references the nth wildcard in Subject.
+
+            The sum of wildcard reference and * tokens needs to match the number of * token in Subject.'
+          type: string
+        name:
+          type: string
+        share:
+          type: boolean
+        subject:
+          description: 'Subject field in an import is always from the perspective of the
+
+            initial publisher - in the case of a stream it is the account owning
+
+            the stream (the exporter), and in the case of a service it is the
+
+            account making the request (the importer).'
+          type: string
+        to:
+          description: 'Deprecated: use LocalSubject instead
+
+            To field in an import is always from the perspective of the subscriber
+
+            in the case of a stream it is the client of the stream (the importer),
+
+            from the perspective of a service, it is the subscription waiting for
+
+            requests (the exporter). If the field is empty, it will default to the
+
+            value in the Subject field.'
+          type: string
+        token:
+          type: string
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    NatsServerListResponse:
+      example:
+        items:
+        - server:
+            cluster: cluster
+            ver: ver
+            domain: domain
+            host: host
+            name: name
+            id: id
+            time: 2000-01-23 04:56:07+00:00
+            jetstream: true
+            seq: 2147483647
+            tags:
+            - tags
+            - tags
+          statsz:
+            gateways:
+            - null
+            - null
+            subscriptions: 870642708
+            start: 2000-01-23 04:56:07+00:00
+            cpu: 5.637376656633329
+            received:
+              msgs: 9
+              bytes: 7
+            jetstream: null
+            sent:
+              msgs: 9
+              bytes: 7
+            routes:
+            - null
+            - null
+            total_connections: 2147483647
+            cores: 5
+            mem: 2
+            active_accounts: 0
+            slow_consumers: 3
+            active_servers: 6
+            connections: 1
+        - server:
+            cluster: cluster
+            ver: ver
+            domain: domain
+            host: host
+            name: name
+            id: id
+            time: 2000-01-23 04:56:07+00:00
+            jetstream: true
+            seq: 2147483647
+            tags:
+            - tags
+            - tags
+          statsz:
+            gateways:
+            - null
+            - null
+            subscriptions: 870642708
+            start: 2000-01-23 04:56:07+00:00
+            cpu: 5.637376656633329
+            received:
+              msgs: 9
+              bytes: 7
+            jetstream: null
+            sent:
+              msgs: 9
+              bytes: 7
+            routes:
+            - null
+            - null
+            total_connections: 2147483647
+            cores: 5
+            mem: 2
+            active_accounts: 0
+            slow_consumers: 3
+            active_servers: 6
+            connections: 1
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/ServerStatsMsg'
+          type: array
+      required:
+      - items
+      type: object
+    SlackConfig:
+      properties:
+        channel:
+          type: string
+        token:
+          type: string
+      required:
+      - channel
+      - token
+      type: object
+    ChecksSummary:
+      example:
+        code: code
+        examples:
+        - examples
+        - examples
+        name: name
+        description: description
+        status: pass
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+        examples:
+          items:
+            type: string
+          type: array
+        name:
+          type: string
+        status:
+          enum:
+          - pass
+          - info
+          - warning
+          - fail
+          - skip
+          - unknown
+          type: string
+      required:
+      - code
+      - description
+      - name
+      - status
+      type: object
+    DataLimits:
+      example:
+        total_sent: 2
+        gateway_sent: 5
+        route_received: 7
+        route_sent: 9
+        client_received: 0
+        client_sent: 6
+        leaf_sent: 2
+        leaf_received: 5
+        gateway_received: 1
+        total_received: 3
+      properties:
+        client_received:
+          format: int64
+          type: integer
+        client_sent:
+          format: int64
+          type: integer
+        gateway_received:
+          format: int64
+          type: integer
+        gateway_sent:
+          format: int64
+          type: integer
+        leaf_received:
+          format: int64
+          type: integer
+        leaf_sent:
+          format: int64
+          type: integer
+        route_received:
+          format: int64
+          type: integer
+        route_sent:
+          format: int64
+          type: integer
+        total_received:
+          format: int64
+          type: integer
+        total_sent:
+          format: int64
+          type: integer
+      required:
+      - client_received
+      - client_sent
+      - gateway_received
+      - gateway_sent
+      - leaf_received
+      - leaf_sent
+      - route_received
+      - route_sent
+      - total_received
+      - total_sent
+      type: object
+    Permissions:
+      description: Permissions are used to restrict subject access, either on a user or for everyone on a server by default
+      example:
+        sub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+        resp:
+          max: 0
+          ttl: 6
+        pub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+      properties:
+        pub:
+          $ref: '#/components/schemas/Permission'
+        resp:
+          $ref: '#/components/schemas/ResponsePermission'
+        sub:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    GenericFields:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          description: ClaimType is used to indicate the type of JWT being stored in a Claim
+          type: string
+        version:
+          type: integer
+      type: object
+    NatsCluster:
+      example:
+        incoming_gateways: 6
+        servers:
+        - leaf_nodes:
+            leafnodes: 5
+            leafs:
+            - null
+            - null
+            now: 2000-01-23 04:56:07+00:00
+            server_id: server_id
+        - leaf_nodes:
+            leafnodes: 5
+            leafs:
+            - null
+            - null
+            now: 2000-01-23 04:56:07+00:00
+            server_id: server_id
+        name: name
+        outgoing_gateways: 5
+        node_count: 1
+        connections: 0
+      properties:
+        connections:
+          type: integer
+        incoming_gateways:
+          type: integer
+        name:
+          type: string
+        node_count:
+          type: integer
+        outgoing_gateways:
+          type: integer
+        servers:
+          items:
+            $ref: '#/components/schemas/NatsServer'
+          type: array
+      required:
+      - connections
+      - incoming_gateways
+      - name
+      - node_count
+      - outgoing_gateways
+      - servers
+      type: object
+    Info:
+      properties:
+        description:
+          type: string
+        info_url:
+          type: string
+      type: object
+    JetStreamStats:
+      description: Statistics about JetStream for this server.
+      properties:
+        accounts:
+          type: integer
+        api:
+          $ref: '#/components/schemas/JetStreamAPIStats'
+        ha_assets:
+          type: integer
+        memory:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        reserved_memory:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        reserved_storage:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        storage:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      required:
+      - accounts
+      - api
+      - ha_assets
+      - memory
+      - reserved_memory
+      - reserved_storage
+      - storage
+      type: object
+    RouteStat:
+      description: RouteStat holds route statistics.
+      properties:
+        name:
+          type: string
+        pending:
+          type: integer
+        received:
+          $ref: '#/components/schemas/DataStats'
+        rid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        sent:
+          $ref: '#/components/schemas/DataStats'
+      required:
+      - pending
+      - received
+      - rid
+      - sent
+      type: object
+    SystemUpdateRequest_direct_connection_opts:
+      allOf:
+      - $ref: '#/components/schemas/SystemDirectConnectionOptsPatch'
+      type:
+      - object
+      - 'null'
+    ServiceLatency:
+      description: "ServiceLatency is used when observing and exported service for\nlatency measurements.\nSampling 1-100, represents sampling rate, defaults to 100.\nResults is the subject where the latency metrics are published.\nA metric will be defined by the nats-server's ServiceLatency. Time durations\nare in nanoseconds.\nsee https://github.com/nats-io/nats-server/blob/main/server/accounts.go#L524\ne.g.\n{\n \"app\": \"dlc22\",\n \"start\": \"2019-09-16T21:46:23.636869585-07:00\",\n \"svc\": 219732,\n \"nats\": {\n   \"req\": 320415,\n   \"resp\": 228268,\n   \"sys\": 0\n },\n \"total\": 768415\n}"
+      example:
+        sampling: 23
+        results: results
+      properties:
+        results:
+          type: string
+        sampling:
+          maximum: 100
+          minimum: 0
+          type: integer
+      required:
+      - results
+      - sampling
+      type: object
+    AuthCalloutAuthenticatorsListResponse:
+      example:
+        items:
+        - config_schema:
+          - data: data
+            name: name
+            type: 0
+            required: true
+          - data: data
+            name: name
+            type: 0
+            required: true
+          id: id
+          type: type
+        - config_schema:
+          - data: data
+            name: name
+            type: 0
+            required: true
+          - data: data
+            name: name
+            type: 0
+            required: true
+          id: id
+          type: type
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AuthCalloutAuthenticatorViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    ScraperComponentConfig:
+      properties:
+        account:
+          type: string
+        interval:
+          default: 15
+          minimum: 0
+          type: integer
+        stream:
+          type: string
+      required:
+      - account
+      - interval
+      - stream
+      type: object
+    AppUserType:
+      enum:
+      - Person
+      - AppServiceAccount
+      - TeamServiceAccount
+      type: string
+    SystemLogForwardingOptsPatch:
+      properties:
+        account_id:
+          type: string
+        audit_only:
+          type: boolean
+        enabled:
+          type: boolean
+        levels:
+          items:
+            $ref: '#/components/schemas/SystemLogLevel'
+          type: array
+        subject_prefix:
+          type: string
+      type: object
+    CatalogPlatformComponentConfig:
+      properties:
+        account:
+          default: ''
+          type: string
+        catalog_id:
+          type: string
+      required:
+      - account
+      - catalog_id
+      type: object
+    SystemLogForwardingOpts:
+      example:
+        subject_prefix: subject_prefix
+        account_id: account_id
+        enabled: true
+        levels:
+        - null
+        - null
+        audit_only: true
+      properties:
+        account_id:
+          type: string
+        audit_only:
+          type: boolean
+        enabled:
+          type: boolean
+        levels:
+          items:
+            $ref: '#/components/schemas/SystemLogLevel'
+          type: array
+        subject_prefix:
+          type: string
+      required:
+      - account_id
+      - audit_only
+      - enabled
+      - levels
+      - subject_prefix
+      type: object
+    SystemViewResponse:
+      example:
+        is_tenant: true
+        system_account_jwt: system_account_jwt
+        managed_by: null
+        config_mode: true
+        has_managed_operator: true
+        has_managed_system_account: true
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        log_forwarding_opts:
+          subject_prefix: subject_prefix
+          account_id: account_id
+          enabled: true
+          levels:
+          - null
+          - null
+          audit_only: true
+        id: id
+        nats_alerting_config:
+          receivers:
+          - null
+          - null
+          subject: subject
+          account: account
+        state: null
+        jetstream_enabled: true
+        connection_type: null
+        limited: true
+        created: 2000-01-23 04:56:07+00:00
+        operator_jwt: operator_jwt
+        max_nodes: 0
+        user_jwt_expires_in_secs: 6
+        operator_claims:
+          nats:
+            system_account: system_account
+            signing_keys:
+            - signing_keys
+            - signing_keys
+            strict_signing_key_usage: true
+            operator_service_urls:
+            - operator_service_urls
+            - operator_service_urls
+            assert_server_version: assert_server_version
+            account_server_url: account_server_url
+        team:
+          name: name
+          id: id
+        direct_connection_opts:
+          tls_client_key: tls_client_key
+          tls_mode: null
+          override_urls: override_urls
+          tls_client_cert: tls_client_cert
+          tls_insecure_skip_verify: false
+          tls_ca_certs: tls_ca_certs
+        host_system_id: host_system_id
+        updates_available:
+          key:
+            current: current
+            latest_minor: latest_minor
+            latest: latest
+            latest_patch: latest_patch
+        platform_components:
+          components:
+          - id: id
+            type: null
+            config: null
+            enabled: true
+          - id: id
+            type: null
+            config: null
+            enabled: true
+          system_id: system_id
+        name: name
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        created:
+          format: date-time
+          type: string
+        direct_connection_opts:
+          $ref: '#/components/schemas/SystemDirectConnectionOpts'
+        has_managed_operator:
+          type: boolean
+        has_managed_system_account:
+          type: boolean
+        host_system_id:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        limited:
+          type: boolean
+        log_forwarding_opts:
+          $ref: '#/components/schemas/SystemLogForwardingOpts'
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        max_nodes:
+          format: int32
+          type: integer
+        name:
+          type: string
+        nats_alerting_config:
+          $ref: '#/components/schemas/NatsAlertingConfig'
+        operator_claims:
+          $ref: '#/components/schemas/OperatorClaims'
+        operator_jwt:
+          type: string
+        platform_components:
+          $ref: '#/components/schemas/PlatformComponentsViewResponse'
+        state:
+          $ref: '#/components/schemas/SystemState'
+        system_account_jwt:
+          type: string
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        updates_available:
+          additionalProperties:
+            $ref: '#/components/schemas/Update'
+          type: object
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - created
+      - has_managed_operator
+      - has_managed_system_account
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - limited
+      - name
+      - state
+      - team
+      - updates_available
+      - user_jwt_expires_in_secs
+      type: object
+    AccountInfo:
+      example:
+        user_jwt: user_jwt
+        auth_type: null
+        user_cred: user_cred
+        account_public_key: account_public_key
+        name: name
+        user_jwt_expires_in_secs: 0
+        id: id
+        is_platform_account: true
+        is_scp_account: true
+        is_system_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - auth_type
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - name
+      - user_jwt_expires_in_secs
+      type: object
+    SystemUpdateRequest_log_forwarding_opts:
+      allOf:
+      - $ref: '#/components/schemas/SystemLogForwardingOptsPatch'
+      type:
+      - object
+      - 'null'
+    PlatformComponentType:
+      enum:
+      - http_gateway
+      - connectors
+      - authenticators
+      - workloads
+      - scraper
+      - schema_registry
+      - safe
+      - insights
+      - catalog
+      type: string
+    SystemManagedBy:
+      enum:
+      - byon
+      - sdkube
+      type: string
+    AlertRuleThresholdMetric:
+      enum:
+      - account.max_connections
+      - account.max_consumers
+      - account.max_bytes
+      - account.max_exports
+      - account.max_imports
+      - account.max_jwt_expiry
+      - account.max_msg_payload
+      - account.max_streams
+      - account.max_subscriptions
+      - account.JS_max_file
+      - account.JS_max_memory
+      - system.JS_max_memory
+      - system.JS_max_file
+      type: string
+    TLSPeerCert:
+      description: TLSPeerCert contains basic information about a TLS peer certificate
+      properties:
+        cert_sha256:
+          type: string
+        spki_sha256:
+          type: string
+        subject:
+          type: string
+      type: object
+    SystemExportResponse:
+      example:
+        system_account:
+          seed: seed
+          jwt: jwt
+          name: name
+          signing_key_groups:
+          - name: name
+            signing_keys:
+            - seed: seed
+              id: id
+            - seed: seed
+              id: id
+          - name: name
+            signing_keys:
+            - seed: seed
+              id: id
+            - seed: seed
+              id: id
+          id: id
+          users:
+          - seed: seed
+            jwt: jwt
+            name: name
+            id: id
+          - seed: seed
+            jwt: jwt
+            name: name
+            id: id
+        name: name
+        accounts:
+        - seed: seed
+          jwt: jwt
+          name: name
+          signing_key_groups:
+          - name: name
+            signing_keys:
+            - seed: seed
+              id: id
+            - seed: seed
+              id: id
+          - name: name
+            signing_keys:
+            - seed: seed
+              id: id
+            - seed: seed
+              id: id
+          id: id
+          users:
+          - seed: seed
+            jwt: jwt
+            name: name
+            id: id
+          - seed: seed
+            jwt: jwt
+            name: name
+            id: id
+        - seed: seed
+          jwt: jwt
+          name: name
+          signing_key_groups:
+          - name: name
+            signing_keys:
+            - seed: seed
+              id: id
+            - seed: seed
+              id: id
+          - name: name
+            signing_keys:
+            - seed: seed
+              id: id
+            - seed: seed
+              id: id
+          id: id
+          users:
+          - seed: seed
+            jwt: jwt
+            name: name
+            id: id
+          - seed: seed
+            jwt: jwt
+            name: name
+            id: id
+        operator:
+          seed: seed
+          jwt: jwt
+          name: name
+          signing_keys:
+          - seed: seed
+            id: id
+          - seed: seed
+            id: id
+          id: id
+      properties:
+        accounts:
+          items:
+            $ref: '#/components/schemas/AccountExportResponse'
+          type: array
+        name:
+          type: string
+        operator:
+          $ref: '#/components/schemas/OperatorExport'
+        system_account:
+          $ref: '#/components/schemas/AccountExportResponse'
+      required:
+      - accounts
+      - name
+      - operator
+      - system_account
+      type: object
+    AgentTokenRotateResponse:
+      example:
+        id: id
+        token: token
+      properties:
+        id:
+          type: string
+        token:
+          type: string
+      required:
+      - id
+      - token
+      type: object
+    AlertViewResponse:
+      example:
+        severity: null
+        closed_at: 2000-01-23 04:56:07+00:00
+        created: 2000-01-23 04:56:07+00:00
+        system_id: system_id
+        metric_value: 0.8008281904610115
+        message: message
+        alert_rule:
+          severity: null
+          created: 2000-01-23 04:56:07+00:00
+          system_id: system_id
+          duration_in_secs: 0
+          message: message
+          threshold_expression_metric: threshold_expression_metric
+          threshold_fixed_value: 1.4658129805029452
+          is_enabled: true
+          account_id: account_id
+          consumer_name: consumer_name
+          rule_type: null
+          stream_name: stream_name
+          metric: metric
+          threshold_operator: threshold_operator
+          id: id
+          threshold_expression_multiplier: 6.027456183070403
+        sample_values:
+        - value: 1.4658129805029452
+          timestamp: 6
+        - value: 1.4658129805029452
+          timestamp: 6
+        is_acknowledged: true
+        account_id: account_id
+        consumer_name: consumer_name
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        stream_name: stream_name
+        threshold_value: 5.962133916683182
+        AcknowledgedByAppUserID: AcknowledgedByAppUserID
+        id: id
+        is_firing: true
+        alert_rule_id: alert_rule_id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+        acknowledged_at: 2000-01-23 04:56:07+00:00
+        is_closed: true
+      properties:
+        AcknowledgedByAppUserID:
+          type: string
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        account_id:
+          type: string
+        acknowledged_at:
+          format: date-time
+          type: string
+        alert_rule:
+          $ref: '#/components/schemas/AlertRuleViewResponse'
+        alert_rule_id:
+          type: string
+        closed_at:
+          format: date-time
+          type: string
+        consumer_name:
+          type: string
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_acknowledged:
+          type: boolean
+        is_closed:
+          type: boolean
+        is_firing:
+          type: boolean
+        message:
+          type: string
+        metric_value:
+          format: double
+          type: number
+        sample_values:
+          items:
+            $ref: '#/components/schemas/PromSampleValue'
+          type: array
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        stream_name:
+          type: string
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        system_id:
+          type: string
+        threshold_value:
+          format: double
+          type: number
+      required:
+      - alert_rule
+      - alert_rule_id
+      - created
+      - id
+      - is_acknowledged
+      - is_closed
+      - is_firing
+      - message
+      - metric_value
+      - sample_values
+      - severity
+      - threshold_value
+      type: object
+    HttpGatewayPlatformComponentConfig:
+      properties:
+        account:
+          type: string
+        token_bucket:
+          type: string
+        url:
+          type: string
+      required:
+      - account
+      - token_bucket
+      - url
+      type: object
+    JetStreamVarz_config:
+      allOf:
+      - $ref: '#/components/schemas/JetStreamConfig'
+      type:
+      - object
+      - 'null'
+    ClusterOverviewSummary:
+      example:
+        total_connections: 7
+        total_clusters: 6
+        total_nodes: 4
+        total_routes: 5
+        total_gateways: 1
+      properties:
+        total_clusters:
+          type: integer
+        total_connections:
+          type: integer
+        total_gateways:
+          type: integer
+        total_nodes:
+          type: integer
+        total_routes:
+          type: integer
+      required:
+      - total_clusters
+      - total_connections
+      - total_gateways
+      - total_nodes
+      - total_routes
+      type: object
+    AgentTokenListResponse:
+      example:
+        items:
+        - nkey_public: nkey_public
+          created: 2000-01-23 04:56:07+00:00
+          id: id
+          last_accessed_at: 2000-01-23 04:56:07+00:00
+          is_current: true
+          rotated_at: 2000-01-23 04:56:07+00:00
+        - nkey_public: nkey_public
+          created: 2000-01-23 04:56:07+00:00
+          id: id
+          last_accessed_at: 2000-01-23 04:56:07+00:00
+          is_current: true
+          rotated_at: 2000-01-23 04:56:07+00:00
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AgentTokenViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    AuthCalloutConfig:
+      example:
+        xkey_public: xkey_public
+        control_account_id: control_account_id
+        system_id: system_id
+        id: id
+      properties:
+        control_account_id:
+          type: string
+        id:
+          type: string
+        system_id:
+          type: string
+        xkey_public:
+          type: string
+      required:
+      - control_account_id
+      - id
+      - system_id
+      type: object
+    OperatorClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: OperatorClaims define the data for an operator JWT
+      example:
+        nats:
+          system_account: system_account
+          signing_keys:
+          - signing_keys
+          - signing_keys
+          strict_signing_key_usage: true
+          operator_service_urls:
+          - operator_service_urls
+          - operator_service_urls
+          assert_server_version: assert_server_version
+          account_server_url: account_server_url
+      properties:
+        nats:
+          $ref: '#/components/schemas/Operator'
+      type: object
+    AuditJobListResponse:
+      example:
+        items:
+        - duration: duration
+          job_id: job_id
+          system_id: system_id
+          created_at: 2000-01-23 04:56:07+00:00
+          message: message
+          status: queued
+        - duration: duration
+          job_id: job_id
+          system_id: system_id
+          created_at: 2000-01-23 04:56:07+00:00
+          message: message
+          status: queued
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AuditJobResponse'
+          type: array
+      required:
+      - items
+      type: object
+    AlertRuleSeverity:
+      enum:
+      - Info
+      - Warn
+      - Error
+      - Critical
+      type: string
+    RaftSummary:
+      example:
+        empty_wal_groups: 2
+        healthy_groups: 4
+        leaderless_groups: 7
+        out_of_sync_groups: 1
+        total_groups: 1
+        wal_error_groups: 1
+      properties:
+        empty_wal_groups:
+          type: integer
+        healthy_groups:
+          type: integer
+        leaderless_groups:
+          type: integer
+        out_of_sync_groups:
+          type: integer
+        total_groups:
+          type: integer
+        wal_error_groups:
+          type: integer
+      required:
+      - empty_wal_groups
+      - healthy_groups
+      - leaderless_groups
+      - out_of_sync_groups
+      - total_groups
+      - wal_error_groups
+      type: object
+    ServerStats_gateways_inner:
+      allOf:
+      - $ref: '#/components/schemas/GatewayStat'
+      type:
+      - object
+      - 'null'
+    ServerStats_jetstream:
+      allOf:
+      - $ref: '#/components/schemas/JetStreamVarz'
+      type:
+      - object
+      - 'null'
+    Update:
+      example:
+        current: current
+        latest_minor: latest_minor
+        latest: latest
+        latest_patch: latest_patch
+      properties:
+        current:
+          type: string
+        latest:
+          type: string
+        latest_minor:
+          type: string
+        latest_patch:
+          type: string
+      required:
+      - current
+      - latest
+      - latest_minor
+      - latest_patch
+      type: object
+    TimeRange:
+      description: TimeRange is used to represent a start and end time
+      properties:
+        end:
+          type: string
+        start:
+          type: string
+      type: object
+    ConnInfo_tls_peer_certs_inner:
+      allOf:
+      - $ref: '#/components/schemas/TLSPeerCert'
+      type:
+      - object
+      - 'null'
+    NatsLimits:
+      properties:
+        data:
+          format: int64
+          type: integer
+        payload:
+          format: int64
+          type: integer
+        subs:
+          format: int64
+          type: integer
+      type: object
+    SystemDirectConnectionOptsPatch:
+      properties:
+        override_urls:
+          type: string
+        tls_ca_certs:
+          type: string
+        tls_client_cert:
+          type: string
+        tls_client_key:
+          type: string
+        tls_insecure_skip_verify:
+          default: false
+          type: boolean
+        tls_mode:
+          $ref: '#/components/schemas/TLSMode'
+      type: object
+    AccountsOverviewListResponse:
+      example:
+        items:
+        - account_public_key: account_public_key
+          metrics:
+            JetStreamR1StorageUsed: 1.4658129805029452
+            BytesReceived: 0.8008281904610115
+            NumLeafNodes: 2.3021358869347655
+            NumConnections: 5.637376656633329
+            NumMessagesSent: 9.301444243932576
+            BytesSent: 6.027456183070403
+            JetStreamR3StorageUsed: 5.962133916683182
+            NumMessagesReceived: 7.061401241503109
+        - account_public_key: account_public_key
+          metrics:
+            JetStreamR1StorageUsed: 1.4658129805029452
+            BytesReceived: 0.8008281904610115
+            NumLeafNodes: 2.3021358869347655
+            NumConnections: 5.637376656633329
+            NumMessagesSent: 9.301444243932576
+            BytesSent: 6.027456183070403
+            JetStreamR3StorageUsed: 5.962133916683182
+            NumMessagesReceived: 7.061401241503109
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AccountOverviewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    NatsAlertingConfig:
+      example:
+        receivers:
+        - null
+        - null
+        subject: subject
+        account: account
+      properties:
+        account:
+          type: string
+        receivers:
+          items:
+            $ref: '#/components/schemas/ReceiverConfig'
+          type: array
+        subject:
+          type: string
+      type: object
+    AccountCreateRequest:
+      example:
+        user_secret: user_secret
+        auth_type: null
+        connectors: true
+        connectors_log_stream: connectors_log_stream
+        jwt_settings:
+          authorization:
+            allowed_accounts:
+            - allowed_accounts
+            - allowed_accounts
+            auth_users:
+            - auth_users
+            - auth_users
+            xkey: xkey
+          mappings:
+            key:
+            - cluster: cluster
+              subject: subject
+              weight: 26
+            - cluster: cluster
+              subject: subject
+              weight: 26
+          revocations:
+            key: 6
+          limits:
+            tiered_limits:
+              key:
+                max_ack_pending: 2
+                mem_max_stream_bytes: 4
+                disk_max_stream_bytes: 9
+                disk_storage: 3
+                max_bytes_required: true
+                streams: 1
+                mem_storage: 7
+                consumer: 7
+          tags:
+          - tags
+          - tags
+        user_cred: user_cred
+        name: name
+        workloads: true
+        user_jwt_expires_in_secs: 0
+        workloads_log_stream: workloads_log_stream
+      properties:
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        connectors:
+          type: boolean
+        connectors_log_stream:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/AccountJWTSettings'
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+        user_secret:
+          type: string
+        workloads:
+          type: boolean
+        workloads_log_stream:
+          type: string
+      required:
+      - name
+      type: object
+    PlatformComponentConfigs:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      - $ref: '#/components/schemas/WorkloadsPlatformComponentConfig'
+      - $ref: '#/components/schemas/ScraperComponentConfig'
+      - $ref: '#/components/schemas/CatalogPlatformComponentConfig'
+      type:
+      - object
+      - 'null'
+    SigningKeyScope:
+      properties:
+        key:
+          type: string
+        kind:
+          $ref: '#/components/schemas/SigningKeyScopeType'
+        role:
+          type: string
+        template:
+          $ref: '#/components/schemas/UserPermissionLimits'
+      required:
+      - key
+      - kind
+      - role
+      - template
+      type: object
+    Leafz:
+      description: Leafz represents detailed information on Leafnodes.
+      example:
+        leafnodes: 5
+        leafs:
+        - null
+        - null
+        now: 2000-01-23 04:56:07+00:00
+        server_id: server_id
+      properties:
+        leafnodes:
+          type: integer
+        leafs:
+          items:
+            $ref: '#/components/schemas/Leafz_leafs_inner'
+          type: array
+        now:
+          format: date-time
+          type: string
+        server_id:
+          type: string
+      required:
+      - leafnodes
+      - leafs
+      - now
+      - server_id
+      type: object
+    SystemInfo:
+      example:
+        jetstream_enabled: true
+        http_gateway_url: http_gateway_url
+        is_tenant: true
+        connection_type: null
+        managed_by: null
+        config_mode: true
+        server_urls: server_urls
+        user_jwt_expires_in_secs: 7
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        name: name
+        id: id
+        state: null
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        http_gateway_url:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        name:
+          type: string
+        server_urls:
+          type: string
+        state:
+          $ref: '#/components/schemas/SystemState'
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - name
+      - state
+      - user_jwt_expires_in_secs
+      type: object
+    SlackReceiverConfig:
+      properties:
+        config:
+          $ref: '#/components/schemas/SlackConfig'
+        type:
+          enum:
+          - slack
+          type: string
+      required:
+      - config
+      - type
+      type: object
+    PlatformComponentTokenViewResponse:
+      example:
+        last_access: 2000-01-23 04:56:07+00:00
+        created: 2000-01-23 04:56:07+00:00
+        id: id
+        token: token
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        last_access:
+          format: date-time
+          type: string
+        token:
+          type: string
+      required:
+      - created
+      - id
+      - token
+      type: object
+    JetStreamVarz:
+      description: JetStreamVarz contains basic runtime information about jetstream
+      properties:
+        config:
+          $ref: '#/components/schemas/JetStreamVarz_config'
+        meta:
+          $ref: '#/components/schemas/JetStreamVarz_meta'
+        stats:
+          $ref: '#/components/schemas/JetStreamVarz_stats'
+      type: object
+    AppUserAssignRequest:
+      example:
+        role_id: role_id
+      properties:
+        role_id:
+          type: string
+      required:
+      - role_id
+      type: object
+    AgentTokenRotateRequest:
+      type: object
+    AppUserAssignResponse:
+      example:
+        role_name: role_name
+        nats_user:
+          user_public_key: user_public_key
+          name: name
+          id: id
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        app_user:
+          identifier: identifier
+          name: name
+          id: id
+          type: null
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        scope: null
+        team_app_user:
+          role_name: role_name
+          role_id: role_id
+          pending_invitation: true
+          id: id
+        resource_id: resource_id
+        team:
+          name: name
+          id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        app_user:
+          $ref: '#/components/schemas/AppUserInfo'
+        created:
+          format: date-time
+          type: string
+        nats_user:
+          $ref: '#/components/schemas/NatsUserInfo'
+        resource_id:
+          type: string
+        role_id:
+          type: string
+        role_name:
+          type: string
+        scope:
+          $ref: '#/components/schemas/AppRoleScope'
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        team_app_user:
+          $ref: '#/components/schemas/TeamAppUserInfo'
+      required:
+      - app_user
+      - created
+      - resource_id
+      - role_id
+      - role_name
+      - scope
+      - team_app_user
+      type: object
+    HealthCheckResponse:
+      description: Health Check Response - equivalent to 'nats server report health'
+      example:
+        summary:
+          critical: 6
+          total_errors: 5
+          healthy: 5
+          total_servers: 2
+          degraded: 1
+        checks:
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        servers:
+        - cluster: cluster
+          server: server
+          status_code: 0
+          domain: domain
+          errors:
+          - error: error
+            type: type
+          - error: error
+            type: type
+          status: ok
+        - cluster: cluster
+          server: server
+          status_code: 0
+          domain: domain
+          errors:
+          - error: error
+            type: type
+          - error: error
+            type: type
+          status: ok
+        system_id: system_id
+        status: healthy
+        timestamp: timestamp
+      properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/ChecksSummary'
+          type: array
+        servers:
+          items:
+            $ref: '#/components/schemas/ServerHealthInfo'
+          type: array
+        status:
+          enum:
+          - healthy
+          - degraded
+          - critical
+          type: string
+        summary:
+          $ref: '#/components/schemas/HealthSummary'
+        system_id:
+          type: string
+        timestamp:
+          type: string
+      required:
+      - servers
+      - status
+      - summary
+      - system_id
+      - timestamp
+      type: object
+    ServerListResponse:
+      description: Server List Response - equivalent to 'nats server ls'
+      example:
+        summary:
+          total_slow_consumers: 4
+          total_connections: 6
+          jetstream_servers: 1
+          total_memory_bytes: 7
+          total_clusters: 1
+          total_servers: 1
+          total_subscriptions: 5
+        checks:
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        - code: code
+          examples:
+          - examples
+          - examples
+          name: name
+          description: description
+          status: pass
+        servers:
+        - cluster: cluster
+          gateways: 5
+          slow_consumer_stats:
+            gateways: 9
+            routes: 2
+            clients: 7
+            leafs: 3
+          subscriptions: 7
+          uptime_ns: 1
+          memory_bytes: 5
+          jetstream: true
+          version: version
+          routes: 2
+          start_time: start_time
+          cores: 6
+          host: host
+          name: name
+          slow_consumers: 4
+          id: id
+          connections: 0
+          jetstream_domain: jetstream_domain
+          cpu_percent: 1.4658129805029452
+        - cluster: cluster
+          gateways: 5
+          slow_consumer_stats:
+            gateways: 9
+            routes: 2
+            clients: 7
+            leafs: 3
+          subscriptions: 7
+          uptime_ns: 1
+          memory_bytes: 5
+          jetstream: true
+          version: version
+          routes: 2
+          start_time: start_time
+          cores: 6
+          host: host
+          name: name
+          slow_consumers: 4
+          id: id
+          connections: 0
+          jetstream_domain: jetstream_domain
+          cpu_percent: 1.4658129805029452
+        system_id: system_id
+        clusters:
+        - leader: leader
+          system_account: true
+          replicas:
+          - null
+          - null
+          raft_group: raft_group
+          name: name
+          traffic_account: traffic_account
+          leader_since: leader_since
+        - leader: leader
+          system_account: true
+          replicas:
+          - null
+          - null
+          raft_group: raft_group
+          name: name
+          traffic_account: traffic_account
+          leader_since: leader_since
+        timestamp: timestamp
+      properties:
+        checks:
+          items:
+            $ref: '#/components/schemas/ChecksSummary'
+          type: array
+        clusters:
+          items:
+            $ref: '#/components/schemas/ClusterInfo'
+          type: array
+        servers:
+          items:
+            $ref: '#/components/schemas/ServerListInfo'
+          type: array
+        summary:
+          $ref: '#/components/schemas/ServerSummary'
+        system_id:
+          type: string
+        timestamp:
+          type: string
+      required:
+      - servers
+      - summary
+      - system_id
+      - timestamp
+      type: object
+    ServerStatsMsg:
+      description: ServerStatsMsg is sent periodically with stats updates.
+      example:
+        server:
+          cluster: cluster
+          ver: ver
+          domain: domain
+          host: host
+          name: name
+          id: id
+          time: 2000-01-23 04:56:07+00:00
+          jetstream: true
+          seq: 2147483647
+          tags:
+          - tags
+          - tags
+        statsz:
+          gateways:
+          - null
+          - null
+          subscriptions: 870642708
+          start: 2000-01-23 04:56:07+00:00
+          cpu: 5.637376656633329
+          received:
+            msgs: 9
+            bytes: 7
+          jetstream: null
+          sent:
+            msgs: 9
+            bytes: 7
+          routes:
+          - null
+          - null
+          total_connections: 2147483647
+          cores: 5
+          mem: 2
+          active_accounts: 0
+          slow_consumers: 3
+          active_servers: 6
+          connections: 1
+      properties:
+        server:
+          $ref: '#/components/schemas/ServerInfo'
+        statsz:
+          $ref: '#/components/schemas/ServerStats'
+      required:
+      - server
+      - statsz
+      type: object
+    AccountListResponse:
+      example:
+        items:
+        - jwt_sync_error: jwt_sync_error
+          auth_type: null
+          connectors: true
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          account_public_key: account_public_key
+          workloads: true
+          user_jwt_expires_in_secs: 7
+          team:
+            name: name
+            id: id
+          nsc_managed: true
+          is_scp_account: true
+          is_system_account: true
+          claims_info:
+            js_enabled: true
+          user_jwt: user_jwt
+          connectors_log_stream: connectors_log_stream
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          jwt_sync_status: null
+          jwt_settings:
+            authorization:
+              allowed_accounts:
+              - allowed_accounts
+              - allowed_accounts
+              auth_users:
+              - auth_users
+              - auth_users
+              xkey: xkey
+            mappings:
+              key:
+              - cluster: cluster
+                subject: subject
+                weight: 26
+              - cluster: cluster
+                subject: subject
+                weight: 26
+            revocations:
+              key: 6
+            limits:
+              tiered_limits:
+                key:
+                  max_ack_pending: 2
+                  mem_max_stream_bytes: 4
+                  disk_max_stream_bytes: 9
+                  disk_storage: 3
+                  max_bytes_required: true
+                  streams: 1
+                  mem_storage: 7
+                  consumer: 7
+            tags:
+            - tags
+            - tags
+          user_cred: user_cred
+          claims:
+            nats:
+              authorization:
+                allowed_accounts:
+                - allowed_accounts
+                - allowed_accounts
+                auth_users:
+                - auth_users
+                - auth_users
+                xkey: xkey
+              default_permissions:
+                sub:
+                  allow:
+                  - allow
+                  - allow
+                  deny:
+                  - deny
+                  - deny
+                resp:
+                  max: 0
+                  ttl: 6
+                pub:
+                  allow:
+                  - allow
+                  - allow
+                  deny:
+                  - deny
+                  - deny
+              mappings:
+                key:
+                - cluster: cluster
+                  subject: subject
+                  weight: 26
+                - cluster: cluster
+                  subject: subject
+                  weight: 26
+              imports:
+              - local_subject: local_subject
+                subject: subject
+                name: name
+                share: true
+                to: to
+                type: null
+                account: account
+                token: token
+              - local_subject: local_subject
+                subject: subject
+                name: name
+                share: true
+                to: to
+                type: null
+                account: account
+                token: token
+              revocations:
+                key: 1
+              exports:
+              - revocations:
+                  key: 5
+                account_token_position: 0
+                subject: subject
+                name: name
+                response_type: null
+                token_req: true
+                type: null
+                service_latency:
+                  sampling: 23
+                  results: results
+                advertise: true
+                response_threshold: 5
+              - revocations:
+                  key: 5
+                account_token_position: 0
+                subject: subject
+                name: name
+                response_type: null
+                token_req: true
+                type: null
+                service_latency:
+                  sampling: 23
+                  results: results
+                advertise: true
+                response_threshold: 5
+              signing_keys: null
+              limits:
+                tiered_limits:
+                  key:
+                    max_ack_pending: 2
+                    mem_max_stream_bytes: 4
+                    disk_max_stream_bytes: 9
+                    disk_storage: 3
+                    max_bytes_required: true
+                    streams: 1
+                    mem_storage: 7
+                    consumer: 7
+          name: name
+          workloads_log_stream: workloads_log_stream
+          id: id
+          is_platform_account: true
+        - jwt_sync_error: jwt_sync_error
+          auth_type: null
+          connectors: true
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          account_public_key: account_public_key
+          workloads: true
+          user_jwt_expires_in_secs: 7
+          team:
+            name: name
+            id: id
+          nsc_managed: true
+          is_scp_account: true
+          is_system_account: true
+          claims_info:
+            js_enabled: true
+          user_jwt: user_jwt
+          connectors_log_stream: connectors_log_stream
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          jwt_sync_status: null
+          jwt_settings:
+            authorization:
+              allowed_accounts:
+              - allowed_accounts
+              - allowed_accounts
+              auth_users:
+              - auth_users
+              - auth_users
+              xkey: xkey
+            mappings:
+              key:
+              - cluster: cluster
+                subject: subject
+                weight: 26
+              - cluster: cluster
+                subject: subject
+                weight: 26
+            revocations:
+              key: 6
+            limits:
+              tiered_limits:
+                key:
+                  max_ack_pending: 2
+                  mem_max_stream_bytes: 4
+                  disk_max_stream_bytes: 9
+                  disk_storage: 3
+                  max_bytes_required: true
+                  streams: 1
+                  mem_storage: 7
+                  consumer: 7
+            tags:
+            - tags
+            - tags
+          user_cred: user_cred
+          claims:
+            nats:
+              authorization:
+                allowed_accounts:
+                - allowed_accounts
+                - allowed_accounts
+                auth_users:
+                - auth_users
+                - auth_users
+                xkey: xkey
+              default_permissions:
+                sub:
+                  allow:
+                  - allow
+                  - allow
+                  deny:
+                  - deny
+                  - deny
+                resp:
+                  max: 0
+                  ttl: 6
+                pub:
+                  allow:
+                  - allow
+                  - allow
+                  deny:
+                  - deny
+                  - deny
+              mappings:
+                key:
+                - cluster: cluster
+                  subject: subject
+                  weight: 26
+                - cluster: cluster
+                  subject: subject
+                  weight: 26
+              imports:
+              - local_subject: local_subject
+                subject: subject
+                name: name
+                share: true
+                to: to
+                type: null
+                account: account
+                token: token
+              - local_subject: local_subject
+                subject: subject
+                name: name
+                share: true
+                to: to
+                type: null
+                account: account
+                token: token
+              revocations:
+                key: 1
+              exports:
+              - revocations:
+                  key: 5
+                account_token_position: 0
+                subject: subject
+                name: name
+                response_type: null
+                token_req: true
+                type: null
+                service_latency:
+                  sampling: 23
+                  results: results
+                advertise: true
+                response_threshold: 5
+              - revocations:
+                  key: 5
+                account_token_position: 0
+                subject: subject
+                name: name
+                response_type: null
+                token_req: true
+                type: null
+                service_latency:
+                  sampling: 23
+                  results: results
+                advertise: true
+                response_threshold: 5
+              signing_keys: null
+              limits:
+                tiered_limits:
+                  key:
+                    max_ack_pending: 2
+                    mem_max_stream_bytes: 4
+                    disk_max_stream_bytes: 9
+                    disk_storage: 3
+                    max_bytes_required: true
+                    streams: 1
+                    mem_storage: 7
+                    consumer: 7
+          name: name
+          workloads_log_stream: workloads_log_stream
+          id: id
+          is_platform_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AccountViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    Leafz_leafs_inner:
+      allOf:
+      - $ref: '#/components/schemas/LeafInfo'
+      type:
+      - object
+      - 'null'
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
+      type: string
+    AuthCalloutAuthenticatorViewResponse:
+      example:
+        config_schema:
+        - data: data
+          name: name
+          type: 0
+          required: true
+        - data: data
+          name: name
+          type: 0
+          required: true
+        id: id
+        type: type
+      properties:
+        config_schema:
+          items:
+            $ref: '#/components/schemas/PlatformComponentsConfigSchema'
+          type: array
+        id:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - type
+      type: object
+    WorkloadsPlatformComponentConfig:
+      properties:
+        account:
+          type: string
+        nexus_name:
+          type: string
+      required:
+      - account
+      - nexus_name
+      type: object
+    AgentTokenViewResponse:
+      example:
+        nkey_public: nkey_public
+        created: 2000-01-23 04:56:07+00:00
+        id: id
+        last_accessed_at: 2000-01-23 04:56:07+00:00
+        is_current: true
+        rotated_at: 2000-01-23 04:56:07+00:00
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_current:
+          type: boolean
+        last_accessed_at:
+          format: date-time
+          type: string
+        nkey_public:
+          type: string
+        rotated_at:
+          format: date-time
+          type: string
+      required:
+      - created
+      - id
+      - is_current
+      - nkey_public
+      type: object
+    PlatformComponentsViewResponse:
+      example:
+        components:
+        - id: id
+          type: null
+          config: null
+          enabled: true
+        - id: id
+          type: null
+          config: null
+          enabled: true
+        system_id: system_id
+      properties:
+        components:
+          items:
+            $ref: '#/components/schemas/PlatformComponent'
+          type: array
+        system_id:
+          type: string
+      required:
+      - components
+      - system_id
+      type: object
+    AppUserInfo:
+      example:
+        identifier: identifier
+        name: name
+        id: id
+        type: null
+      properties:
+        id:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - id
+      - name
+      - type
+      type: object
+    TeamInfo:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    AuditJobRequest:
+      example:
+        profiles: false
+        server_endpoints: true
+        details: true
+        account_endpoints: true
+      properties:
+        account_endpoints:
+          default: true
+          type: boolean
+        details:
+          default: true
+          type: boolean
+        profiles:
+          default: false
+          type: boolean
+        server_endpoints:
+          default: true
+          type: boolean
+      required:
+      - account_endpoints
+      - details
+      - profiles
+      - server_endpoints
+      type: object
+    AgentTokenCurrentResponse:
+      allOf:
+      - $ref: '#/components/schemas/AgentTokenViewResponse'
+      - required:
+        - token
+        - url
+      example:
+        url: url
+        token: token
+      properties:
+        token:
+          type: string
+        url:
+          type: string
+      type: object
+    GatewayStat:
+      description: GatewayStat holds gateway statistics.
+      properties:
+        gwid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        inbound_connections:
+          type: integer
+        name:
+          type: string
+        received:
+          $ref: '#/components/schemas/DataStats'
+        sent:
+          $ref: '#/components/schemas/DataStats'
+      required:
+      - gwid
+      - inbound_connections
+      - name
+      - received
+      - sent
+      type: object
+    AccountOverviewResponse_metrics:
+      example:
+        JetStreamR1StorageUsed: 1.4658129805029452
+        BytesReceived: 0.8008281904610115
+        NumLeafNodes: 2.3021358869347655
+        NumConnections: 5.637376656633329
+        NumMessagesSent: 9.301444243932576
+        BytesSent: 6.027456183070403
+        JetStreamR3StorageUsed: 5.962133916683182
+        NumMessagesReceived: 7.061401241503109
+      properties:
+        BytesReceived:
+          format: double
+          type: number
+        BytesSent:
+          format: double
+          type: number
+        JetStreamR1StorageUsed:
+          format: double
+          type: number
+        JetStreamR3StorageUsed:
+          format: double
+          type: number
+        NumConnections:
+          format: double
+          type: number
+        NumLeafNodes:
+          format: double
+          type: number
+        NumMessagesReceived:
+          format: double
+          type: number
+        NumMessagesSent:
+          format: double
+          type: number
+      required:
+      - BytesReceived
+      - BytesSent
+      - JetStreamR1StorageUsed
+      - JetStreamR3StorageUsed
+      - NumConnections
+      - NumLeafNodes
+      - NumMessagesReceived
+      - NumMessagesSent
+      type: object
+    SystemLogLevel:
+      enum:
+      - panic
+      - fatal
+      - error
+      - warn
+      - info
+      - debug
+      - trace
+      type: string
+    NatsAlertingConfigPatch_receivers_inner:
+      properties:
+        config:
+          $ref: '#/components/schemas/NatsAlertingConfigPatch_receivers_inner_config'
+        type:
+          enum:
+          - slack
+          type: string
+      required:
+      - config
+      - type
+      type: object
+    PlatformComponentsConfigSchema:
+      example:
+        data: data
+        name: name
+        type: 0
+        required: true
+      properties:
+        data:
+          type: string
+        name:
+          type: string
+        required:
+          type: boolean
+        type:
+          type: integer
+      required:
+      - name
+      - required
+      - type
+      type: object
+    AuthCalloutAuthenticatorComponentConfig:
+      properties:
+        account:
+          type: string
+        bucket:
+          type: string
+      required:
+      - account
+      - bucket
+      type: object
+    AlertRuleViewResponse:
+      example:
+        severity: null
+        created: 2000-01-23 04:56:07+00:00
+        system_id: system_id
+        duration_in_secs: 0
+        message: message
+        threshold_expression_metric: threshold_expression_metric
+        threshold_fixed_value: 1.4658129805029452
+        is_enabled: true
+        account_id: account_id
+        consumer_name: consumer_name
+        rule_type: null
+        stream_name: stream_name
+        metric: metric
+        threshold_operator: threshold_operator
+        id: id
+        threshold_expression_multiplier: 6.027456183070403
+      properties:
+        account_id:
+          type: string
+        consumer_name:
+          type: string
+        created:
+          format: date-time
+          type: string
+        duration_in_secs:
+          type: integer
+        id:
+          type: string
+        is_enabled:
+          type: boolean
+        message:
+          type: string
+        metric:
+          type: string
+        rule_type:
+          $ref: '#/components/schemas/AlertRuleType'
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        stream_name:
+          type: string
+        system_id:
+          type: string
+        threshold_expression_metric:
+          type: string
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          type: string
+      required:
+      - created
+      - duration_in_secs
+      - id
+      - is_enabled
+      - message
+      - metric
+      - rule_type
+      - severity
+      - threshold_operator
+      type: object
+    SystemConnectionsListResponse:
+      example:
+        items:
+        - total: 5
+          offset: 1
+          now: 2000-01-23 04:56:07+00:00
+          limit: 0
+          num_connections: 6
+          server_id: server_id
+          connections:
+          - null
+          - null
+        - total: 5
+          offset: 1
+          now: 2000-01-23 04:56:07+00:00
+          limit: 0
+          num_connections: 6
+          server_id: server_id
+          connections:
+          - null
+          - null
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Connz'
+          type: array
+      required:
+      - items
+      type: object
+    PlatformComponent:
+      example:
+        id: id
+        type: null
+        config: null
+        enabled: true
+      properties:
+        config:
+          $ref: '#/components/schemas/PlatformComponentConfigs'
+        enabled:
+          type: boolean
+        id:
+          type: string
+        type:
+          $ref: '#/components/schemas/PlatformComponentType'
+      required:
+      - enabled
+      - id
+      - type
+      type: object
+    UserPermissionLimits:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      - $ref: '#/components/schemas/NatsLimits'
+      example:
+        bearer_token: true
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+      type: object
+    TeamAppUserInfo:
+      example:
+        role_name: role_name
+        role_id: role_id
+        pending_invitation: true
+        id: id
+      properties:
+        id:
+          type: string
+        pending_invitation:
+          type: boolean
+        role_id:
+          type: string
+        role_name:
+          type: string
+      required:
+      - id
+      - pending_invitation
+      - role_id
+      - role_name
+      type: object
+    AccountClaimsInfo:
+      example:
+        js_enabled: true
+      properties:
+        js_enabled:
+          type: boolean
+      required:
+      - js_enabled
+      type: object
+    JetStreamServerInfo:
+      example:
+        cluster: cluster
+        server: server
+        pending: 4
+        streams: 7
+        file_bytes: 9
+        api_total: 5
+        memory_bytes: 3
+        is_leader: true
+        api_errors: 5
+        bytes: 2
+        domain: domain
+        messages: 2
+        consumers: 7
+      properties:
+        api_errors:
+          type: integer
+        api_total:
+          type: integer
+        bytes:
+          type: integer
+        cluster:
+          type: string
+        consumers:
+          type: integer
+        domain:
+          type: string
+        file_bytes:
+          type: integer
+        is_leader:
+          type: boolean
+        memory_bytes:
+          type: integer
+        messages:
+          type: integer
+        pending:
+          type: integer
+        server:
+          type: string
+        streams:
+          type: integer
+      required:
+      - api_errors
+      - api_total
+      - bytes
+      - cluster
+      - consumers
+      - file_bytes
+      - is_leader
+      - memory_bytes
+      - messages
+      - server
+      - streams
+      type: object
+    OperatorExport:
+      example:
+        seed: seed
+        jwt: jwt
+        name: name
+        signing_keys:
+        - seed: seed
+          id: id
+        - seed: seed
+          id: id
+        id: id
+      properties:
+        id:
+          type: string
+        jwt:
+          type: string
+        name:
+          type: string
+        seed:
+          type: string
+        signing_keys:
+          items:
+            $ref: '#/components/schemas/SigningKeyExport'
+          type: array
+      required:
+      - id
+      - jwt
+      - name
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

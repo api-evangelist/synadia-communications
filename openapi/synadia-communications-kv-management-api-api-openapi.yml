@@ -1,0 +1,393 @@
+openapi: 3.2.0
+info:
+  title: NATS HTTP Gateway KV Management API
+  description: 'This is the API for interacting with NATS and NATS
+
+    based services using HTTP.'
+  version: 1.0.0
+servers:
+- url: https://api.ngs.global/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: KV Management API
+paths:
+  /kvm/buckets:
+    get:
+      operationId: ListKvStores
+      tags:
+      - KV Management API
+      summary: List all key value stores
+      responses:
+        '200':
+          description: List of entity names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                x-content-type: application/json
+            application/text:
+              schema:
+                type: string
+                x-content-type: application/text
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /kvm/buckets/{bucket}:
+    parameters:
+    - in: path
+      name: bucket
+      description: Bucket name
+      required: true
+      style: simple
+      explode: false
+      schema:
+        maximum: 1
+        minimum: 1
+        type: string
+    get:
+      operationId: KvStoreInfo
+      tags:
+      - KV Management API
+      summary: Returns metadata on the key value store
+      responses:
+        '200':
+          headers:
+            X-Nats-Kv-Name:
+              schema:
+                type: string
+              description: the name of the bucket (only on application/text)
+            X-Nats-Kv-Values:
+              schema:
+                type: number
+              description: the number of entries in the KV - includes history (only on application/text)
+            X-Nats-Kv-History:
+              schema:
+                type: number
+              description: the number of possible history per key (only on application/text)
+            X-Nats-Kv-Ttl:
+              schema:
+                type: string
+              description: the amount of time entries live in the bucket (only on application/text)
+            X-Nats-Kv-Backing-Store:
+              schema:
+                type: string
+              description: the backing store for the KV (memory or disk) (only on application/text)
+            X-Nats-Kv-Size:
+              schema:
+                type: number
+              description: the size of the bucket in bytes (only on application/text)
+            X-Nats-Kv-Compression:
+              schema:
+                type: boolean
+              description: true if the KV is compressed (only on application/text)
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  values:
+                    type: number
+                    format: uint64
+                  history:
+                    type: number
+                    format: uint8
+                  ttl:
+                    type: number
+                    format: int64
+                  backing_store:
+                    type: string
+                  size:
+                    type: number
+                    format: uint64
+                  compression:
+                    type: boolean
+    post:
+      operationId: AddKvStore
+      tags:
+      - KV Management API
+      summary: Add a key value store
+      parameters:
+      - in: header
+        name: X-Nats-Kv-Max-Value-Size
+        schema:
+          type: number
+        description: the maximum size for an entry (only on application/text)
+      - in: header
+        name: X-Nats-Kv-History
+        schema:
+          type: number
+        description: the number of possible history per key (only on application/text)
+      - in: header
+        name: X-Nats-Kv-Ttl
+        schema:
+          type: number
+        description: the amount of time entries live in the bucket in nanoseconds (only on application/text)
+      - in: header
+        name: X-Nats-Kv-Max-Bytes
+        schema:
+          type: number
+        description: the maximum size of the KV in bytes (only on application/text)
+      - in: header
+        name: X-Nats-Kv-Storage
+        schema:
+          type: string
+          enum:
+          - file
+          - memory
+        description: the underlying storage for the KV (only on application/text)
+      - in: header
+        name: X-Nats-Kv-Replicas
+        schema:
+          type: number
+        description: the underlying number of replicas (only on application/text)
+      - in: header
+        name: X-Nats-Kv-Compression
+        schema:
+          type: boolean
+        description: compress the KV store (only on application/text)
+      requestBody:
+        description: key store configuration
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                max_value_size:
+                  type: number
+                  format: int32
+                history:
+                  type: number
+                  format: uint8
+                ttl:
+                  type: number
+                  format: int64
+                max_bytes:
+                  type: number
+                  format: uint64
+                storage:
+                  type: string
+                  enum:
+                  - file
+                  - memory
+                replicas:
+                  type: number
+                  format: int
+                compression:
+                  type: boolean
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  x-schema-name: Metadata
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    delete:
+      tags:
+      - KV Management API
+      summary: Delete a store, removing all keys
+      operationId: KvStoreDestroy
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid Request
+        '404':
+          description: Bucket doesn't exist
+  /kvm/buckets/{bucket}/purge:
+    delete:
+      operationId: KvStorePurge
+      tags:
+      - KV Management API
+      parameters:
+      - in: path
+        name: bucket
+        description: Bucket name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      summary: Purge a store removing all deleted keys
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /kvm/buckets/{bucket}/keys:
+    get:
+      operationId: KvStoreKeys
+      tags:
+      - KV Management API
+      summary: List all the keys in the store
+      parameters:
+      - in: path
+        name: bucket
+        description: Bucket name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      - name: filter
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      responses:
+        '200':
+          description: List of entity names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                x-content-type: application/json
+            application/text:
+              schema:
+                type: string
+                x-content-type: application/text
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /kvm/buckets/{bucket}/watch:
+    get:
+      operationId: KvStoreWatch
+      tags:
+      - KV Management API
+      summary: Watches for changes in the specified store
+      parameters:
+      - in: path
+        name: bucket
+        description: Bucket name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      - name: filter
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      - name: include
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - lastValue
+          - allHistory
+          - updatesOnly
+      - name: ignoreDeletes
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: boolean
+      - name: resumeRevision
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: number
+          format: uint64
+      - name: authorization
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success response
+          content:
+            text/event-stream:
+              schema:
+                type: object
+                properties:
+                  bucket:
+                    type: string
+                  created:
+                    type: string
+                    format: date-time
+                  revision:
+                    type: number
+                    format: uint64
+                  delta:
+                    type: number
+                    format: uint64
+                  operation:
+                    type: string
+                    enum:
+                    - PUT
+                    - DEL
+                    - PURGE
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header

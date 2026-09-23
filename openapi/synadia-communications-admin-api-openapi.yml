@@ -1,0 +1,99 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Admin API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: Admin
+paths:
+  /core/beta/admin/app-user:
+    get:
+      description: Check whether there is an App Admin user
+      operationId: checkAppAdmin
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Check for Admin User
+      tags:
+      - Admin
+      x-doc-tags:
+      - Admin
+    post:
+      description: On clean installs, allows the programatic creation of the App Admin user
+      operationId: createAppAdmin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAppUserCreateRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminAppUserCreateResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Create an App Admin User
+      tags:
+      - Admin
+      x-doc-tags:
+      - Admin
+components:
+  schemas:
+    AdminAppUserCreateResponse:
+      example:
+        token: token
+      properties:
+        token:
+          type: string
+      type: object
+    AdminAppUserCreateRequest:
+      example:
+        password: password
+        generate_token: true
+        username: username
+      properties:
+        generate_token:
+          type: boolean
+        password:
+          type: string
+        username:
+          type: string
+      required:
+      - password
+      - username
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

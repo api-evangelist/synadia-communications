@@ -1,0 +1,1717 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Nats User API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: nats-user
+paths:
+  /core/beta/nats-users/{userId}:
+    delete:
+      description: Deletes a NATS user from an account
+      operationId: deleteNatsUser
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Delete NATS User
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+    get:
+      description: Returns a NATS user assigned to the account
+      operationId: getNatsUser
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get NATS User
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+    patch:
+      description: Updates NATS User in an account
+      operationId: updateNatsUser
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatsUserUpdateRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Update NATS User
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/app-users:
+    get:
+      description: Returns a list of Team App Users associated with the NATS user
+      operationId: listNatsUserTeamAppUsers
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Team App Users
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/app-users/{teamAppUserId}:
+    delete:
+      description: Unassign a Team App User from a NATS User
+      operationId: unAssignNatsUserTeamAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: teamAppUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Unassign Team App User from NATS User
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+    post:
+      description: Assign a Team App User to a NATS User. This operation is idempotent; if an App User is already assigned to a NATS User the assignment will be updated with the new role
+      operationId: assignNatsUserTeamAppUser
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: teamAppUserId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppUserAssignRequest'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppUserAssignResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Assign Team App User to NATS User
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/bearer-jwt:
+    post:
+      description: Returns a bearer token a NATS user assigned to the account
+      operationId: downloadNatsUserBearerJwt
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Bearer JWT
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/connections:
+    get:
+      operationId: listNatsUserConnections
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: sort
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: cid
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: subject
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: number
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserConnectionsListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List NATs User Connections
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/copy:
+    post:
+      description: Copies the user, changing name and account SK group. Generates new user NKey
+      operationId: copyNatsUser
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatsUserCopyRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Copy nats user
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/creds:
+    post:
+      description: Returns a creds file for a NATS user assigned to the account
+      operationId: downloadNatsUserCreds
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            text/plain:
+              schema:
+                type: string
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Creds
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/http-gw-token:
+    post:
+      description: Returns a NATS HTTP Gateway token
+      operationId: downloadNatsUserHttpGwToken
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserHTTPGWTokenCreateReply'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get HTTP Gateway Token
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/issuances:
+    get:
+      description: Lists the history of user credential issuances for the user
+      operationId: listNatsUserIssuances
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserIssuancesListResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List nats user issuances
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+  /core/beta/nats-users/{userId}/rotate:
+    post:
+      description: Generates new user nkey
+      operationId: rotateNatsUser
+      parameters:
+      - explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatsUserViewResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Rotate nats user nkey and seed
+      tags:
+      - nats-user
+      x-doc-tags:
+      - NATS Users
+components:
+  schemas:
+    NatsUserInfo:
+      example:
+        user_public_key: user_public_key
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        user_public_key:
+          type: string
+      required:
+      - id
+      - name
+      - user_public_key
+      type: object
+    NatsUserUpdateRequest:
+      example:
+        jwt_settings:
+          sub: null
+          bearer_token: true
+          times:
+          - start: start
+            end: end
+          - start: start
+            end: end
+          times_location: times_location
+          data: 2147483647
+          payload: 2147483647
+          resp: null
+          src:
+          - src
+          - src
+          subs: 2147483647
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+          pub: null
+          tags:
+          - tags
+          - tags
+        name: name
+        jwt_expires_in_secs: 0
+      properties:
+        jwt_expires_in_secs:
+          format: int64
+          type: integer
+        jwt_settings:
+          $ref: '#/components/schemas/NatsUserJwtSettingsPatch'
+        name:
+          type: string
+      type: object
+    UserClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: UserClaims defines a user JWT
+      example:
+        nats:
+          issuer_account: issuer_account
+      properties:
+        nats:
+          $ref: '#/components/schemas/User'
+      type: object
+    TimeRange:
+      description: TimeRange is used to represent a start and end time
+      properties:
+        end:
+          type: string
+        start:
+          type: string
+      type: object
+    ConnInfo_tls_peer_certs_inner:
+      allOf:
+      - $ref: '#/components/schemas/TLSPeerCert'
+      type:
+      - object
+      - 'null'
+    NatsUserHTTPGWTokenCreateReply:
+      example:
+        token: token
+      properties:
+        token:
+          type: string
+      required:
+      - token
+      type: object
+    NatsLimits:
+      properties:
+        data:
+          format: int64
+          type: integer
+        payload:
+          format: int64
+          type: integer
+        subs:
+          format: int64
+          type: integer
+      type: object
+    NatsUserJwtSettingsPatch_pub:
+      allOf:
+      - $ref: '#/components/schemas/PermissionPatch'
+      type:
+      - object
+      - 'null'
+    NatsUserJwtSettings:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      description: 'Set correct allowed values
+
+        extention of jwt.#UserPermissionsLimits'
+      example:
+        bearer_token: true
+        data: 2147483647
+        payload: 2147483647
+        subs: 2147483647
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+        tags:
+        - tags
+        - tags
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+        data:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        payload:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        subs:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    ClaimsData:
+      description: ClaimsData is the base struct for all claims
+      properties:
+        aud:
+          type: string
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        iss:
+          type: string
+        jti:
+          type: string
+        name:
+          type: string
+        nbf:
+          format: int64
+          type: integer
+        sub:
+          type: string
+      type: object
+    AppUserAssignListResponse:
+      example:
+        items:
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+        - role_name: role_name
+          nats_user:
+            user_public_key: user_public_key
+            name: name
+            id: id
+          system:
+            jetstream_enabled: true
+            http_gateway_url: http_gateway_url
+            is_tenant: true
+            connection_type: null
+            managed_by: null
+            config_mode: true
+            server_urls: server_urls
+            user_jwt_expires_in_secs: 7
+            jetstream_tiers:
+            - jetstream_tiers
+            - jetstream_tiers
+            name: name
+            id: id
+            state: null
+            jetstream_domain: jetstream_domain
+          app_user:
+            identifier: identifier
+            name: name
+            id: id
+            type: null
+          role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          team_app_user:
+            role_name: role_name
+            role_id: role_id
+            pending_invitation: true
+            id: id
+          resource_id: resource_id
+          team:
+            name: name
+            id: id
+          account:
+            user_jwt: user_jwt
+            auth_type: null
+            user_cred: user_cred
+            account_public_key: account_public_key
+            name: name
+            user_jwt_expires_in_secs: 0
+            id: id
+            is_platform_account: true
+            is_scp_account: true
+            is_system_account: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppUserAssignResponse'
+          type: array
+      required:
+      - items
+      type: object
+    Permission:
+      description: Permission defines allow/deny subjects
+      example:
+        allow:
+        - allow
+        - allow
+        deny:
+        - deny
+        - deny
+      properties:
+        allow:
+          items:
+            type: string
+          type: array
+        deny:
+          items:
+            type: string
+          type: array
+      type: object
+    ResponsePermission:
+      description: 'ResponsePermission can be used to allow responses to any reply subject
+
+        that is received on a valid subscription.'
+      example:
+        max: 0
+        ttl: 6
+      properties:
+        max:
+          type: integer
+        ttl:
+          format: int64
+          type: integer
+      required:
+      - max
+      - ttl
+      type: object
+    User:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      - $ref: '#/components/schemas/UserPermissionLimits'
+      description: User defines the user specific data in a user JWT
+      example:
+        issuer_account: issuer_account
+      properties:
+        issuer_account:
+          description: 'IssuerAccount stores the public key for the account the issuer represents.
+
+            When set, the claim was issued by a signing key.'
+          type: string
+      type: object
+    UserLimits:
+      description: Src is a comma separated list of CIDR specifications
+      properties:
+        src:
+          items:
+            type: string
+          type: array
+        times:
+          items:
+            $ref: '#/components/schemas/TimeRange'
+          type: array
+        times_location:
+          type: string
+      type: object
+    SystemInfo:
+      example:
+        jetstream_enabled: true
+        http_gateway_url: http_gateway_url
+        is_tenant: true
+        connection_type: null
+        managed_by: null
+        config_mode: true
+        server_urls: server_urls
+        user_jwt_expires_in_secs: 7
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        name: name
+        id: id
+        state: null
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        http_gateway_url:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        name:
+          type: string
+        server_urls:
+          type: string
+        state:
+          $ref: '#/components/schemas/SystemState'
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - name
+      - state
+      - user_jwt_expires_in_secs
+      type: object
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    NatsUserCopyRequest:
+      example:
+        sk_group_id: sk_group_id
+        name: name
+      properties:
+        name:
+          type: string
+        sk_group_id:
+          type: string
+      required:
+      - name
+      - sk_group_id
+      type: object
+    SubDetail:
+      description: SubDetail is for verbose information for subscriptions.
+      properties:
+        account:
+          type: string
+        cid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        max:
+          format: int64
+          type: integer
+        msgs:
+          format: int64
+          type: integer
+        qgroup:
+          type: string
+        sid:
+          type: string
+        subject:
+          type: string
+      required:
+      - cid
+      - msgs
+      - sid
+      - subject
+      type: object
+    AppUserAssignRequest:
+      example:
+        role_id: role_id
+      properties:
+        role_id:
+          type: string
+      required:
+      - role_id
+      type: object
+    NatsUserIssuancesListResponse:
+      example:
+        items:
+        - exp_max: 6
+          sub: sub
+          iat_max: 1
+          events_count: 0
+          created: 2000-01-23 04:56:07+00:00
+          iss: iss
+          name: name
+          id: id
+          iat_min: 5
+          status: null
+        - exp_max: 6
+          sub: sub
+          iat_max: 1
+          events_count: 0
+          created: 2000-01-23 04:56:07+00:00
+          iss: iss
+          name: name
+          id: id
+          iat_min: 5
+          status: null
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/NatsUserIssuanceInfo'
+          type: array
+      required:
+      - items
+      type: object
+    AppUserAssignResponse:
+      example:
+        role_name: role_name
+        nats_user:
+          user_public_key: user_public_key
+          name: name
+          id: id
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        app_user:
+          identifier: identifier
+          name: name
+          id: id
+          type: null
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        scope: null
+        team_app_user:
+          role_name: role_name
+          role_id: role_id
+          pending_invitation: true
+          id: id
+        resource_id: resource_id
+        team:
+          name: name
+          id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        app_user:
+          $ref: '#/components/schemas/AppUserInfo'
+        created:
+          format: date-time
+          type: string
+        nats_user:
+          $ref: '#/components/schemas/NatsUserInfo'
+        resource_id:
+          type: string
+        role_id:
+          type: string
+        role_name:
+          type: string
+        scope:
+          $ref: '#/components/schemas/AppRoleScope'
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        team_app_user:
+          $ref: '#/components/schemas/TeamAppUserInfo'
+      required:
+      - app_user
+      - created
+      - resource_id
+      - role_id
+      - role_name
+      - scope
+      - team_app_user
+      type: object
+    Connz:
+      description: Connz represents detailed information on current client connections.
+      example:
+        total: 5
+        offset: 1
+        now: 2000-01-23 04:56:07+00:00
+        limit: 0
+        num_connections: 6
+        server_id: server_id
+        connections:
+        - null
+        - null
+      properties:
+        connections:
+          items:
+            $ref: '#/components/schemas/Connz_connections_inner'
+          type: array
+        limit:
+          type: integer
+        now:
+          format: date-time
+          type: string
+        num_connections:
+          type: integer
+        offset:
+          type: integer
+        server_id:
+          type: string
+        total:
+          type: integer
+      required:
+      - connections
+      - limit
+      - now
+      - num_connections
+      - offset
+      - server_id
+      - total
+      type: object
+    NatsUserJwtSettingsPatch_times_inner:
+      example:
+        start: start
+        end: end
+      properties:
+        end:
+          type: string
+        start:
+          type: string
+      type: object
+    Permissions:
+      description: Permissions are used to restrict subject access, either on a user or for everyone on a server by default
+      example:
+        sub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+        resp:
+          max: 0
+          ttl: 6
+        pub:
+          allow:
+          - allow
+          - allow
+          deny:
+          - deny
+          - deny
+      properties:
+        pub:
+          $ref: '#/components/schemas/Permission'
+        resp:
+          $ref: '#/components/schemas/ResponsePermission'
+        sub:
+          $ref: '#/components/schemas/Permission'
+      type: object
+    GenericFields:
+      properties:
+        tags:
+          items:
+            type: string
+          type: array
+        type:
+          description: ClaimType is used to indicate the type of JWT being stored in a Claim
+          type: string
+        version:
+          type: integer
+      type: object
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
+      type: string
+    PermissionPatch:
+      properties:
+        allow:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        deny:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type: object
+    AppUserInfo:
+      example:
+        identifier: identifier
+        name: name
+        id: id
+        type: null
+      properties:
+        id:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - id
+      - name
+      - type
+      type: object
+    NatsUserIssuanceInfo:
+      example:
+        exp_max: 6
+        sub: sub
+        iat_max: 1
+        events_count: 0
+        created: 2000-01-23 04:56:07+00:00
+        iss: iss
+        name: name
+        id: id
+        iat_min: 5
+        status: null
+      properties:
+        created:
+          format: date-time
+          type: string
+        events_count:
+          description: total download events for this issuance
+          type: integer
+        exp_max:
+          description: highest expiry time, undefined means Unlimited (exp not set)
+          format: int64
+          type: integer
+        iat_max:
+          description: most recent time this was issued
+          format: int64
+          type: integer
+        iat_min:
+          description: first time this was issued
+          format: int64
+          type: integer
+        id:
+          type: string
+        iss:
+          description: issuer account public nkey
+          type: string
+        name:
+          type: string
+        status:
+          $ref: '#/components/schemas/NatsUserIssuanceStatus'
+        sub:
+          description: nats user public nkey
+          type: string
+      required:
+      - created
+      - events_count
+      - iat_max
+      - iat_min
+      - id
+      - iss
+      - name
+      - status
+      - sub
+      type: object
+    ResponsePermissionPatch:
+      properties:
+        max:
+          type: integer
+        ttl:
+          format: int64
+          type: integer
+      type: object
+    Connz_connections_inner:
+      allOf:
+      - $ref: '#/components/schemas/ConnInfo'
+      type:
+      - object
+      - 'null'
+    AppUserType:
+      enum:
+      - Person
+      - AppServiceAccount
+      - TeamServiceAccount
+      type: string
+    TeamInfo:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    NatsUserJwtSettingsPatch_resp:
+      allOf:
+      - $ref: '#/components/schemas/ResponsePermissionPatch'
+      type:
+      - object
+      - 'null'
+    AppRoleScope:
+      enum:
+      - App
+      - Team
+      - System
+      - Account
+      - NatsUser
+      type: string
+    NatsUserConnectionsListResponse:
+      example:
+        items:
+        - total: 5
+          offset: 1
+          now: 2000-01-23 04:56:07+00:00
+          limit: 0
+          num_connections: 6
+          server_id: server_id
+          connections:
+          - null
+          - null
+        - total: 5
+          offset: 1
+          now: 2000-01-23 04:56:07+00:00
+          limit: 0
+          num_connections: 6
+          server_id: server_id
+          connections:
+          - null
+          - null
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/Connz'
+          type: array
+      required:
+      - items
+      type: object
+    NatsUserIssuanceStatus:
+      description: "NatsUserIssuanceStatus indicates status of an issuance relative to its signing key\nIn context of issuance, status indicates following:\n  Active - Signing key exists, and no revocations\n  Revoked - Signing key exists, and has revocation entry with RevokedBefore > IatMax\n  Partially Revoked - Signing key exists, and has revocation entry with IssMax > RevokedBefore > IatMin\n  SK Disabled - Signing key is disabled\n  SK Group Disabled - Signing key group is disabled\n  SK Removed - Signing key no longer exists\n  Expired - All issuances are expired\nIn context of an issuance event, status indicates following:\n  Active - Signing key exists, and no revocations\n  Revoked - Signing key exists, and has revocation entry with RevokedBefore > Iat\n  SK Disabled - Signing key is disabled\n  SK Group Disabled - Signing key group is disabled\n  SK Removed - Signing key no longer exists\n  Expired - Expired time set on credential has passed"
+      enum:
+      - Active
+      - Revoked
+      - Partially Revoked
+      - SK Disabled
+      - SK Group Disabled
+      - SK Removed
+      - Expired
+      type: string
+    ConnInfo:
+      description: ConnInfo has detailed information on a per connection basis.
+      properties:
+        account:
+          type: string
+        authorized_user:
+          type: string
+        cid:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        idle:
+          type: string
+        in_bytes:
+          format: int64
+          type: integer
+        in_msgs:
+          format: int64
+          type: integer
+        ip:
+          type: string
+        issuer_key:
+          type: string
+        jwt:
+          type: string
+        kind:
+          type: string
+        lang:
+          type: string
+        last_activity:
+          format: date-time
+          type: string
+        mqtt_client:
+          type: string
+        name:
+          type: string
+        name_tag:
+          type: string
+        out_bytes:
+          format: int64
+          type: integer
+        out_msgs:
+          format: int64
+          type: integer
+        pending_bytes:
+          type: integer
+        port:
+          type: integer
+        reason:
+          type: string
+        rtt:
+          type: string
+        start:
+          format: date-time
+          type: string
+        stop:
+          type:
+          - string
+          - 'null'
+        subscriptions:
+          maximum: 4294967295
+          minimum: 0
+          type: integer
+        subscriptions_list:
+          items:
+            type: string
+          type: array
+        subscriptions_list_detail:
+          items:
+            $ref: '#/components/schemas/SubDetail'
+          type: array
+        tags:
+          items:
+            type: string
+          type: array
+        tls_cipher_suite:
+          type: string
+        tls_peer_certs:
+          items:
+            $ref: '#/components/schemas/ConnInfo_tls_peer_certs_inner'
+          type: array
+        tls_version:
+          type: string
+        type:
+          type: string
+        uptime:
+          type: string
+        version:
+          type: string
+      required:
+      - cid
+      - idle
+      - in_bytes
+      - in_msgs
+      - ip
+      - last_activity
+      - out_bytes
+      - out_msgs
+      - pending_bytes
+      - port
+      - start
+      - subscriptions
+      - uptime
+      type: object
+    AccountInfo:
+      example:
+        user_jwt: user_jwt
+        auth_type: null
+        user_cred: user_cred
+        account_public_key: account_public_key
+        name: name
+        user_jwt_expires_in_secs: 0
+        id: id
+        is_platform_account: true
+        is_scp_account: true
+        is_system_account: true
+      properties:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - auth_type
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - name
+      - user_jwt_expires_in_secs
+      type: object
+    SystemManagedBy:
+      enum:
+      - byon
+      - sdkube
+      type: string
+    TLSPeerCert:
+      description: TLSPeerCert contains basic information about a TLS peer certificate
+      properties:
+        cert_sha256:
+          type: string
+        spki_sha256:
+          type: string
+        subject:
+          type: string
+      type: object
+    NatsUserJwtSettingsPatch:
+      example:
+        sub: null
+        bearer_token: true
+        times:
+        - start: start
+          end: end
+        - start: start
+          end: end
+        times_location: times_location
+        data: 2147483647
+        payload: 2147483647
+        resp: null
+        src:
+        - src
+        - src
+        subs: 2147483647
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+        pub: null
+        tags:
+        - tags
+        - tags
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        bearer_token:
+          type: boolean
+        data:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        payload:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        pub:
+          $ref: '#/components/schemas/NatsUserJwtSettingsPatch_pub'
+        resp:
+          $ref: '#/components/schemas/NatsUserJwtSettingsPatch_resp'
+        src:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        sub:
+          $ref: '#/components/schemas/NatsUserJwtSettingsPatch_pub'
+        subs:
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        tags:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        times:
+          items:
+            $ref: '#/components/schemas/NatsUserJwtSettingsPatch_times_inner'
+          type:
+          - array
+          - 'null'
+        times_location:
+          type:
+          - string
+          - 'null'
+      type: object
+    UserPermissionLimits:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      - $ref: '#/components/schemas/NatsLimits'
+      example:
+        bearer_token: true
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
+      properties:
+        allowed_connection_types:
+          items:
+            type: string
+          type: array
+        bearer_token:
+          type: boolean
+      type: object
+    TeamAppUserInfo:
+      example:
+        role_name: role_name
+        role_id: role_id
+        pending_invitation: true
+        id: id
+      properties:
+        id:
+          type: string
+        pending_invitation:
+          type: boolean
+        role_id:
+          type: string
+        role_name:
+          type: string
+      required:
+      - id
+      - pending_invitation
+      - role_id
+      - role_name
+      type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
+    NatsUserViewResponse:
+      example:
+        sk_group_id: sk_group_id
+        user_public_key: user_public_key
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        team:
+          name: name
+          id: id
+        jwt_expires_at_max: 6
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        jwt_settings:
+          bearer_token: true
+          data: 2147483647
+          payload: 2147483647
+          subs: 2147483647
+          allowed_connection_types:
+          - allowed_connection_types
+          - allowed_connection_types
+          tags:
+          - tags
+          - tags
+        claims:
+          nats:
+            issuer_account: issuer_account
+        name: name
+        jwt_expires_in_secs: 1
+        id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        claims:
+          $ref: '#/components/schemas/UserClaims'
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt:
+          type: string
+        jwt_expires_at_max:
+          format: int64
+          type: integer
+        jwt_expires_in_secs:
+          format: int64
+          type: integer
+        jwt_settings:
+          $ref: '#/components/schemas/NatsUserJwtSettings'
+        name:
+          type: string
+        sk_group_id:
+          type: string
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        user_public_key:
+          type: string
+      required:
+      - account
+      - claims
+      - created
+      - id
+      - jwt
+      - jwt_expires_at_max
+      - jwt_expires_in_secs
+      - jwt_settings
+      - name
+      - system
+      - team
+      - user_public_key
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

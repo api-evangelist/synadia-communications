@@ -1,0 +1,356 @@
+openapi: 3.2.0
+info:
+  title: NATS HTTP Gateway ObjectStore Management API
+  description: 'This is the API for interacting with NATS and NATS
+
+    based services using HTTP.'
+  version: 1.0.0
+servers:
+- url: https://api.ngs.global/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: ObjectStore Management API
+paths:
+  /objm/buckets:
+    get:
+      operationId: ObjmList
+      tags:
+      - ObjectStore Management API
+      summary: List all object stores
+      responses:
+        '200':
+          description: List of entity names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                x-content-type: application/json
+            application/text:
+              schema:
+                type: string
+                x-content-type: application/text
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /objm/buckets/{bucket}:
+    parameters:
+    - in: path
+      name: bucket
+      description: Bucket name
+      required: true
+      style: simple
+      explode: false
+      schema:
+        maximum: 1
+        minimum: 1
+        type: string
+    get:
+      operationId: ObjmStoreInfo
+      tags:
+      - ObjectStore Management API
+      summary: Returns metadata on the object store
+      parameters:
+      - in: path
+        name: bucket
+        description: Bucket name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      responses:
+        '200':
+          headers:
+            X-Nats-Obj-Backing-Store:
+              schema:
+                type: string
+                description: the backing store type - only set for application/text requests
+            X-Nats-Obj-Name:
+              schema:
+                type: string
+                description: the name of the bucket - only set for application/text requests
+            X-Nats-Obj-TTl:
+              schema:
+                type: string
+                description: the ttl for entries in the bucket in nanoseconds (0 doesn't expire) - only set for application/text requests
+            X-Nats-Obj-Replicas:
+              schema:
+                type: number
+                description: the number of replicas for the bucket - only set for application/text requests
+            X-Nats-Obj-Size:
+              schema:
+                type: number
+                description: the size of the bucket in bytes - only set for application/text requests
+            X-Nats-Obj-Meta-:
+              schema:
+                type: string
+                description: the metadata for the bucket, all keys in metadata are prefixed by `X-Nats-Obj-Meta-` - only set for application/text requests
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  values:
+                    type: number
+                    format: uint64
+                  history:
+                    type: number
+                    format: uint8
+                  ttl:
+                    type: number
+                    format: int64
+                  backing_store:
+                    type: string
+                  size:
+                    type: number
+                    format: uint64
+                  compression:
+                    type: boolean
+            application/text:
+              schema:
+                type: string
+                x-content-type: application/text
+    post:
+      operationId: ObjmStoreAdd
+      tags:
+      - ObjectStore Management API
+      summary: Add an object store
+      parameters:
+      - in: path
+        name: bucket
+        description: Bucket name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      requestBody:
+        description: key store configuration
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                max_value_size:
+                  type: number
+                  format: int32
+                history:
+                  type: number
+                  format: uint8
+                ttl:
+                  type: number
+                  format: int64
+                max_bytes:
+                  type: number
+                  format: uint64
+                storage:
+                  type: string
+                  enum:
+                  - file
+                  - memory
+                replicas:
+                  type: number
+                  format: int
+                compression:
+                  type: boolean
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                  x-schema-name: Metadata
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    delete:
+      tags:
+      - ObjectStore Management API
+      summary: Delete an object store, removing all keys
+      operationId: ObjmStoreDestroy
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /objm/buckets/{bucket}/keys:
+    get:
+      operationId: ObjStoreKeys
+      tags:
+      - ObjectStore Management API
+      summary: List all the keys in the store
+      parameters:
+      - in: path
+        name: bucket
+        description: Bucket name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      responses:
+        '200':
+          description: List of entity names
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                x-content-type: application/json
+            application/text:
+              schema:
+                type: string
+                x-content-type: application/text
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /objm/buckets/{bucket}/watch:
+    get:
+      operationId: ObjStoreWatch
+      tags:
+      - ObjectStore Management API
+      summary: Watches for changes in the specified store
+      parameters:
+      - in: path
+        name: bucket
+        description: Bucket name
+        required: true
+        style: simple
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      - name: filter
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      - name: include
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - lastValue
+          - allHistory
+          - updatesOnly
+      - name: ignoreDeletes
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: boolean
+      - name: resumeRevision
+        in: query
+        required: false
+        explode: true
+        schema:
+          type: number
+          format: uint64
+      responses:
+        '200':
+          description: Success response
+          content:
+            text/event-stream:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  description:
+                    type: string
+                  metadata:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    x-schema-name: Metadata
+                  link:
+                    type: object
+                    properties:
+                      bucket:
+                        type: string
+                      name:
+                        type: string
+                  max_chunk_size:
+                    type: number
+                    format: uint32
+                  bucket:
+                    type: string
+                  nuid:
+                    type: string
+                  size:
+                    type: number
+                    format: uint64
+                  mtime:
+                    type: string
+                    format: date-time
+                  chunks:
+                    type: number
+                    format: uint32
+                  digest:
+                    type: string
+                  deleted:
+                    type: boolean
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header

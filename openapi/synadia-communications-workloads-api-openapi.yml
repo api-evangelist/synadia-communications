@@ -1,0 +1,155 @@
+openapi: 3.2.0
+info:
+  description: API for Synadia Control Plane / Synadia Cloud
+  title: Synadia Control Plane / Synadia Cloud Workloads API
+  version: beta
+servers:
+- description: Path to Synadia Control Plane Server Api
+  url: '{baseUrl}/api'
+  variables:
+    baseUrl:
+      default: ''
+security:
+- bearerAuth: []
+  sessionAuth: []
+tags:
+- name: Workloads
+paths:
+  /workloads/alpha/{accountId}/limits:
+    get:
+      operationId: getWorkloadLimits
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkloadLimitsResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: Get Workloads limits
+      tags:
+      - Workloads
+      x-doc-tags:
+      - Workloads
+  /workloads/alpha/{accountId}/tags:
+    get:
+      operationId: listWorkloadTags
+      parameters:
+      - explode: false
+        in: path
+        name: accountId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkloadTagsResponse'
+          description: Success
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+      summary: List Workload tags
+      tags:
+      - Workloads
+      x-doc-tags:
+      - Workloads
+components:
+  schemas:
+    WorkloadStateLimits:
+      example:
+        container:
+          current_count: 0
+          limit: 6
+        function:
+          current_count: 0
+          limit: 6
+      properties:
+        container:
+          $ref: '#/components/schemas/WorkloadStateLimit'
+        function:
+          $ref: '#/components/schemas/WorkloadStateLimit'
+      required:
+      - container
+      - function
+      type: object
+    WorkloadStateLimit:
+      example:
+        current_count: 0
+        limit: 6
+      properties:
+        current_count:
+          format: int64
+          type: integer
+        limit:
+          format: int64
+          type: integer
+      required:
+      - current_count
+      - limit
+      type: object
+    WorkloadLimitsResponse:
+      example:
+        connectors:
+          current_count: 0
+          limit: 6
+        workloads:
+          container:
+            current_count: 0
+            limit: 6
+          function:
+            current_count: 0
+            limit: 6
+      properties:
+        connectors:
+          $ref: '#/components/schemas/WorkloadStateLimit'
+        workloads:
+          $ref: '#/components/schemas/WorkloadStateLimits'
+      required:
+      - connectors
+      - workloads
+      type: object
+    WorkloadTagsResponse:
+      example:
+        tags:
+          key: tags
+      properties:
+        tags:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - tags
+      type: object
+  securitySchemes:
+    bearerAuth:
+      bearerFormat: Personal Access Token
+      scheme: bearer
+      type: http
+    sessionAuth:
+      in: cookie
+      name: control_plane_session
+      type: apiKey

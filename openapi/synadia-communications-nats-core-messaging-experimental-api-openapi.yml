@@ -1,0 +1,211 @@
+openapi: 3.2.0
+info:
+  title: NATS HTTP Gateway NATS Core Messaging (Experimental) API
+  description: 'This is the API for interacting with NATS and NATS
+
+    based services using HTTP.'
+  version: 1.0.0
+servers:
+- url: https://api.ngs.global/v1
+security:
+- ApiKeyAuth: []
+tags:
+- name: NATS Core Messaging (Experimental)
+paths:
+  /nats/subjects/{subject}:
+    parameters:
+    - name: subject
+      in: path
+      description: subject
+      required: true
+      style: simple
+      explode: false
+      schema:
+        maximum: 1
+        minimum: 1
+        type: string
+    - in: query
+      name: timeout
+      required: false
+      description: how long to wait for a response in milliseconds. Default is 2000 milliseconds.
+      schema:
+        type: number
+        format: uint64
+    - name: NatsH-*
+      in: header
+      required: false
+      explode: true
+      pattern: ^NatsH-*
+      description: Header prefix - any HTTP request with a header that has the `NatsH-` prefix will have the prefix dropped, and have the header included on the published message.
+      schema:
+        type: string
+    post:
+      tags:
+      - NATS Core Messaging (Experimental)
+      summary: Makes a request
+      operationId: request
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+          application/text:
+            schema:
+              type: string
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subject:
+                    type: string
+                  reply:
+                    type: string
+                  data:
+                    type: string
+                    format: binary
+                  headers:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    x-schema-name: Header
+                example:
+                  headers:
+                    key: headers
+                  data: ''
+                  subject: subject
+                  reply: reply
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    put:
+      tags:
+      - NATS Core Messaging (Experimental)
+      summary: Publishes a message with an optional reply
+      operationId: publish
+      parameters:
+      - name: reply
+        in: query
+        description: subject
+        required: true
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      - name: NatsH-*
+        in: header
+        required: false
+        explode: true
+        pattern: ^NatsH-*
+        description: Header prefix - any HTTP request with a header that has the `NatsH-` prefix will have the prefix dropped, and have the header included on the published message.
+        schema:
+          type: string
+      - name: query
+        in: query
+        description: queue group for the subscription
+        required: false
+        explode: false
+        schema:
+          maximum: 1
+          minimum: 1
+          type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+          application/text:
+            schema:
+              type: string
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+      responses:
+        '200':
+          description: Success response
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    get:
+      tags:
+      - NATS Core Messaging (Experimental)
+      summary: Creates a subscription
+      operationId: subscribe
+      parameters:
+      - name: limit
+        in: query
+        description: the maximum number of keys to return, note internally it is limited to 1000
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: number
+          default: 1000
+          maximum: 1000
+          minimum: 1
+      responses:
+        '200':
+          description: Success response
+          content:
+            text/event-stream:
+              schema:
+                type: object
+                properties:
+                  subject:
+                    type: string
+                  reply:
+                    type: string
+                  data:
+                    type: string
+                    format: binary
+                  headers:
+                    type: object
+                    additionalProperties:
+                      type: string
+                    x-schema-name: Header
+                example:
+                  headers:
+                    key: headers
+                  data: ''
+                  subject: subject
+                  reply: reply
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      name: Authorization
+      in: header
