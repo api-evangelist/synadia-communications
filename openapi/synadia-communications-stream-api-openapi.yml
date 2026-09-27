@@ -243,101 +243,82 @@ paths:
       - 'JetStream: Streams'
 components:
   schemas:
-    JSCommonStreamInfo:
-      properties:
-        alternates:
-          items:
-            $ref: '#/components/schemas/StreamAlternate'
-          type: array
-        cluster:
-          $ref: '#/components/schemas/ClusterInfo'
-        created:
-          format: date-time
-          type: string
-        domain:
-          type: string
-        name:
-          type: string
-        sources:
-          items:
-            $ref: '#/components/schemas/StreamSourceInfo'
-          type: array
-        state:
-          $ref: '#/components/schemas/StreamState'
-        ts:
-          format: date-time
-          type: string
-      required:
-      - created
-      - name
-      - state
-      - ts
-      type: object
-    StreamSource:
-      description: StreamSource dictates how streams can source from other streams.
-      example:
-        opt_start_time: opt_start_time
-        external: null
-        opt_start_seq: 2147483647
-        name: name
-        consumer: null
-        filter_subject: filter_subject
-        subject_transforms:
-        - src: src
-          dest: dest
-        - src: src
-          dest: dest
-      properties:
-        consumer:
-          $ref: '#/components/schemas/StreamSource_consumer'
-        external:
-          $ref: '#/components/schemas/StreamSource_external'
-        filter_subject:
-          type: string
-        name:
-          type: string
-        opt_start_seq:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        opt_start_time:
-          type:
-          - string
-          - 'null'
-        subject_transforms:
-          items:
-            $ref: '#/components/schemas/SubjectTransformConfig'
-          type: array
-      required:
-      - name
-      type: object
-    SubjectTransformConfig:
-      description: 'SubjectTransformConfig is for applying a subject transform (to matching messages) before doing anything else
-
-        when a new message is received'
+    AckPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
+      enum:
+      - none
+      - all
+      - explicit
+      - flow_control
+      type: string
+    RePublish:
+      description: RePublish allows a source subject to be mapped to a destination subject for republishing.
       example:
         src: src
+        headers_only: true
         dest: dest
       properties:
         dest:
           type: string
+        headers_only:
+          type: boolean
         src:
           type: string
       required:
       - dest
-      - src
       type: object
-    StreamAlternate:
+    SequenceInfo:
+      description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
+      example:
+        consumer_seq: 2147483647
+        last_active: last_active
+        stream_seq: 2147483647
       properties:
-        cluster:
+        consumer_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        last_active:
+          type:
+          - string
+          - 'null'
+        stream_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      required:
+      - consumer_seq
+      - stream_seq
+      type: object
+    JSApiError:
+      description: JSApiError retains the existing schema name; the upstream Go type is now ApiError.
+      properties:
+        code:
+          type: integer
+        description:
           type: string
-        domain:
+        err_code:
+          maximum: 65535
+          minimum: 0
+          type: integer
+      required:
+      - code
+      type: object
+    ConsumerInfo_cluster:
+      allOf:
+      - $ref: '#/components/schemas/ClusterInfo'
+      type:
+      - object
+      - 'null'
+    StreamConsumerSource:
+      description: StreamConsumerSource configures the consumer used by a sourced stream.
+      properties:
+        deliver_subject:
           type: string
         name:
           type: string
       required:
-      - cluster
-      - name
+      - deliver_subject
       type: object
     PriorityGroupState:
       description: PriorityGroupState is the state of a consumer priority group.
@@ -356,9 +337,37 @@ components:
       required:
       - group
       type: object
-    StreamState_lost:
+    JSPushConsumerConfigRequest:
       allOf:
-      - $ref: '#/components/schemas/LostStreamData'
+      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
+      example:
+        deliver_group: deliver_group
+        deliver_subject: deliver_subject
+        rate_limit_bps: 2147483647
+        headers_only: true
+        flow_control: true
+        idle_heartbeat: 0
+      properties:
+        deliver_group:
+          type: string
+        deliver_subject:
+          description: Push based options.
+          type: string
+        flow_control:
+          type: boolean
+        headers_only:
+          type: boolean
+        idle_heartbeat:
+          format: int64
+          type: integer
+        rate_limit_bps:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      type: object
+    StreamSourceInfo_error:
+      allOf:
+      - $ref: '#/components/schemas/JSApiError'
       type:
       - object
       - 'null'
@@ -466,60 +475,39 @@ components:
       - sealed
       - storage
       type: object
-    ConsumerInfo:
-      description: ConsumerInfo reports the current state of a consumer
+    ClusterInfo:
+      description: 'ClusterInfo shows information about the underlying set of servers
+
+        that make up the stream or consumer.'
+      example:
+        leader: leader
+        system_account: true
+        replicas:
+        - null
+        - null
+        raft_group: raft_group
+        name: name
+        traffic_account: traffic_account
+        leader_since: leader_since
       properties:
-        ack_floor:
-          $ref: '#/components/schemas/SequenceInfo'
-        cluster:
-          $ref: '#/components/schemas/ConsumerInfo_cluster'
-        config:
-          $ref: '#/components/schemas/ConsumerConfig'
-        created:
-          format: date-time
+        leader:
           type: string
-        delivered:
-          $ref: '#/components/schemas/SequenceInfo'
+        leader_since:
+          type:
+          - string
+          - 'null'
         name:
           type: string
-        num_ack_pending:
-          type: integer
-        num_pending:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        num_redelivered:
-          type: integer
-        num_waiting:
-          type: integer
-        pause_remaining:
-          format: int64
-          type: integer
-        paused:
-          type: boolean
-        priority_groups:
+        raft_group:
+          type: string
+        replicas:
           items:
-            $ref: '#/components/schemas/PriorityGroupState'
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
           type: array
-        push_bound:
+        system_account:
           type: boolean
-        stream_name:
+        traffic_account:
           type: string
-        ts:
-          format: date-time
-          type: string
-      required:
-      - ack_floor
-      - config
-      - created
-      - delivered
-      - name
-      - num_ack_pending
-      - num_pending
-      - num_redelivered
-      - num_waiting
-      - stream_name
-      - ts
       type: object
     DeliverPolicy:
       enum:
@@ -530,181 +518,55 @@ components:
       - by_start_time
       - last_per_subject
       type: string
-    JSConsumerType:
-      enum:
-      - push
-      - pull
-      type: string
-    StreamSource_external:
-      allOf:
-      - $ref: '#/components/schemas/ExternalStream'
-      type:
-      - object
-      - 'null'
-    RetentionPolicy:
-      enum:
-      - limits
-      - interest
-      - workqueue
-      type: string
-    ConsumerInfo_cluster:
-      allOf:
-      - $ref: '#/components/schemas/ClusterInfo'
-      type:
-      - object
-      - 'null'
-    JSConsumerInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/ConsumerInfo'
-      - required:
-        - consumer_type
-        - id
+    StreamSource:
+      description: StreamSource dictates how streams can source from other streams.
       example:
-        consumer_type: null
-        id: id
+        opt_start_time: opt_start_time
+        external: null
+        opt_start_seq: 2147483647
+        name: name
+        consumer: null
+        filter_subject: filter_subject
+        subject_transforms:
+        - src: src
+          dest: dest
+        - src: src
+          dest: dest
       properties:
-        consumer_type:
-          $ref: '#/components/schemas/JSConsumerType'
-        id:
-          type: string
-      type: object
-    Compression:
-      enum:
-      - none
-      - s2
-      type: string
-    SequenceInfo:
-      description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
-      example:
-        consumer_seq: 2147483647
-        last_active: last_active
-        stream_seq: 2147483647
-      properties:
-        consumer_seq:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        last_active:
-          type:
-          - string
-          - 'null'
-        stream_seq:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-      required:
-      - consumer_seq
-      - stream_seq
-      type: object
-    Placement:
-      description: Placement describes stream placement requirements for a stream or leader.
-      example:
-        cluster: cluster
-        tags:
-        - tags
-        - tags
-      properties:
-        cluster:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-      type: object
-    JSStreamConfigRequest:
-      allOf:
-      - $ref: '#/components/schemas/JSCommonStreamConfig'
-      example:
-        subjects:
-        - subjects
-        - subjects
-      properties:
-        subjects:
-          items:
-            type: string
-          type: array
-      type: object
-    StreamConsumerSource:
-      description: StreamConsumerSource configures the consumer used by a sourced stream.
-      properties:
-        deliver_subject:
+        consumer:
+          $ref: '#/components/schemas/StreamSource_consumer'
+        external:
+          $ref: '#/components/schemas/StreamSource_external'
+        filter_subject:
           type: string
         name:
           type: string
-      required:
-      - deliver_subject
-      type: object
-    ReplayPolicy:
-      enum:
-      - instant
-      - original
-      type: string
-    JSCommonConsumerConfigRequest:
-      properties:
-        ack_policy:
-          $ref: '#/components/schemas/AckPolicy'
-        ack_wait:
-          format: int64
-          type: integer
-        backoff:
-          items:
-            format: int64
-            type: integer
-          type: array
-        deliver_policy:
-          $ref: '#/components/schemas/DeliverPolicy'
-        description:
-          type: string
-        direct:
-          type: boolean
-        durable_name:
-          type: string
-        filter_subjects:
-          items:
-            type: string
-          type: array
-        inactive_threshold:
-          format: int64
-          type: integer
-        max_ack_pending:
-          type: integer
-        max_deliver:
-          type: integer
-        mem_storage:
-          type: boolean
-        metadata:
-          additionalProperties:
-            type: string
-          type: object
-        name:
-          type: string
-        num_replicas:
-          type: integer
         opt_start_seq:
           maximum: 18446744073709551615
           minimum: 0
           type: integer
         opt_start_time:
-          format: date-time
+          type:
+          - string
+          - 'null'
+        subject_transforms:
+          items:
+            $ref: '#/components/schemas/SubjectTransformConfig'
+          type: array
+      required:
+      - name
+      type: object
+    ExternalStream:
+      description: ExternalStream allows you to qualify access to a stream source in another account.
+      properties:
+        api:
           type: string
-        pause_until:
-          format: date-time
-          type: string
-        replay_policy:
-          $ref: '#/components/schemas/ReplayPolicy'
-        sample_freq:
+        deliver:
           type: string
       required:
-      - ack_policy
-      - deliver_policy
-      - num_replicas
-      - replay_policy
+      - api
+      - deliver
       type: object
-    StorageType:
-      enum:
-      - file
-      - memory
-      type: string
     ConsumerConfig:
       description: 'ConsumerConfig is the configuration for a JetStream consumes
 
@@ -809,312 +671,6 @@ components:
       - num_replicas
       - replay_policy
       type: object
-    StreamSource_consumer:
-      allOf:
-      - $ref: '#/components/schemas/StreamConsumerSource'
-      type:
-      - object
-      - 'null'
-    JSType:
-      enum:
-      - stream
-      - mirror
-      - kv-bucket
-      - object-bucket
-      type: string
-    StreamSourceInfo_error:
-      allOf:
-      - $ref: '#/components/schemas/JSApiError'
-      type:
-      - object
-      - 'null'
-    JSPushConsumerConfigRequest:
-      allOf:
-      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
-      example:
-        deliver_group: deliver_group
-        deliver_subject: deliver_subject
-        rate_limit_bps: 2147483647
-        headers_only: true
-        flow_control: true
-        idle_heartbeat: 0
-      properties:
-        deliver_group:
-          type: string
-        deliver_subject:
-          description: Push based options.
-          type: string
-        flow_control:
-          type: boolean
-        headers_only:
-          type: boolean
-        idle_heartbeat:
-          format: int64
-          type: integer
-        rate_limit_bps:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-      type: object
-    JSPersistMode:
-      enum:
-      - default
-      - async
-      type: string
-    JSPullConsumerConfigRequest:
-      allOf:
-      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
-      example:
-        max_waiting: 2
-        priority_timeout: 7
-        priority_groups:
-        - priority_groups
-        - priority_groups
-        priority_policy: null
-        max_expires: 5
-        max_bytes: 5
-        max_batch: 1
-      properties:
-        max_batch:
-          type: integer
-        max_bytes:
-          type: integer
-        max_expires:
-          format: int64
-          type: integer
-        max_waiting:
-          description: Pull based options.
-          type: integer
-        priority_groups:
-          items:
-            type: string
-          type: array
-        priority_policy:
-          $ref: '#/components/schemas/PriorityPolicy'
-        priority_timeout:
-          format: int64
-          type: integer
-      type: object
-    JSPushConsumerInfoResponse:
-      example:
-        cluster:
-          leader: leader
-          system_account: true
-          replicas:
-          - null
-          - null
-          raft_group: raft_group
-          name: name
-          traffic_account: traffic_account
-          leader_since: leader_since
-        num_redelivered: 5
-        paused: true
-        created: 2000-01-23 04:56:07+00:00
-        num_pending: 2147483647
-        pause_remaining: 2
-        delivered:
-          consumer_seq: 2147483647
-          last_active: last_active
-          stream_seq: 2147483647
-        num_ack_pending: 1
-        push_bound: true
-        stream_name: stream_name
-        name: name
-        id: id
-        config:
-          deliver_group: deliver_group
-          deliver_subject: deliver_subject
-          rate_limit_bps: 2147483647
-          headers_only: true
-          flow_control: true
-          idle_heartbeat: 0
-        ack_floor:
-          consumer_seq: 2147483647
-          last_active: last_active
-          stream_seq: 2147483647
-        ts: 2000-01-23 04:56:07+00:00
-      properties:
-        ack_floor:
-          $ref: '#/components/schemas/SequenceInfo'
-        cluster:
-          $ref: '#/components/schemas/ClusterInfo'
-        config:
-          $ref: '#/components/schemas/JSPushConsumerConfigRequest'
-        created:
-          format: date-time
-          type: string
-        delivered:
-          $ref: '#/components/schemas/SequenceInfo'
-        id:
-          type: string
-        name:
-          type: string
-        num_ack_pending:
-          type: integer
-        num_pending:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        num_redelivered:
-          type: integer
-        pause_remaining:
-          format: int64
-          type: integer
-        paused:
-          type: boolean
-        push_bound:
-          type: boolean
-        stream_name:
-          type: string
-        ts:
-          format: date-time
-          type: string
-      required:
-      - ack_floor
-      - created
-      - delivered
-      - id
-      - name
-      - num_ack_pending
-      - num_pending
-      - num_redelivered
-      - stream_name
-      - ts
-      type: object
-    StreamSourceInfo:
-      description: StreamSourceInfo shows information about an upstream stream source.
-      example:
-        external: null
-        lag: 2147483647
-        name: name
-        active: 0
-        error: null
-        filter_subject: filter_subject
-        subject_transforms:
-        - src: src
-          dest: dest
-        - src: src
-          dest: dest
-      properties:
-        active:
-          format: int64
-          type: integer
-        error:
-          $ref: '#/components/schemas/StreamSourceInfo_error'
-        external:
-          $ref: '#/components/schemas/StreamSource_external'
-        filter_subject:
-          type: string
-        lag:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        name:
-          type: string
-        subject_transforms:
-          items:
-            $ref: '#/components/schemas/SubjectTransformConfig'
-          type: array
-      required:
-      - active
-      - lag
-      - name
-      type: object
-    JSConsumerInfoListResponse:
-      example:
-        items:
-        - consumer_type: null
-          id: id
-        - consumer_type: null
-          id: id
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/JSConsumerInfoResponse'
-          type: array
-      required:
-      - items
-      type: object
-    JSApiError:
-      description: JSApiError retains the existing schema name; the upstream Go type is now ApiError.
-      properties:
-        code:
-          type: integer
-        description:
-          type: string
-        err_code:
-          maximum: 65535
-          minimum: 0
-          type: integer
-      required:
-      - code
-      type: object
-    PriorityPolicy:
-      description: PriorityPolicy determines how messages are selected from priority groups.
-      enum:
-      - none
-      - overflow
-      - pinned_client
-      - prioritized
-      type: string
-    RePublish:
-      description: RePublish allows a source subject to be mapped to a destination subject for republishing.
-      example:
-        src: src
-        headers_only: true
-        dest: dest
-      properties:
-        dest:
-          type: string
-        headers_only:
-          type: boolean
-        src:
-          type: string
-      required:
-      - dest
-      type: object
-    DiscardPolicy:
-      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/streams.go
-      enum:
-      - old
-      - new
-      type: string
-    ClusterInfo_replicas_inner:
-      allOf:
-      - $ref: '#/components/schemas/PeerInfo'
-      type:
-      - object
-      - 'null'
-    JSStreamInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/JSCommonStreamInfo'
-      - required:
-        - config
-        - id
-        - jetstream_type
-      example:
-        jetstream_type: null
-        id: id
-        config:
-          subjects:
-          - subjects
-          - subjects
-      properties:
-        config:
-          $ref: '#/components/schemas/JSStreamConfigRequest'
-        id:
-          type: string
-        jetstream_type:
-          $ref: '#/components/schemas/JSType'
-      type: object
-    AckPolicy:
-      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
-      enum:
-      - none
-      - all
-      - explicit
-      - flow_control
-      type: string
     StreamState:
       properties:
         bytes:
@@ -1168,6 +724,36 @@ components:
       - last_ts
       - messages
       type: object
+    JSCommonStreamInfo:
+      properties:
+        alternates:
+          items:
+            $ref: '#/components/schemas/StreamAlternate'
+          type: array
+        cluster:
+          $ref: '#/components/schemas/ClusterInfo'
+        created:
+          format: date-time
+          type: string
+        domain:
+          type: string
+        name:
+          type: string
+        sources:
+          items:
+            $ref: '#/components/schemas/StreamSourceInfo'
+          type: array
+        state:
+          $ref: '#/components/schemas/StreamState'
+        ts:
+          format: date-time
+          type: string
+      required:
+      - created
+      - name
+      - state
+      - ts
+      type: object
     JSStreamConsumerLimits:
       properties:
         inactive_threshold:
@@ -1176,40 +762,41 @@ components:
         max_ack_pending:
           type: integer
       type: object
-    ClusterInfo:
-      description: 'ClusterInfo shows information about the underlying set of servers
-
-        that make up the stream or consumer.'
+    JSConsumerInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/ConsumerInfo'
+      - required:
+        - consumer_type
+        - id
       example:
-        leader: leader
-        system_account: true
-        replicas:
-        - null
-        - null
-        raft_group: raft_group
-        name: name
-        traffic_account: traffic_account
-        leader_since: leader_since
+        consumer_type: null
+        id: id
       properties:
-        leader:
-          type: string
-        leader_since:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        raft_group:
-          type: string
-        replicas:
-          items:
-            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
-          type: array
-        system_account:
-          type: boolean
-        traffic_account:
+        consumer_type:
+          $ref: '#/components/schemas/JSConsumerType'
+        id:
           type: string
       type: object
+    JSConsumerInfoListResponse:
+      example:
+        items:
+        - consumer_type: null
+          id: id
+        - consumer_type: null
+          id: id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/JSConsumerInfoResponse'
+          type: array
+      required:
+      - items
+      type: object
+    JSConsumerType:
+      enum:
+      - push
+      - pull
+      type: string
     PeerInfo:
       description: 'PeerInfo shows information about all the peers in the cluster that
 
@@ -1236,17 +823,113 @@ components:
       - name
       - peer
       type: object
-    ExternalStream:
-      description: ExternalStream allows you to qualify access to a stream source in another account.
+    JSStreamConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonStreamConfig'
+      example:
+        subjects:
+        - subjects
+        - subjects
       properties:
-        api:
+        subjects:
+          items:
+            type: string
+          type: array
+      type: object
+    JSStreamInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonStreamInfo'
+      - required:
+        - config
+        - id
+        - jetstream_type
+      example:
+        jetstream_type: null
+        id: id
+        config:
+          subjects:
+          - subjects
+          - subjects
+      properties:
+        config:
+          $ref: '#/components/schemas/JSStreamConfigRequest'
+        id:
           type: string
-        deliver:
+        jetstream_type:
+          $ref: '#/components/schemas/JSType'
+      type: object
+    StorageType:
+      enum:
+      - file
+      - memory
+      type: string
+    ConsumerInfo:
+      description: ConsumerInfo reports the current state of a consumer
+      properties:
+        ack_floor:
+          $ref: '#/components/schemas/SequenceInfo'
+        cluster:
+          $ref: '#/components/schemas/ConsumerInfo_cluster'
+        config:
+          $ref: '#/components/schemas/ConsumerConfig'
+        created:
+          format: date-time
+          type: string
+        delivered:
+          $ref: '#/components/schemas/SequenceInfo'
+        name:
+          type: string
+        num_ack_pending:
+          type: integer
+        num_pending:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        num_redelivered:
+          type: integer
+        num_waiting:
+          type: integer
+        pause_remaining:
+          format: int64
+          type: integer
+        paused:
+          type: boolean
+        priority_groups:
+          items:
+            $ref: '#/components/schemas/PriorityGroupState'
+          type: array
+        push_bound:
+          type: boolean
+        stream_name:
+          type: string
+        ts:
+          format: date-time
           type: string
       required:
-      - api
-      - deliver
+      - ack_floor
+      - config
+      - created
+      - delivered
+      - name
+      - num_ack_pending
+      - num_pending
+      - num_redelivered
+      - num_waiting
+      - stream_name
+      - ts
       type: object
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
+    DiscardPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/streams.go
+      enum:
+      - old
+      - new
+      type: string
     JSPullConsumerInfoResponse:
       example:
         cluster:
@@ -1348,6 +1031,37 @@ components:
       - stream_name
       - ts
       type: object
+    PriorityPolicy:
+      description: PriorityPolicy determines how messages are selected from priority groups.
+      enum:
+      - none
+      - overflow
+      - pinned_client
+      - prioritized
+      type: string
+    StreamSource_external:
+      allOf:
+      - $ref: '#/components/schemas/ExternalStream'
+      type:
+      - object
+      - 'null'
+    RetentionPolicy:
+      enum:
+      - limits
+      - interest
+      - workqueue
+      type: string
+    JSPersistMode:
+      enum:
+      - default
+      - async
+      type: string
+    StreamSource_consumer:
+      allOf:
+      - $ref: '#/components/schemas/StreamConsumerSource'
+      type:
+      - object
+      - 'null'
     LostStreamData:
       description: LostStreamData indicates msgs that have been lost during file checks and recover due to corruption
       properties:
@@ -1366,6 +1080,292 @@ components:
       required:
       - bytes
       - msgs
+      type: object
+    SubjectTransformConfig:
+      description: 'SubjectTransformConfig is for applying a subject transform (to matching messages) before doing anything else
+
+        when a new message is received'
+      example:
+        src: src
+        dest: dest
+      properties:
+        dest:
+          type: string
+        src:
+          type: string
+      required:
+      - dest
+      - src
+      type: object
+    Compression:
+      enum:
+      - none
+      - s2
+      type: string
+    ReplayPolicy:
+      enum:
+      - instant
+      - original
+      type: string
+    StreamSourceInfo:
+      description: StreamSourceInfo shows information about an upstream stream source.
+      example:
+        external: null
+        lag: 2147483647
+        name: name
+        active: 0
+        error: null
+        filter_subject: filter_subject
+        subject_transforms:
+        - src: src
+          dest: dest
+        - src: src
+          dest: dest
+      properties:
+        active:
+          format: int64
+          type: integer
+        error:
+          $ref: '#/components/schemas/StreamSourceInfo_error'
+        external:
+          $ref: '#/components/schemas/StreamSource_external'
+        filter_subject:
+          type: string
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        subject_transforms:
+          items:
+            $ref: '#/components/schemas/SubjectTransformConfig'
+          type: array
+      required:
+      - active
+      - lag
+      - name
+      type: object
+    StreamAlternate:
+      properties:
+        cluster:
+          type: string
+        domain:
+          type: string
+        name:
+          type: string
+      required:
+      - cluster
+      - name
+      type: object
+    JSCommonConsumerConfigRequest:
+      properties:
+        ack_policy:
+          $ref: '#/components/schemas/AckPolicy'
+        ack_wait:
+          format: int64
+          type: integer
+        backoff:
+          items:
+            format: int64
+            type: integer
+          type: array
+        deliver_policy:
+          $ref: '#/components/schemas/DeliverPolicy'
+        description:
+          type: string
+        direct:
+          type: boolean
+        durable_name:
+          type: string
+        filter_subjects:
+          items:
+            type: string
+          type: array
+        inactive_threshold:
+          format: int64
+          type: integer
+        max_ack_pending:
+          type: integer
+        max_deliver:
+          type: integer
+        mem_storage:
+          type: boolean
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        name:
+          type: string
+        num_replicas:
+          type: integer
+        opt_start_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        opt_start_time:
+          format: date-time
+          type: string
+        pause_until:
+          format: date-time
+          type: string
+        replay_policy:
+          $ref: '#/components/schemas/ReplayPolicy'
+        sample_freq:
+          type: string
+      required:
+      - ack_policy
+      - deliver_policy
+      - num_replicas
+      - replay_policy
+      type: object
+    Placement:
+      description: Placement describes stream placement requirements for a stream or leader.
+      example:
+        cluster: cluster
+        tags:
+        - tags
+        - tags
+      properties:
+        cluster:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    JSPushConsumerInfoResponse:
+      example:
+        cluster:
+          leader: leader
+          system_account: true
+          replicas:
+          - null
+          - null
+          raft_group: raft_group
+          name: name
+          traffic_account: traffic_account
+          leader_since: leader_since
+        num_redelivered: 5
+        paused: true
+        created: 2000-01-23 04:56:07+00:00
+        num_pending: 2147483647
+        pause_remaining: 2
+        delivered:
+          consumer_seq: 2147483647
+          last_active: last_active
+          stream_seq: 2147483647
+        num_ack_pending: 1
+        push_bound: true
+        stream_name: stream_name
+        name: name
+        id: id
+        config:
+          deliver_group: deliver_group
+          deliver_subject: deliver_subject
+          rate_limit_bps: 2147483647
+          headers_only: true
+          flow_control: true
+          idle_heartbeat: 0
+        ack_floor:
+          consumer_seq: 2147483647
+          last_active: last_active
+          stream_seq: 2147483647
+        ts: 2000-01-23 04:56:07+00:00
+      properties:
+        ack_floor:
+          $ref: '#/components/schemas/SequenceInfo'
+        cluster:
+          $ref: '#/components/schemas/ClusterInfo'
+        config:
+          $ref: '#/components/schemas/JSPushConsumerConfigRequest'
+        created:
+          format: date-time
+          type: string
+        delivered:
+          $ref: '#/components/schemas/SequenceInfo'
+        id:
+          type: string
+        name:
+          type: string
+        num_ack_pending:
+          type: integer
+        num_pending:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        num_redelivered:
+          type: integer
+        pause_remaining:
+          format: int64
+          type: integer
+        paused:
+          type: boolean
+        push_bound:
+          type: boolean
+        stream_name:
+          type: string
+        ts:
+          format: date-time
+          type: string
+      required:
+      - ack_floor
+      - created
+      - delivered
+      - id
+      - name
+      - num_ack_pending
+      - num_pending
+      - num_redelivered
+      - stream_name
+      - ts
+      type: object
+    StreamState_lost:
+      allOf:
+      - $ref: '#/components/schemas/LostStreamData'
+      type:
+      - object
+      - 'null'
+    JSType:
+      enum:
+      - stream
+      - mirror
+      - kv-bucket
+      - object-bucket
+      type: string
+    JSPullConsumerConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
+      example:
+        max_waiting: 2
+        priority_timeout: 7
+        priority_groups:
+        - priority_groups
+        - priority_groups
+        priority_policy: null
+        max_expires: 5
+        max_bytes: 5
+        max_batch: 1
+      properties:
+        max_batch:
+          type: integer
+        max_bytes:
+          type: integer
+        max_expires:
+          format: int64
+          type: integer
+        max_waiting:
+          description: Pull based options.
+          type: integer
+        priority_groups:
+          items:
+            type: string
+          type: array
+        priority_policy:
+          $ref: '#/components/schemas/PriorityPolicy'
+        priority_timeout:
+          format: int64
+          type: integer
       type: object
   securitySchemes:
     bearerAuth:

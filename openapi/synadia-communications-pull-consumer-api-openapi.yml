@@ -112,13 +112,13 @@ paths:
       - JetStream
 components:
   schemas:
-    PriorityPolicy:
-      description: PriorityPolicy determines how messages are selected from priority groups.
+    AckPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
       enum:
       - none
-      - overflow
-      - pinned_client
-      - prioritized
+      - all
+      - explicit
+      - flow_control
       type: string
     JSPullConsumerUpdateRequest:
       example:
@@ -192,6 +192,135 @@ components:
         sample_freq:
           type: string
       type: object
+    ReplayPolicy:
+      enum:
+      - instant
+      - original
+      type: string
+    JSPullConsumerInfoResponse:
+      example:
+        cluster:
+          leader: leader
+          system_account: true
+          replicas:
+          - null
+          - null
+          raft_group: raft_group
+          name: name
+          traffic_account: traffic_account
+          leader_since: leader_since
+        num_redelivered: 2
+        paused: true
+        created: 2000-01-23 04:56:07+00:00
+        num_pending: 2147483647
+        num_waiting: 4
+        pause_remaining: 7
+        delivered:
+          consumer_seq: 2147483647
+          last_active: last_active
+          stream_seq: 2147483647
+        num_ack_pending: 9
+        priority_groups:
+        - pinned_client_id: pinned_client_id
+          pinned_ts: 2000-01-23 04:56:07+00:00
+          group: group
+        - pinned_client_id: pinned_client_id
+          pinned_ts: 2000-01-23 04:56:07+00:00
+          group: group
+        stream_name: stream_name
+        name: name
+        id: id
+        config:
+          max_waiting: 2
+          priority_timeout: 7
+          priority_groups:
+          - priority_groups
+          - priority_groups
+          priority_policy: null
+          max_expires: 5
+          max_bytes: 5
+          max_batch: 1
+        ack_floor:
+          consumer_seq: 2147483647
+          last_active: last_active
+          stream_seq: 2147483647
+        ts: 2000-01-23 04:56:07+00:00
+      properties:
+        ack_floor:
+          $ref: '#/components/schemas/SequenceInfo'
+        cluster:
+          $ref: '#/components/schemas/ClusterInfo'
+        config:
+          $ref: '#/components/schemas/JSPullConsumerConfigRequest'
+        created:
+          format: date-time
+          type: string
+        delivered:
+          $ref: '#/components/schemas/SequenceInfo'
+        id:
+          type: string
+        name:
+          type: string
+        num_ack_pending:
+          type: integer
+        num_pending:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        num_redelivered:
+          type: integer
+        num_waiting:
+          type: integer
+        pause_remaining:
+          format: int64
+          type: integer
+        paused:
+          type: boolean
+        priority_groups:
+          items:
+            $ref: '#/components/schemas/PriorityGroupState'
+          type: array
+        stream_name:
+          type: string
+        ts:
+          format: date-time
+          type: string
+      required:
+      - ack_floor
+      - created
+      - delivered
+      - id
+      - name
+      - num_ack_pending
+      - num_pending
+      - num_redelivered
+      - num_waiting
+      - stream_name
+      - ts
+      type: object
+    PriorityGroupState:
+      description: PriorityGroupState is the state of a consumer priority group.
+      example:
+        pinned_client_id: pinned_client_id
+        pinned_ts: 2000-01-23 04:56:07+00:00
+        group: group
+      properties:
+        group:
+          type: string
+        pinned_client_id:
+          type: string
+        pinned_ts:
+          format: date-time
+          type: string
+      required:
+      - group
+      type: object
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
     SequenceInfo:
       description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
       example:
@@ -215,37 +344,14 @@ components:
       - consumer_seq
       - stream_seq
       type: object
-    ClusterInfo_replicas_inner:
-      allOf:
-      - $ref: '#/components/schemas/PeerInfo'
-      type:
-      - object
-      - 'null'
-    AckPolicy:
-      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
+    PriorityPolicy:
+      description: PriorityPolicy determines how messages are selected from priority groups.
       enum:
       - none
-      - all
-      - explicit
-      - flow_control
+      - overflow
+      - pinned_client
+      - prioritized
       type: string
-    PriorityGroupState:
-      description: PriorityGroupState is the state of a consumer priority group.
-      example:
-        pinned_client_id: pinned_client_id
-        pinned_ts: 2000-01-23 04:56:07+00:00
-        group: group
-      properties:
-        group:
-          type: string
-        pinned_client_id:
-          type: string
-        pinned_ts:
-          format: date-time
-          type: string
-      required:
-      - group
-      type: object
     JSCommonConsumerConfigRequest:
       properties:
         ack_policy:
@@ -307,11 +413,6 @@ components:
       - num_replicas
       - replay_policy
       type: object
-    ReplayPolicy:
-      enum:
-      - instant
-      - original
-      type: string
     ClusterInfo:
       description: 'ClusterInfo shows information about the underlying set of servers
 
@@ -414,107 +515,6 @@ components:
         priority_timeout:
           format: int64
           type: integer
-      type: object
-    JSPullConsumerInfoResponse:
-      example:
-        cluster:
-          leader: leader
-          system_account: true
-          replicas:
-          - null
-          - null
-          raft_group: raft_group
-          name: name
-          traffic_account: traffic_account
-          leader_since: leader_since
-        num_redelivered: 2
-        paused: true
-        created: 2000-01-23 04:56:07+00:00
-        num_pending: 2147483647
-        num_waiting: 4
-        pause_remaining: 7
-        delivered:
-          consumer_seq: 2147483647
-          last_active: last_active
-          stream_seq: 2147483647
-        num_ack_pending: 9
-        priority_groups:
-        - pinned_client_id: pinned_client_id
-          pinned_ts: 2000-01-23 04:56:07+00:00
-          group: group
-        - pinned_client_id: pinned_client_id
-          pinned_ts: 2000-01-23 04:56:07+00:00
-          group: group
-        stream_name: stream_name
-        name: name
-        id: id
-        config:
-          max_waiting: 2
-          priority_timeout: 7
-          priority_groups:
-          - priority_groups
-          - priority_groups
-          priority_policy: null
-          max_expires: 5
-          max_bytes: 5
-          max_batch: 1
-        ack_floor:
-          consumer_seq: 2147483647
-          last_active: last_active
-          stream_seq: 2147483647
-        ts: 2000-01-23 04:56:07+00:00
-      properties:
-        ack_floor:
-          $ref: '#/components/schemas/SequenceInfo'
-        cluster:
-          $ref: '#/components/schemas/ClusterInfo'
-        config:
-          $ref: '#/components/schemas/JSPullConsumerConfigRequest'
-        created:
-          format: date-time
-          type: string
-        delivered:
-          $ref: '#/components/schemas/SequenceInfo'
-        id:
-          type: string
-        name:
-          type: string
-        num_ack_pending:
-          type: integer
-        num_pending:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        num_redelivered:
-          type: integer
-        num_waiting:
-          type: integer
-        pause_remaining:
-          format: int64
-          type: integer
-        paused:
-          type: boolean
-        priority_groups:
-          items:
-            $ref: '#/components/schemas/PriorityGroupState'
-          type: array
-        stream_name:
-          type: string
-        ts:
-          format: date-time
-          type: string
-      required:
-      - ack_floor
-      - created
-      - delivered
-      - id
-      - name
-      - num_ack_pending
-      - num_pending
-      - num_redelivered
-      - num_waiting
-      - stream_name
-      - ts
       type: object
   securitySchemes:
     bearerAuth:

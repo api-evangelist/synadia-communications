@@ -188,6 +188,27 @@ components:
         type:
           $ref: '#/components/schemas/ExportType'
       type: object
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    SubjectImportUpdateRequest:
+      example:
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/ImportPatch'
+      type: object
     Import:
       description: Import describes a mapping from another account into this one
       example:
@@ -243,27 +264,6 @@ components:
           type: string
         type:
           $ref: '#/components/schemas/ExportType'
-      type: object
-    ExportType:
-      description: ExportType defines the type of import/export.
-      enum:
-      - stream
-      - service
-      type: string
-    SubjectImportUpdateRequest:
-      example:
-        jwt_settings:
-          local_subject: local_subject
-          subject: subject
-          name: name
-          share: true
-          to: to
-          type: null
-          account: account
-          token: token
-      properties:
-        jwt_settings:
-          $ref: '#/components/schemas/ImportPatch'
       type: object
   securitySchemes:
     bearerAuth:

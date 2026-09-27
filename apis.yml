@@ -44,8 +44,8 @@ tags:
 - Key-Value Store
 - Object Storage
 - Infrastructure
-- Agentic AI
-- Open-Source
+- AI Agents
+- Open Source
 tags_raw:
 - Company
 - Messaging
@@ -59,6 +59,7 @@ tags_raw:
 - Infrastructure
 - Agentic AI
 - Open Source
+- Open-Source
 apis:
 - aid: synadia-communications:synadia-communications-account-api
   name: Synadia Communications Account API

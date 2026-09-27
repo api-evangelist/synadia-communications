@@ -69,6 +69,36 @@ paths:
       - Component Versions
 components:
   schemas:
+    AvailableComponentVersionsResponse:
+      additionalProperties:
+        $ref: '#/components/schemas/AvailableChartVersions'
+      type: object
+    AvailableChartVersions:
+      items:
+        $ref: '#/components/schemas/AvailableChartVersion'
+      type: array
+    AvailableComponentVersionsRequest:
+      example:
+        deployment_type: deployment_type
+        major: 2147483647
+        minor: 2147483647
+      properties:
+        deployment_type:
+          type: string
+        major:
+          default: -1
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+        minor:
+          default: -1
+          maximum: 9223372036854775807
+          minimum: -1
+          type: integer
+      required:
+      - major
+      - minor
+      type: object
     AvailableChartVersion:
       example:
         app_version: app_version
@@ -93,36 +123,6 @@ components:
       - repo
       - type
       - version
-      type: object
-    AvailableComponentVersionsRequest:
-      example:
-        deployment_type: deployment_type
-        major: 2147483647
-        minor: 2147483647
-      properties:
-        deployment_type:
-          type: string
-        major:
-          default: -1
-          maximum: 9223372036854775807
-          minimum: -1
-          type: integer
-        minor:
-          default: -1
-          maximum: 9223372036854775807
-          minimum: -1
-          type: integer
-      required:
-      - major
-      - minor
-      type: object
-    AvailableChartVersions:
-      items:
-        $ref: '#/components/schemas/AvailableChartVersion'
-      type: array
-    AvailableComponentVersionsResponse:
-      additionalProperties:
-        $ref: '#/components/schemas/AvailableChartVersions'
       type: object
   securitySchemes:
     bearerAuth:

@@ -54,63 +54,6 @@ paths:
       - Platform Components
 components:
   schemas:
-    PlatformComponentsConnectViewResponse:
-      example:
-        server: server
-        jwt: jwt
-        config: null
-        account: account
-      properties:
-        account:
-          type: string
-        config:
-          $ref: '#/components/schemas/PlatformComponentConfigs'
-        jwt:
-          type: string
-        server:
-          type: string
-      required:
-      - account
-      - jwt
-      - server
-      type: object
-    PlatformComponentConfigs:
-      oneOf:
-      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
-      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
-      - $ref: '#/components/schemas/WorkloadsPlatformComponentConfig'
-      - $ref: '#/components/schemas/ScraperComponentConfig'
-      - $ref: '#/components/schemas/CatalogPlatformComponentConfig'
-      type:
-      - object
-      - 'null'
-    PlatformComponentConnectConfig:
-      oneOf:
-      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
-      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
-      type:
-      - object
-      - 'null'
-    WorkloadsPlatformComponentConfig:
-      properties:
-        account:
-          type: string
-        nexus_name:
-          type: string
-      required:
-      - account
-      - nexus_name
-      type: object
-    AuthCalloutAuthenticatorComponentConfig:
-      properties:
-        account:
-          type: string
-        bucket:
-          type: string
-      required:
-      - account
-      - bucket
-      type: object
     ScraperComponentConfig:
       properties:
         account:
@@ -139,6 +82,13 @@ components:
       - token_bucket
       - url
       type: object
+    PlatformComponentConnectConfig:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      type:
+      - object
+      - 'null'
     PlatformComponentsConnectRequest:
       example:
         data: null
@@ -161,6 +111,56 @@ components:
       required:
       - account
       - catalog_id
+      type: object
+    PlatformComponentsConnectViewResponse:
+      example:
+        server: server
+        jwt: jwt
+        config: null
+        account: account
+      properties:
+        account:
+          type: string
+        config:
+          $ref: '#/components/schemas/PlatformComponentConfigs'
+        jwt:
+          type: string
+        server:
+          type: string
+      required:
+      - account
+      - jwt
+      - server
+      type: object
+    AuthCalloutAuthenticatorComponentConfig:
+      properties:
+        account:
+          type: string
+        bucket:
+          type: string
+      required:
+      - account
+      - bucket
+      type: object
+    PlatformComponentConfigs:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      - $ref: '#/components/schemas/WorkloadsPlatformComponentConfig'
+      - $ref: '#/components/schemas/ScraperComponentConfig'
+      - $ref: '#/components/schemas/CatalogPlatformComponentConfig'
+      type:
+      - object
+      - 'null'
+    WorkloadsPlatformComponentConfig:
+      properties:
+        account:
+          type: string
+        nexus_name:
+          type: string
+      required:
+      - account
+      - nexus_name
       type: object
   securitySchemes:
     bearerAuth:

@@ -188,62 +188,324 @@ paths:
       - OIDC Providers
 components:
   schemas:
-    TeamAssignment:
+    OidcProviderViewResponse:
       example:
-        role: role
-        system_assignments:
-        - role: role
-          system_id: system_id
-          system_name: system_name
-          account_assignments:
-          - account_id: account_id
-            role: role
-            account_name: account_name
-          - account_id: account_id
-            role: role
-            account_name: account_name
-        - role: role
-          system_id: system_id
-          system_name: system_name
-          account_assignments:
-          - account_id: account_id
-            role: role
-            account_name: account_name
-          - account_id: account_id
-            role: role
-            account_name: account_name
-        team_id: team_id
-        team_name: team_name
+        issuer_url: issuer_url
+        created: 2000-01-23 04:56:07+00:00
+        mapper: mapper
+        label: label
+        claims_source: claims_source
+        client_id: client_id
+        enabled: true
+        microsoft_subject_source: microsoft_subject_source
+        additional_id_token_audiences:
+        - additional_id_token_audiences
+        - additional_id_token_audiences
+        requested_claims: ''
+        provider: provider
+        domain: domain
+        scope:
+        - scope
+        - scope
+        claims: claims
+        auth_url: auth_url
+        id: id
+        group_role_mappings:
+          key:
+            team_assignments:
+            - role: role
+              system_assignments:
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              team_id: team_id
+              team_name: team_name
+            - role: role
+              system_assignments:
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              team_id: team_id
+              team_name: team_name
+            app_role: app_role
+        token_url: token_url
+        microsoft_tenant: microsoft_tenant
       properties:
-        role:
-          type: string
-        system_assignments:
+        additional_id_token_audiences:
           items:
-            $ref: '#/components/schemas/SystemAssignment'
+            type: string
           type: array
-        team_id:
+        auth_url:
           type: string
-        team_name:
+        claims:
+          type: string
+        claims_source:
+          type: string
+        client_id:
+          type: string
+        created:
+          format: date-time
+          type: string
+        domain:
+          type: string
+        enabled:
+          type: boolean
+        group_role_mappings:
+          additionalProperties:
+            $ref: '#/components/schemas/GroupMapping'
+          type: object
+        id:
+          type: string
+        issuer_url:
+          type: string
+        label:
+          type: string
+        mapper:
+          type: string
+        microsoft_subject_source:
+          type: string
+        microsoft_tenant:
+          type: string
+        provider:
+          type: string
+        requested_claims: {}
+        scope:
+          items:
+            type: string
+          type: array
+        token_url:
           type: string
       required:
-      - role
-      - team_id
+      - created
+      - domain
+      - enabled
+      - id
       type: object
-    AccountAssignment:
+    SystemAssignment:
       example:
-        account_id: account_id
         role: role
-        account_name: account_name
+        system_id: system_id
+        system_name: system_name
+        account_assignments:
+        - account_id: account_id
+          role: role
+          account_name: account_name
+        - account_id: account_id
+          role: role
+          account_name: account_name
       properties:
-        account_id:
-          type: string
-        account_name:
-          type: string
+        account_assignments:
+          items:
+            $ref: '#/components/schemas/AccountAssignment'
+          type: array
         role:
           type: string
+        system_id:
+          type: string
+        system_name:
+          type: string
       required:
-      - account_id
       - role
+      - system_id
+      type: object
+    OidcProviderDefaultsResponse:
+      example:
+        provider: provider
+        claims:
+        - claims
+        - claims
+        scopes:
+        - scopes
+        - scopes
+      properties:
+        claims:
+          items:
+            type: string
+          type: array
+        provider:
+          type: string
+        scopes:
+          items:
+            type: string
+          type: array
+      required:
+      - claims
+      - provider
+      - scopes
+      type: object
+    OidcProviderUpdateRequest:
+      example:
+        issuer_url: issuer_url
+        mapper: mapper
+        label: label
+        claims_source: claims_source
+        client_id: client_id
+        enabled: true
+        microsoft_subject_source: microsoft_subject_source
+        additional_id_token_audiences:
+        - additional_id_token_audiences
+        - additional_id_token_audiences
+        requested_claims: ''
+        provider: provider
+        scope:
+        - scope
+        - scope
+        claims: claims
+        auth_url: auth_url
+        client_secret: client_secret
+        group_role_mappings:
+          key:
+            team_assignments:
+            - role: role
+              system_assignments:
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              team_id: team_id
+              team_name: team_name
+            - role: role
+              system_assignments:
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              - role: role
+                system_id: system_id
+                system_name: system_name
+                account_assignments:
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+                - account_id: account_id
+                  role: role
+                  account_name: account_name
+              team_id: team_id
+              team_name: team_name
+            app_role: app_role
+        token_url: token_url
+        microsoft_tenant: microsoft_tenant
+      properties:
+        additional_id_token_audiences:
+          items:
+            type: string
+          type: array
+        auth_url:
+          type: string
+        claims:
+          type: string
+        claims_source:
+          type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        enabled:
+          type: boolean
+        group_role_mappings:
+          additionalProperties:
+            $ref: '#/components/schemas/GroupMapping'
+          type: object
+        issuer_url:
+          type: string
+        label:
+          type: string
+        mapper:
+          type: string
+        microsoft_subject_source:
+          type: string
+        microsoft_tenant:
+          type: string
+        provider:
+          type: string
+        requested_claims: {}
+        scope:
+          items:
+            type: string
+          type: array
+        token_url:
+          type: string
+      type: object
+    OidcProviderDefaultsListResponse:
+      example:
+        items:
+        - provider: provider
+          claims:
+          - claims
+          - claims
+          scopes:
+          - scopes
+          - scopes
+        - provider: provider
+          claims:
+          - claims
+          - claims
+          scopes:
+          - scopes
+          - scopes
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/OidcProviderDefaultsResponse'
+          type: array
+      required:
+      - items
       type: object
     OidcProviderAddRequest:
       example:
@@ -525,299 +787,62 @@ components:
       required:
       - items
       type: object
-    OidcProviderUpdateRequest:
+    AccountAssignment:
       example:
-        issuer_url: issuer_url
-        mapper: mapper
-        label: label
-        claims_source: claims_source
-        client_id: client_id
-        enabled: true
-        microsoft_subject_source: microsoft_subject_source
-        additional_id_token_audiences:
-        - additional_id_token_audiences
-        - additional_id_token_audiences
-        requested_claims: ''
-        provider: provider
-        scope:
-        - scope
-        - scope
-        claims: claims
-        auth_url: auth_url
-        client_secret: client_secret
-        group_role_mappings:
-          key:
-            team_assignments:
-            - role: role
-              system_assignments:
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              team_id: team_id
-              team_name: team_name
-            - role: role
-              system_assignments:
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              team_id: team_id
-              team_name: team_name
-            app_role: app_role
-        token_url: token_url
-        microsoft_tenant: microsoft_tenant
-      properties:
-        additional_id_token_audiences:
-          items:
-            type: string
-          type: array
-        auth_url:
-          type: string
-        claims:
-          type: string
-        claims_source:
-          type: string
-        client_id:
-          type: string
-        client_secret:
-          type: string
-        enabled:
-          type: boolean
-        group_role_mappings:
-          additionalProperties:
-            $ref: '#/components/schemas/GroupMapping'
-          type: object
-        issuer_url:
-          type: string
-        label:
-          type: string
-        mapper:
-          type: string
-        microsoft_subject_source:
-          type: string
-        microsoft_tenant:
-          type: string
-        provider:
-          type: string
-        requested_claims: {}
-        scope:
-          items:
-            type: string
-          type: array
-        token_url:
-          type: string
-      type: object
-    OidcProviderViewResponse:
-      example:
-        issuer_url: issuer_url
-        created: 2000-01-23 04:56:07+00:00
-        mapper: mapper
-        label: label
-        claims_source: claims_source
-        client_id: client_id
-        enabled: true
-        microsoft_subject_source: microsoft_subject_source
-        additional_id_token_audiences:
-        - additional_id_token_audiences
-        - additional_id_token_audiences
-        requested_claims: ''
-        provider: provider
-        domain: domain
-        scope:
-        - scope
-        - scope
-        claims: claims
-        auth_url: auth_url
-        id: id
-        group_role_mappings:
-          key:
-            team_assignments:
-            - role: role
-              system_assignments:
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              team_id: team_id
-              team_name: team_name
-            - role: role
-              system_assignments:
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              - role: role
-                system_id: system_id
-                system_name: system_name
-                account_assignments:
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-                - account_id: account_id
-                  role: role
-                  account_name: account_name
-              team_id: team_id
-              team_name: team_name
-            app_role: app_role
-        token_url: token_url
-        microsoft_tenant: microsoft_tenant
-      properties:
-        additional_id_token_audiences:
-          items:
-            type: string
-          type: array
-        auth_url:
-          type: string
-        claims:
-          type: string
-        claims_source:
-          type: string
-        client_id:
-          type: string
-        created:
-          format: date-time
-          type: string
-        domain:
-          type: string
-        enabled:
-          type: boolean
-        group_role_mappings:
-          additionalProperties:
-            $ref: '#/components/schemas/GroupMapping'
-          type: object
-        id:
-          type: string
-        issuer_url:
-          type: string
-        label:
-          type: string
-        mapper:
-          type: string
-        microsoft_subject_source:
-          type: string
-        microsoft_tenant:
-          type: string
-        provider:
-          type: string
-        requested_claims: {}
-        scope:
-          items:
-            type: string
-          type: array
-        token_url:
-          type: string
-      required:
-      - created
-      - domain
-      - enabled
-      - id
-      type: object
-    SystemAssignment:
-      example:
+        account_id: account_id
         role: role
-        system_id: system_id
-        system_name: system_name
-        account_assignments:
-        - account_id: account_id
-          role: role
-          account_name: account_name
-        - account_id: account_id
-          role: role
-          account_name: account_name
+        account_name: account_name
       properties:
-        account_assignments:
-          items:
-            $ref: '#/components/schemas/AccountAssignment'
-          type: array
+        account_id:
+          type: string
+        account_name:
+          type: string
         role:
           type: string
-        system_id:
+      required:
+      - account_id
+      - role
+      type: object
+    TeamAssignment:
+      example:
+        role: role
+        system_assignments:
+        - role: role
+          system_id: system_id
+          system_name: system_name
+          account_assignments:
+          - account_id: account_id
+            role: role
+            account_name: account_name
+          - account_id: account_id
+            role: role
+            account_name: account_name
+        - role: role
+          system_id: system_id
+          system_name: system_name
+          account_assignments:
+          - account_id: account_id
+            role: role
+            account_name: account_name
+          - account_id: account_id
+            role: role
+            account_name: account_name
+        team_id: team_id
+        team_name: team_name
+      properties:
+        role:
           type: string
-        system_name:
+        system_assignments:
+          items:
+            $ref: '#/components/schemas/SystemAssignment'
+          type: array
+        team_id:
+          type: string
+        team_name:
           type: string
       required:
       - role
-      - system_id
-      type: object
-    OidcProviderDefaultsResponse:
-      example:
-        provider: provider
-        claims:
-        - claims
-        - claims
-        scopes:
-        - scopes
-        - scopes
-      properties:
-        claims:
-          items:
-            type: string
-          type: array
-        provider:
-          type: string
-        scopes:
-          items:
-            type: string
-          type: array
-      required:
-      - claims
-      - provider
-      - scopes
+      - team_id
       type: object
     GroupMapping:
       example:
@@ -878,31 +903,6 @@ components:
           items:
             $ref: '#/components/schemas/TeamAssignment'
           type: array
-      type: object
-    OidcProviderDefaultsListResponse:
-      example:
-        items:
-        - provider: provider
-          claims:
-          - claims
-          - claims
-          scopes:
-          - scopes
-          - scopes
-        - provider: provider
-          claims:
-          - claims
-          - claims
-          scopes:
-          - scopes
-          - scopes
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/OidcProviderDefaultsResponse'
-          type: array
-      required:
-      - items
       type: object
   securitySchemes:
     bearerAuth:

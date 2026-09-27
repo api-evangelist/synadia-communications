@@ -79,23 +79,6 @@ paths:
       - Workloads
 components:
   schemas:
-    WorkloadStateLimits:
-      example:
-        container:
-          current_count: 0
-          limit: 6
-        function:
-          current_count: 0
-          limit: 6
-      properties:
-        container:
-          $ref: '#/components/schemas/WorkloadStateLimit'
-        function:
-          $ref: '#/components/schemas/WorkloadStateLimit'
-      required:
-      - container
-      - function
-      type: object
     WorkloadStateLimit:
       example:
         current_count: 0
@@ -110,6 +93,18 @@ components:
       required:
       - current_count
       - limit
+      type: object
+    WorkloadTagsResponse:
+      example:
+        tags:
+          key: tags
+      properties:
+        tags:
+          additionalProperties:
+            type: string
+          type: object
+      required:
+      - tags
       type: object
     WorkloadLimitsResponse:
       example:
@@ -132,17 +127,22 @@ components:
       - connectors
       - workloads
       type: object
-    WorkloadTagsResponse:
+    WorkloadStateLimits:
       example:
-        tags:
-          key: tags
+        container:
+          current_count: 0
+          limit: 6
+        function:
+          current_count: 0
+          limit: 6
       properties:
-        tags:
-          additionalProperties:
-            type: string
-          type: object
+        container:
+          $ref: '#/components/schemas/WorkloadStateLimit'
+        function:
+          $ref: '#/components/schemas/WorkloadStateLimit'
       required:
-      - tags
+      - container
+      - function
       type: object
   securitySchemes:
     bearerAuth:

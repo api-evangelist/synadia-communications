@@ -213,144 +213,6 @@ paths:
       - Sharing
 components:
   schemas:
-    SubjectExportUpdateRequest:
-      example:
-        jwt_settings:
-          revocations: '{}'
-          account_token_position: 0
-          subject: subject
-          name: name
-          description: description
-          response_type: null
-          token_req: true
-          type: null
-          service_latency: null
-          advertise: true
-          info_url: info_url
-          response_threshold: 2147483647
-        metrics_sampling_percentage: 1
-        metrics_enabled: true
-      properties:
-        jwt_settings:
-          $ref: '#/components/schemas/ExportPatch'
-        metrics_enabled:
-          type: boolean
-        metrics_sampling_percentage:
-          format: int64
-          type: integer
-      type: object
-    ActivationClaims:
-      allOf:
-      - $ref: '#/components/schemas/ClaimsData'
-      description: ActivationClaims holds the data specific to an activation JWT
-      example:
-        nats:
-          kind: null
-          subject: subject
-          issuer_account: issuer_account
-      properties:
-        nats:
-          $ref: '#/components/schemas/Activation'
-      type: object
-    ExportType:
-      description: ExportType defines the type of import/export.
-      enum:
-      - stream
-      - service
-      type: string
-    ClaimsData:
-      description: ClaimsData is the base struct for all claims
-      properties:
-        aud:
-          type: string
-        exp:
-          format: int64
-          type: integer
-        iat:
-          format: int64
-          type: integer
-        iss:
-          type: string
-        jti:
-          type: string
-        name:
-          type: string
-        nbf:
-          format: int64
-          type: integer
-        sub:
-          type: string
-      type: object
-    SubjectShareListResponse:
-      example:
-        items:
-        - subject_export_id: subject_export_id
-          created: 2000-01-23 04:56:07+00:00
-          jwt: jwt
-          id: id
-          target_account_nkey_public: target_account_nkey_public
-          jwt_claims:
-            nats:
-              kind: null
-              subject: subject
-              issuer_account: issuer_account
-        - subject_export_id: subject_export_id
-          created: 2000-01-23 04:56:07+00:00
-          jwt: jwt
-          id: id
-          target_account_nkey_public: target_account_nkey_public
-          jwt_claims:
-            nats:
-              kind: null
-              subject: subject
-              issuer_account: issuer_account
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/SubjectShareViewResponse'
-          type: array
-      required:
-      - items
-      type: object
-    SubjectShareViewResponse:
-      description: '/
-
-        Subject Shares
-
-        /'
-      example:
-        subject_export_id: subject_export_id
-        created: 2000-01-23 04:56:07+00:00
-        jwt: jwt
-        id: id
-        target_account_nkey_public: target_account_nkey_public
-        jwt_claims:
-          nats:
-            kind: null
-            subject: subject
-            issuer_account: issuer_account
-      properties:
-        created:
-          format: date-time
-          type: string
-        id:
-          type: string
-        jwt:
-          type: string
-        jwt_claims:
-          $ref: '#/components/schemas/ActivationClaims'
-        subject_export_id:
-          type: string
-        target_account_nkey_public:
-          type: string
-      required:
-      - created
-      - id
-      - jwt
-      - jwt_claims
-      - subject_export_id
-      - target_account_nkey_public
-      type: object
     Export:
       allOf:
       - $ref: '#/components/schemas/Info'
@@ -489,13 +351,29 @@ components:
       - nkey
       - username
       type: string
-    ResponseType:
-      description: ResponseType is used to store an export response type
-      enum:
-      - Singleton
-      - Stream
-      - Chunked
-      type: string
+    ClaimsData:
+      description: ClaimsData is the base struct for all claims
+      properties:
+        aud:
+          type: string
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        iss:
+          type: string
+        jti:
+          type: string
+        name:
+          type: string
+        nbf:
+          format: int64
+          type: integer
+        sub:
+          type: string
+      type: object
     GenericFields:
       properties:
         tags:
@@ -508,13 +386,6 @@ components:
         version:
           type: integer
       type: object
-    Info:
-      properties:
-        description:
-          type: string
-        info_url:
-          type: string
-      type: object
     SubjectShareCreateRequest:
       example:
         target_account_nkey_public: target_account_nkey_public
@@ -524,55 +395,6 @@ components:
       required:
       - target_account_nkey_public
       type: object
-    ServiceLatency:
-      description: "ServiceLatency is used when observing and exported service for\nlatency measurements.\nSampling 1-100, represents sampling rate, defaults to 100.\nResults is the subject where the latency metrics are published.\nA metric will be defined by the nats-server's ServiceLatency. Time durations\nare in nanoseconds.\nsee https://github.com/nats-io/nats-server/blob/main/server/accounts.go#L524\ne.g.\n{\n \"app\": \"dlc22\",\n \"start\": \"2019-09-16T21:46:23.636869585-07:00\",\n \"svc\": 219732,\n \"nats\": {\n   \"req\": 320415,\n   \"resp\": 228268,\n   \"sys\": 0\n },\n \"total\": 768415\n}"
-      example:
-        sampling: 23
-        results: results
-      properties:
-        results:
-          type: string
-        sampling:
-          maximum: 100
-          minimum: 0
-          type: integer
-      required:
-      - results
-      - sampling
-      type: object
-    RevocationListPatch:
-      additionalProperties:
-        maximum: 9223372036854775807
-        minimum: -9223372036854775808
-        type:
-        - integer
-        - 'null'
-      type: object
-    Activation:
-      allOf:
-      - $ref: '#/components/schemas/GenericFields'
-      description: Activation defines the custom parts of an activation claim
-      example:
-        kind: null
-        subject: subject
-        issuer_account: issuer_account
-      properties:
-        issuer_account:
-          description: 'IssuerAccount stores the public key for the account the issuer represents.
-
-            When set, the claim was issued by a signing key.'
-          type: string
-        kind:
-          $ref: '#/components/schemas/ExportType'
-        subject:
-          type: string
-      type: object
-    ExportPatch_service_latency:
-      allOf:
-      - $ref: '#/components/schemas/ServiceLatencyPatch'
-      type:
-      - object
-      - 'null'
     AccountInfo:
       example:
         user_jwt: user_jwt
@@ -615,6 +437,49 @@ components:
       - is_system_account
       - name
       - user_jwt_expires_in_secs
+      type: object
+    ExportPatch_service_latency:
+      allOf:
+      - $ref: '#/components/schemas/ServiceLatencyPatch'
+      type:
+      - object
+      - 'null'
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    RevocationListPatch:
+      additionalProperties:
+        maximum: 9223372036854775807
+        minimum: -9223372036854775808
+        type:
+        - integer
+        - 'null'
+      type: object
+    ResponseType:
+      description: ResponseType is used to store an export response type
+      enum:
+      - Singleton
+      - Stream
+      - Chunked
+      type: string
+    ServiceLatency:
+      description: "ServiceLatency is used when observing and exported service for\nlatency measurements.\nSampling 1-100, represents sampling rate, defaults to 100.\nResults is the subject where the latency metrics are published.\nA metric will be defined by the nats-server's ServiceLatency. Time durations\nare in nanoseconds.\nsee https://github.com/nats-io/nats-server/blob/main/server/accounts.go#L524\ne.g.\n{\n \"app\": \"dlc22\",\n \"start\": \"2019-09-16T21:46:23.636869585-07:00\",\n \"svc\": 219732,\n \"nats\": {\n   \"req\": 320415,\n   \"resp\": 228268,\n   \"sys\": 0\n },\n \"total\": 768415\n}"
+      example:
+        sampling: 23
+        results: results
+      properties:
+        results:
+          type: string
+        sampling:
+          maximum: 100
+          minimum: 0
+          type: integer
+      required:
+      - results
+      - sampling
       type: object
     ExportPatch:
       example:
@@ -671,6 +536,84 @@ components:
         type:
           $ref: '#/components/schemas/ExportType'
       type: object
+    Activation:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      description: Activation defines the custom parts of an activation claim
+      example:
+        kind: null
+        subject: subject
+        issuer_account: issuer_account
+      properties:
+        issuer_account:
+          description: 'IssuerAccount stores the public key for the account the issuer represents.
+
+            When set, the claim was issued by a signing key.'
+          type: string
+        kind:
+          $ref: '#/components/schemas/ExportType'
+        subject:
+          type: string
+      type: object
+    Info:
+      properties:
+        description:
+          type: string
+        info_url:
+          type: string
+      type: object
+    SubjectShareViewResponse:
+      description: '/
+
+        Subject Shares
+
+        /'
+      example:
+        subject_export_id: subject_export_id
+        created: 2000-01-23 04:56:07+00:00
+        jwt: jwt
+        id: id
+        target_account_nkey_public: target_account_nkey_public
+        jwt_claims:
+          nats:
+            kind: null
+            subject: subject
+            issuer_account: issuer_account
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt:
+          type: string
+        jwt_claims:
+          $ref: '#/components/schemas/ActivationClaims'
+        subject_export_id:
+          type: string
+        target_account_nkey_public:
+          type: string
+      required:
+      - created
+      - id
+      - jwt
+      - jwt_claims
+      - subject_export_id
+      - target_account_nkey_public
+      type: object
+    ActivationClaims:
+      allOf:
+      - $ref: '#/components/schemas/ClaimsData'
+      description: ActivationClaims holds the data specific to an activation JWT
+      example:
+        nats:
+          kind: null
+          subject: subject
+          issuer_account: issuer_account
+      properties:
+        nats:
+          $ref: '#/components/schemas/Activation'
+      type: object
     ServiceLatencyPatch:
       properties:
         results:
@@ -678,6 +621,63 @@ components:
         sampling:
           maximum: 100
           minimum: 0
+          type: integer
+      type: object
+    SubjectShareListResponse:
+      example:
+        items:
+        - subject_export_id: subject_export_id
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          id: id
+          target_account_nkey_public: target_account_nkey_public
+          jwt_claims:
+            nats:
+              kind: null
+              subject: subject
+              issuer_account: issuer_account
+        - subject_export_id: subject_export_id
+          created: 2000-01-23 04:56:07+00:00
+          jwt: jwt
+          id: id
+          target_account_nkey_public: target_account_nkey_public
+          jwt_claims:
+            nats:
+              kind: null
+              subject: subject
+              issuer_account: issuer_account
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/SubjectShareViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    SubjectExportUpdateRequest:
+      example:
+        jwt_settings:
+          revocations: '{}'
+          account_token_position: 0
+          subject: subject
+          name: name
+          description: description
+          response_type: null
+          token_req: true
+          type: null
+          service_latency: null
+          advertise: true
+          info_url: info_url
+          response_threshold: 2147483647
+        metrics_sampling_percentage: 1
+        metrics_enabled: true
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/ExportPatch'
+        metrics_enabled:
+          type: boolean
+        metrics_sampling_percentage:
+          format: int64
           type: integer
       type: object
   securitySchemes:

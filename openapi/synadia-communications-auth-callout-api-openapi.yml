@@ -320,102 +320,6 @@ components:
       - id
       - type
       type: object
-    AuthCalloutTargetAccountViewResponse:
-      example:
-        target_account_name: target_account_name
-        control_account_sk_group_id: control_account_sk_group_id
-        target_account_id: target_account_id
-        control_account_sk_group_name: control_account_sk_group_name
-        target_account_sk_group_id: target_account_sk_group_id
-        id: id
-        target_account_sk_group_name: target_account_sk_group_name
-      properties:
-        control_account_sk_group_id:
-          type: string
-        control_account_sk_group_name:
-          type: string
-        id:
-          type: string
-        target_account_id:
-          type: string
-        target_account_name:
-          type: string
-        target_account_sk_group_id:
-          type: string
-        target_account_sk_group_name:
-          type: string
-      required:
-      - control_account_sk_group_id
-      - control_account_sk_group_name
-      - id
-      - target_account_id
-      - target_account_name
-      - target_account_sk_group_id
-      - target_account_sk_group_name
-      type: object
-    AuthCalloutUserViewResponse:
-      example:
-        name: name
-        id: id
-        nats_user_id: nats_user_id
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        nats_user_id:
-          type: string
-      required:
-      - id
-      - name
-      - nats_user_id
-      type: object
-    AuthCalloutConfig:
-      example:
-        xkey_public: xkey_public
-        control_account_id: control_account_id
-        system_id: system_id
-        id: id
-      properties:
-        control_account_id:
-          type: string
-        id:
-          type: string
-        system_id:
-          type: string
-        xkey_public:
-          type: string
-      required:
-      - control_account_id
-      - id
-      - system_id
-      type: object
-    AuthCalloutUsersListResponse:
-      example:
-        items:
-        - name: name
-          id: id
-          nats_user_id: nats_user_id
-        - name: name
-          id: id
-          nats_user_id: nats_user_id
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/AuthCalloutUserViewResponse'
-          type: array
-      required:
-      - items
-      type: object
-    AuthCalloutAddUserRequest:
-      example:
-        nats_user_id: nats_user_id
-      properties:
-        nats_user_id:
-          type: string
-      required:
-      - nats_user_id
-      type: object
     AuthCalloutViewResponse:
       allOf:
       - $ref: '#/components/schemas/AuthCalloutConfig'
@@ -481,6 +385,102 @@ components:
       - account_id
       - control_account_sk_group_id
       - sk_group_id
+      type: object
+    AuthCalloutAddUserRequest:
+      example:
+        nats_user_id: nats_user_id
+      properties:
+        nats_user_id:
+          type: string
+      required:
+      - nats_user_id
+      type: object
+    AuthCalloutUsersListResponse:
+      example:
+        items:
+        - name: name
+          id: id
+          nats_user_id: nats_user_id
+        - name: name
+          id: id
+          nats_user_id: nats_user_id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AuthCalloutUserViewResponse'
+          type: array
+      required:
+      - items
+      type: object
+    AuthCalloutTargetAccountViewResponse:
+      example:
+        target_account_name: target_account_name
+        control_account_sk_group_id: control_account_sk_group_id
+        target_account_id: target_account_id
+        control_account_sk_group_name: control_account_sk_group_name
+        target_account_sk_group_id: target_account_sk_group_id
+        id: id
+        target_account_sk_group_name: target_account_sk_group_name
+      properties:
+        control_account_sk_group_id:
+          type: string
+        control_account_sk_group_name:
+          type: string
+        id:
+          type: string
+        target_account_id:
+          type: string
+        target_account_name:
+          type: string
+        target_account_sk_group_id:
+          type: string
+        target_account_sk_group_name:
+          type: string
+      required:
+      - control_account_sk_group_id
+      - control_account_sk_group_name
+      - id
+      - target_account_id
+      - target_account_name
+      - target_account_sk_group_id
+      - target_account_sk_group_name
+      type: object
+    AuthCalloutConfig:
+      example:
+        xkey_public: xkey_public
+        control_account_id: control_account_id
+        system_id: system_id
+        id: id
+      properties:
+        control_account_id:
+          type: string
+        id:
+          type: string
+        system_id:
+          type: string
+        xkey_public:
+          type: string
+      required:
+      - control_account_id
+      - id
+      - system_id
+      type: object
+    AuthCalloutUserViewResponse:
+      example:
+        name: name
+        id: id
+        nats_user_id: nats_user_id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        nats_user_id:
+          type: string
+      required:
+      - id
+      - name
+      - nats_user_id
       type: object
   securitySchemes:
     bearerAuth:
