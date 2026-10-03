@@ -110,25 +110,21 @@ paths:
       - JetStream
 components:
   schemas:
-    AckPolicy:
-      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
-      enum:
-      - none
-      - all
-      - explicit
-      - flow_control
-      type: string
-    ReplayPolicy:
-      enum:
-      - instant
-      - original
-      type: string
     ClusterInfo_replicas_inner:
       allOf:
       - $ref: '#/components/schemas/PeerInfo'
       type:
       - object
       - 'null'
+    DeliverPolicy:
+      enum:
+      - all
+      - last
+      - new
+      - by_start_sequence
+      - by_start_time
+      - last_per_subject
+      type: string
     SequenceInfo:
       description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
       example:
@@ -151,34 +147,6 @@ components:
       required:
       - consumer_seq
       - stream_seq
-      type: object
-    JSPushConsumerConfigRequest:
-      allOf:
-      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
-      example:
-        deliver_group: deliver_group
-        deliver_subject: deliver_subject
-        rate_limit_bps: 2147483647
-        headers_only: true
-        flow_control: true
-        idle_heartbeat: 0
-      properties:
-        deliver_group:
-          type: string
-        deliver_subject:
-          description: Push based options.
-          type: string
-        flow_control:
-          type: boolean
-        headers_only:
-          type: boolean
-        idle_heartbeat:
-          format: int64
-          type: integer
-        rate_limit_bps:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
       type: object
     JSCommonConsumerConfigRequest:
       properties:
@@ -240,6 +208,66 @@ components:
       - deliver_policy
       - num_replicas
       - replay_policy
+      type: object
+    PeerInfo:
+      description: 'PeerInfo shows information about all the peers in the cluster that
+
+        are supporting the stream or consumer.'
+      properties:
+        active:
+          format: int64
+          type: integer
+        current:
+          type: boolean
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        offline:
+          type: boolean
+        peer:
+          type: string
+      required:
+      - active
+      - current
+      - name
+      - peer
+      type: object
+    ClusterInfo:
+      description: 'ClusterInfo shows information about the underlying set of servers
+
+        that make up the stream or consumer.'
+      example:
+        leader: leader
+        system_account: true
+        replicas:
+        - null
+        - null
+        raft_group: raft_group
+        name: name
+        traffic_account: traffic_account
+        leader_since: leader_since
+      properties:
+        leader:
+          type: string
+        leader_since:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        raft_group:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
+          type: array
+        system_account:
+          type: boolean
+        traffic_account:
+          type: string
       type: object
     JSPushConsumerInfoResponse:
       example:
@@ -327,40 +355,42 @@ components:
       - stream_name
       - ts
       type: object
-    ClusterInfo:
-      description: 'ClusterInfo shows information about the underlying set of servers
-
-        that make up the stream or consumer.'
+    JSPushConsumerConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
       example:
-        leader: leader
-        system_account: true
-        replicas:
-        - null
-        - null
-        raft_group: raft_group
-        name: name
-        traffic_account: traffic_account
-        leader_since: leader_since
+        deliver_group: deliver_group
+        deliver_subject: deliver_subject
+        rate_limit_bps: 2147483647
+        headers_only: true
+        flow_control: true
+        idle_heartbeat: 0
       properties:
-        leader:
+        deliver_group:
           type: string
-        leader_since:
-          type:
-          - string
-          - 'null'
-        name:
+        deliver_subject:
+          description: Push based options.
           type: string
-        raft_group:
-          type: string
-        replicas:
-          items:
-            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
-          type: array
-        system_account:
+        flow_control:
           type: boolean
-        traffic_account:
-          type: string
+        headers_only:
+          type: boolean
+        idle_heartbeat:
+          format: int64
+          type: integer
+        rate_limit_bps:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
       type: object
+    AckPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
+      enum:
+      - none
+      - all
+      - explicit
+      - flow_control
+      type: string
     JSPushConsumerUpdateRequest:
       example:
         metadata:
@@ -420,40 +450,10 @@ components:
         sample_freq:
           type: string
       type: object
-    PeerInfo:
-      description: 'PeerInfo shows information about all the peers in the cluster that
-
-        are supporting the stream or consumer.'
-      properties:
-        active:
-          format: int64
-          type: integer
-        current:
-          type: boolean
-        lag:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        name:
-          type: string
-        offline:
-          type: boolean
-        peer:
-          type: string
-      required:
-      - active
-      - current
-      - name
-      - peer
-      type: object
-    DeliverPolicy:
+    ReplayPolicy:
       enum:
-      - all
-      - last
-      - new
-      - by_start_sequence
-      - by_start_time
-      - last_per_subject
+      - instant
+      - original
       type: string
   securitySchemes:
     bearerAuth:

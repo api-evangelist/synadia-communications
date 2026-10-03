@@ -69,14 +69,14 @@ paths:
       - Component Versions
 components:
   schemas:
-    AvailableComponentVersionsResponse:
-      additionalProperties:
-        $ref: '#/components/schemas/AvailableChartVersions'
-      type: object
     AvailableChartVersions:
       items:
         $ref: '#/components/schemas/AvailableChartVersion'
       type: array
+    AvailableComponentVersionsResponse:
+      additionalProperties:
+        $ref: '#/components/schemas/AvailableChartVersions'
+      type: object
     AvailableComponentVersionsRequest:
       example:
         deployment_type: deployment_type

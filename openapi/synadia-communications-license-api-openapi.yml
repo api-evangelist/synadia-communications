@@ -92,43 +92,6 @@ paths:
       - License
 components:
   schemas:
-    EntitlementsView:
-      example:
-        http_gateway: 5
-        schema_registry: 7
-        fleet: 1
-        connectors: 6
-        insights: 5
-        catalog: 0
-        workloads: 9
-        protect: 2
-      properties:
-        catalog:
-          type: integer
-        connectors:
-          type: integer
-        fleet:
-          type: integer
-        http_gateway:
-          type: integer
-        insights:
-          type: integer
-        protect:
-          type: integer
-        schema_registry:
-          type: integer
-        workloads:
-          type: integer
-      required:
-      - catalog
-      - connectors
-      - fleet
-      - http_gateway
-      - insights
-      - protect
-      - schema_registry
-      - workloads
-      type: object
     LicenseStatusResponse:
       example:
         entitlements:
@@ -175,6 +138,43 @@ components:
           type: string
       required:
       - license_key
+      type: object
+    EntitlementsView:
+      example:
+        http_gateway: 5
+        schema_registry: 7
+        fleet: 1
+        connectors: 6
+        insights: 5
+        catalog: 0
+        workloads: 9
+        protect: 2
+      properties:
+        catalog:
+          type: integer
+        connectors:
+          type: integer
+        fleet:
+          type: integer
+        http_gateway:
+          type: integer
+        insights:
+          type: integer
+        protect:
+          type: integer
+        schema_registry:
+          type: integer
+        workloads:
+          type: integer
+      required:
+      - catalog
+      - connectors
+      - fleet
+      - http_gateway
+      - insights
+      - protect
+      - schema_registry
+      - workloads
       type: object
   securitySchemes:
     bearerAuth:

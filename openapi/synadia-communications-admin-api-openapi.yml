@@ -65,13 +65,6 @@ paths:
       - Admin
 components:
   schemas:
-    AdminAppUserCreateResponse:
-      example:
-        token: token
-      properties:
-        token:
-          type: string
-      type: object
     AdminAppUserCreateRequest:
       example:
         password: password
@@ -87,6 +80,13 @@ components:
       required:
       - password
       - username
+      type: object
+    AdminAppUserCreateResponse:
+      example:
+        token: token
+      properties:
+        token:
+          type: string
       type: object
   securitySchemes:
     bearerAuth:

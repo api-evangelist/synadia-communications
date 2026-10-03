@@ -191,12 +191,7 @@ components:
       required:
       - items
       type: object
-    StreamShareCreateRequest:
-      description: '/
-
-        Stream Share
-
-        /'
+    StreamShareViewResponse:
       example:
         target_account_nkey_public: target_account_nkey_public
       properties:
@@ -244,7 +239,12 @@ components:
       - js_subject_prefix
       - stream_name
       type: object
-    StreamShareViewResponse:
+    StreamShareCreateRequest:
+      description: '/
+
+        Stream Share
+
+        /'
       example:
         target_account_nkey_public: target_account_nkey_public
       properties:

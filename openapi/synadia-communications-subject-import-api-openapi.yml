@@ -111,104 +111,6 @@ paths:
       - Sharing
 components:
   schemas:
-    SubjectImportViewResponse:
-      description: '/
-
-        Subject Imports
-
-        /'
-      example:
-        remote_account_nkey_public: remote_account_nkey_public
-        remote_subject: remote_subject
-        created: 2000-01-23 04:56:07+00:00
-        jwt_settings:
-          local_subject: local_subject
-          subject: subject
-          name: name
-          share: true
-          to: to
-          type: null
-          account: account
-          token: token
-        name: name
-        id: id
-      properties:
-        created:
-          format: date-time
-          type: string
-        id:
-          type: string
-        jwt_settings:
-          $ref: '#/components/schemas/Import'
-        name:
-          type: string
-        remote_account_nkey_public:
-          type: string
-        remote_subject:
-          type: string
-      required:
-      - created
-      - id
-      - jwt_settings
-      - name
-      - remote_account_nkey_public
-      - remote_subject
-      type: object
-    ImportPatch:
-      example:
-        local_subject: local_subject
-        subject: subject
-        name: name
-        share: true
-        to: to
-        type: null
-        account: account
-        token: token
-      properties:
-        account:
-          type: string
-        local_subject:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        share:
-          type: boolean
-        subject:
-          type: string
-        to:
-          type:
-          - string
-          - 'null'
-        token:
-          type:
-          - string
-          - 'null'
-        type:
-          $ref: '#/components/schemas/ExportType'
-      type: object
-    ExportType:
-      description: ExportType defines the type of import/export.
-      enum:
-      - stream
-      - service
-      type: string
-    SubjectImportUpdateRequest:
-      example:
-        jwt_settings:
-          local_subject: local_subject
-          subject: subject
-          name: name
-          share: true
-          to: to
-          type: null
-          account: account
-          token: token
-      properties:
-        jwt_settings:
-          $ref: '#/components/schemas/ImportPatch'
-      type: object
     Import:
       description: Import describes a mapping from another account into this one
       example:
@@ -262,6 +164,104 @@ components:
           type: string
         token:
           type: string
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    SubjectImportViewResponse:
+      description: '/
+
+        Subject Imports
+
+        /'
+      example:
+        remote_account_nkey_public: remote_account_nkey_public
+        remote_subject: remote_subject
+        created: 2000-01-23 04:56:07+00:00
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+        name: name
+        id: id
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        jwt_settings:
+          $ref: '#/components/schemas/Import'
+        name:
+          type: string
+        remote_account_nkey_public:
+          type: string
+        remote_subject:
+          type: string
+      required:
+      - created
+      - id
+      - jwt_settings
+      - name
+      - remote_account_nkey_public
+      - remote_subject
+      type: object
+    SubjectImportUpdateRequest:
+      example:
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/ImportPatch'
+      type: object
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    ImportPatch:
+      example:
+        local_subject: local_subject
+        subject: subject
+        name: name
+        share: true
+        to: to
+        type: null
+        account: account
+        token: token
+      properties:
+        account:
+          type: string
+        local_subject:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        share:
+          type: boolean
+        subject:
+          type: string
+        to:
+          type:
+          - string
+          - 'null'
+        token:
+          type:
+          - string
+          - 'null'
         type:
           $ref: '#/components/schemas/ExportType'
       type: object

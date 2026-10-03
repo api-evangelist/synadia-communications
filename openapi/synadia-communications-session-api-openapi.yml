@@ -364,66 +364,56 @@ paths:
       - Session
 components:
   schemas:
-    AppUserCreateResponse:
-      allOf:
-      - $ref: '#/components/schemas/AppUserViewResponse'
-      - required:
-        - invitation_link
+    TeamCreateRequest:
       example:
-        invitation_link: invitation_link
+        name: name
       properties:
-        invitation_link:
+        name:
           type: string
+      required:
+      - name
       type: object
-    SystemManagedBy:
-      enum:
-      - byon
-      - sdkube
-      type: string
-    AppRoleScope:
-      enum:
-      - App
-      - Team
-      - System
-      - Account
-      - NatsUser
-      type: string
-    AccountAuthType:
-      enum:
-      - jwt
-      - tls
-      - nkey
-      - username
-      type: string
-    AlertRuleType:
-      enum:
-      - SystemDefault
-      - System
-      - AccountDefault
-      - Account
-      - Stream
-      - Consumer
-      type: string
-    TeamAppUserInfo:
+    TeamInfo:
       example:
-        role_name: role_name
-        role_id: role_id
-        pending_invitation: true
+        name: name
         id: id
       properties:
         id:
           type: string
-        pending_invitation:
-          type: boolean
-        role_id:
-          type: string
-        role_name:
+        name:
           type: string
       required:
       - id
-      - pending_invitation
+      - name
+      type: object
+    AlertRuleSeverity:
+      enum:
+      - Info
+      - Warn
+      - Error
+      - Critical
+      type: string
+    ServiceAccountCreateRequest:
+      example:
+        role_id: role_id
+        name: name
+        resources:
+          key:
+            role_id: role_id
+      properties:
+        name:
+          type: string
+        resources:
+          additionalProperties:
+            $ref: '#/components/schemas/AppUserAssignRequest'
+          description: resource keys must be in format ServiceAccountResourceScope:resource_id
+          type: object
+        role_id:
+          type: string
+      required:
+      - name
+      - resources
       - role_id
-      - role_name
       type: object
     SystemInfo:
       example:
@@ -482,16 +472,177 @@ components:
       - state
       - user_jwt_expires_in_secs
       type: object
-    AppUserAccessTokenCreateResponse:
-      allOf:
-      - $ref: '#/components/schemas/AppUserAccessTokenViewResponse'
-      - required:
-        - token
+    NatsUserInfo:
       example:
-        token: token
+        user_public_key: user_public_key
+        name: name
+        id: id
       properties:
-        token:
+        id:
           type: string
+        name:
+          type: string
+        user_public_key:
+          type: string
+      required:
+      - id
+      - name
+      - user_public_key
+      type: object
+    AlertViewResponse:
+      example:
+        severity: null
+        closed_at: 2000-01-23 04:56:07+00:00
+        created: 2000-01-23 04:56:07+00:00
+        system_id: system_id
+        metric_value: 0.8008281904610115
+        message: message
+        alert_rule:
+          severity: null
+          created: 2000-01-23 04:56:07+00:00
+          system_id: system_id
+          duration_in_secs: 0
+          message: message
+          threshold_expression_metric: threshold_expression_metric
+          threshold_fixed_value: 1.4658129805029452
+          is_enabled: true
+          account_id: account_id
+          consumer_name: consumer_name
+          rule_type: null
+          stream_name: stream_name
+          metric: metric
+          threshold_operator: threshold_operator
+          id: id
+          threshold_expression_multiplier: 6.027456183070403
+        sample_values:
+        - value: 1.4658129805029452
+          timestamp: 6
+        - value: 1.4658129805029452
+          timestamp: 6
+        is_acknowledged: true
+        account_id: account_id
+        consumer_name: consumer_name
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        stream_name: stream_name
+        threshold_value: 5.962133916683182
+        AcknowledgedByAppUserID: AcknowledgedByAppUserID
+        id: id
+        is_firing: true
+        alert_rule_id: alert_rule_id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+        acknowledged_at: 2000-01-23 04:56:07+00:00
+        is_closed: true
+      properties:
+        AcknowledgedByAppUserID:
+          type: string
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        account_id:
+          type: string
+        acknowledged_at:
+          format: date-time
+          type: string
+        alert_rule:
+          $ref: '#/components/schemas/AlertRuleViewResponse'
+        alert_rule_id:
+          type: string
+        closed_at:
+          format: date-time
+          type: string
+        consumer_name:
+          type: string
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        is_acknowledged:
+          type: boolean
+        is_closed:
+          type: boolean
+        is_firing:
+          type: boolean
+        message:
+          type: string
+        metric_value:
+          format: double
+          type: number
+        sample_values:
+          items:
+            $ref: '#/components/schemas/PromSampleValue'
+          type: array
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        stream_name:
+          type: string
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        system_id:
+          type: string
+        threshold_value:
+          format: double
+          type: number
+      required:
+      - alert_rule
+      - alert_rule_id
+      - created
+      - id
+      - is_acknowledged
+      - is_closed
+      - is_firing
+      - message
+      - metric_value
+      - sample_values
+      - severity
+      - threshold_value
+      type: object
+    AppRoleScope:
+      enum:
+      - App
+      - Team
+      - System
+      - Account
+      - NatsUser
+      type: string
+    InvitationListResponse:
+      example:
+        items:
+        - name: name
+          id: id
+        - name: name
+          id: id
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/TeamInfo'
+          type: array
+      required:
+      - items
       type: object
     InvitationDecisionRequest:
       example:
@@ -502,22 +653,75 @@ components:
       required:
       - accept
       type: object
-    AppUserAccessTokenCreateRequest:
+    AlertRuleViewResponse:
       example:
-        expires: 2000-01-23 04:56:07+00:00
-        never_expires: true
-        name: name
+        severity: null
+        created: 2000-01-23 04:56:07+00:00
+        system_id: system_id
+        duration_in_secs: 0
+        message: message
+        threshold_expression_metric: threshold_expression_metric
+        threshold_fixed_value: 1.4658129805029452
+        is_enabled: true
+        account_id: account_id
+        consumer_name: consumer_name
+        rule_type: null
+        stream_name: stream_name
+        metric: metric
+        threshold_operator: threshold_operator
+        id: id
+        threshold_expression_multiplier: 6.027456183070403
       properties:
-        expires:
+        account_id:
+          type: string
+        consumer_name:
+          type: string
+        created:
           format: date-time
           type: string
-        name:
+        duration_in_secs:
+          type: integer
+        id:
           type: string
-        never_expires:
+        is_enabled:
           type: boolean
+        message:
+          type: string
+        metric:
+          type: string
+        rule_type:
+          $ref: '#/components/schemas/AlertRuleType'
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        stream_name:
+          type: string
+        system_id:
+          type: string
+        threshold_expression_metric:
+          type: string
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          type: string
       required:
-      - name
+      - created
+      - duration_in_secs
+      - id
+      - is_enabled
+      - message
+      - metric
+      - rule_type
+      - severity
+      - threshold_operator
       type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
     AppUserViewResponse:
       example:
         role_name: role_name
@@ -560,90 +764,453 @@ components:
       - role_name
       - type
       type: object
-    TeamInfo:
+    ServiceAccountScope:
+      enum:
+      - App
+      - Team
+      type: string
+    PromSampleValue:
       example:
-        name: name
-        id: id
+        value: 1.4658129805029452
+        timestamp: 6
       properties:
-        id:
-          type: string
-        name:
-          type: string
+        timestamp:
+          format: int64
+          type: integer
+        value:
+          format: double
+          type: number
       required:
-      - id
-      - name
+      - timestamp
+      - value
       type: object
-    InvitationListResponse:
+    ServiceAccountListResponse:
       example:
         items:
-        - name: name
+        - role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          name: name
+          resources:
+            key:
+              role_name: role_name
+              nats_user:
+                user_public_key: user_public_key
+                name: name
+                id: id
+              system:
+                jetstream_enabled: true
+                http_gateway_url: http_gateway_url
+                is_tenant: true
+                connection_type: null
+                managed_by: null
+                config_mode: true
+                server_urls: server_urls
+                user_jwt_expires_in_secs: 7
+                jetstream_tiers:
+                - jetstream_tiers
+                - jetstream_tiers
+                name: name
+                id: id
+                state: null
+                jetstream_domain: jetstream_domain
+              app_user:
+                identifier: identifier
+                name: name
+                id: id
+                type: null
+              role_id: role_id
+              created: 2000-01-23 04:56:07+00:00
+              scope: null
+              team_app_user:
+                role_name: role_name
+                role_id: role_id
+                pending_invitation: true
+                id: id
+              resource_id: resource_id
+              team:
+                name: name
+                id: id
+              account:
+                user_jwt: user_jwt
+                auth_type: null
+                user_cred: user_cred
+                account_public_key: account_public_key
+                name: name
+                user_jwt_expires_in_secs: 0
+                id: id
+                is_platform_account: true
+                is_scp_account: true
+                is_system_account: true
           id: id
-        - name: name
+          last_active: last_active
+          team_id: team_id
+        - role_id: role_id
+          created: 2000-01-23 04:56:07+00:00
+          scope: null
+          name: name
+          resources:
+            key:
+              role_name: role_name
+              nats_user:
+                user_public_key: user_public_key
+                name: name
+                id: id
+              system:
+                jetstream_enabled: true
+                http_gateway_url: http_gateway_url
+                is_tenant: true
+                connection_type: null
+                managed_by: null
+                config_mode: true
+                server_urls: server_urls
+                user_jwt_expires_in_secs: 7
+                jetstream_tiers:
+                - jetstream_tiers
+                - jetstream_tiers
+                name: name
+                id: id
+                state: null
+                jetstream_domain: jetstream_domain
+              app_user:
+                identifier: identifier
+                name: name
+                id: id
+                type: null
+              role_id: role_id
+              created: 2000-01-23 04:56:07+00:00
+              scope: null
+              team_app_user:
+                role_name: role_name
+                role_id: role_id
+                pending_invitation: true
+                id: id
+              resource_id: resource_id
+              team:
+                name: name
+                id: id
+              account:
+                user_jwt: user_jwt
+                auth_type: null
+                user_cred: user_cred
+                account_public_key: account_public_key
+                name: name
+                user_jwt_expires_in_secs: 0
+                id: id
+                is_platform_account: true
+                is_scp_account: true
+                is_system_account: true
           id: id
+          last_active: last_active
+          team_id: team_id
       properties:
         items:
           items:
-            $ref: '#/components/schemas/TeamInfo'
+            $ref: '#/components/schemas/ServiceAccountViewResponse'
           type: array
       required:
       - items
       type: object
-    AcceptTermsResponse:
+    AppUserCreateRequest:
       example:
-        ip_address: ip_address
-        accepted_at: 2000-01-23 04:56:07+00:00
-      properties:
-        accepted_at:
-          format: date-time
-          type: string
-        ip_address:
-          type: string
-      required:
-      - accepted_at
-      - ip_address
-      type: object
-    AccountInfo:
-      example:
-        user_jwt: user_jwt
-        auth_type: null
-        user_cred: user_cred
-        account_public_key: account_public_key
+        identifier: identifier
+        role_id: role_id
         name: name
-        user_jwt_expires_in_secs: 0
-        id: id
-        is_platform_account: true
-        is_scp_account: true
-        is_system_account: true
       properties:
-        account_public_key:
+        identifier:
           type: string
-        auth_type:
-          $ref: '#/components/schemas/AccountAuthType'
-        id:
-          type: string
-        is_platform_account:
-          type: boolean
-        is_scp_account:
-          type: boolean
-        is_system_account:
-          type: boolean
         name:
           type: string
-        user_cred:
+        role_id:
           type: string
-        user_jwt:
+      required:
+      - identifier
+      - name
+      - role_id
+      type: object
+    ServiceAccountViewResponse:
+      example:
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        scope: null
+        name: name
+        resources:
+          key:
+            role_name: role_name
+            nats_user:
+              user_public_key: user_public_key
+              name: name
+              id: id
+            system:
+              jetstream_enabled: true
+              http_gateway_url: http_gateway_url
+              is_tenant: true
+              connection_type: null
+              managed_by: null
+              config_mode: true
+              server_urls: server_urls
+              user_jwt_expires_in_secs: 7
+              jetstream_tiers:
+              - jetstream_tiers
+              - jetstream_tiers
+              name: name
+              id: id
+              state: null
+              jetstream_domain: jetstream_domain
+            app_user:
+              identifier: identifier
+              name: name
+              id: id
+              type: null
+            role_id: role_id
+            created: 2000-01-23 04:56:07+00:00
+            scope: null
+            team_app_user:
+              role_name: role_name
+              role_id: role_id
+              pending_invitation: true
+              id: id
+            resource_id: resource_id
+            team:
+              name: name
+              id: id
+            account:
+              user_jwt: user_jwt
+              auth_type: null
+              user_cred: user_cred
+              account_public_key: account_public_key
+              name: name
+              user_jwt_expires_in_secs: 0
+              id: id
+              is_platform_account: true
+              is_scp_account: true
+              is_system_account: true
+        id: id
+        last_active: last_active
+        team_id: team_id
+      properties:
+        created:
+          format: date-time
           type: string
-        user_jwt_expires_in_secs:
-          format: int64
+        id:
+          type: string
+        last_active:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        resources:
+          additionalProperties:
+            $ref: '#/components/schemas/AppUserAssignResponse'
+          description: resource keys must be in format ServiceAccountResourceScope:resource_id
+          type: object
+        role_id:
+          type: string
+        scope:
+          $ref: '#/components/schemas/ServiceAccountScope'
+        team_id:
+          type: string
+      required:
+      - created
+      - id
+      - last_active
+      - name
+      - resources
+      - role_id
+      - scope
+      type: object
+    SDKubeLimit:
+      properties:
+        five_node:
+          type: integer
+        three_node:
           type: integer
       required:
-      - auth_type
+      - five_node
+      - three_node
+      type: object
+    VersionResponse:
+      example:
+        date: date
+        commit: commit
+        version: version
+      properties:
+        commit:
+          type: string
+        date:
+          type: string
+        version:
+          type: string
+      required:
+      - commit
+      - date
+      - version
+      type: object
+    AlertRuleType:
+      enum:
+      - SystemDefault
+      - System
+      - AccountDefault
+      - Account
+      - Stream
+      - Consumer
+      type: string
+    TeamViewResponse:
+      example:
+        created: 2000-01-23 04:56:07+00:00
+        name: name
+        id: id
+        limits:
+          num_sdkube: null
+          num_systems: 0
+          num_users: 6
+          disable_prometheus_federation: true
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        limits:
+          $ref: '#/components/schemas/TeamLimits'
+        name:
+          type: string
+      required:
+      - created
       - id
-      - is_platform_account
-      - is_scp_account
-      - is_system_account
       - name
-      - user_jwt_expires_in_secs
+      type: object
+    TeamLimits:
+      example:
+        num_sdkube: null
+        num_systems: 0
+        num_users: 6
+        disable_prometheus_federation: true
+      properties:
+        disable_prometheus_federation:
+          type: boolean
+        num_sdkube:
+          $ref: '#/components/schemas/TeamLimits_num_sdkube'
+        num_systems:
+          type:
+          - integer
+          - 'null'
+        num_users:
+          type:
+          - integer
+          - 'null'
+      required:
+      - disable_prometheus_federation
+      - num_sdkube
+      - num_systems
+      - num_users
+      type: object
+    AppUserAccessTokenCreateRequest:
+      example:
+        expires: 2000-01-23 04:56:07+00:00
+        never_expires: true
+        name: name
+      properties:
+        expires:
+          format: date-time
+          type: string
+        name:
+          type: string
+        never_expires:
+          type: boolean
+      required:
+      - name
+      type: object
+    TeamLimits_num_sdkube:
+      allOf:
+      - $ref: '#/components/schemas/SDKubeLimit'
+      type:
+      - object
+      - 'null'
+    AppUserAssignResponse:
+      example:
+        role_name: role_name
+        nats_user:
+          user_public_key: user_public_key
+          name: name
+          id: id
+        system:
+          jetstream_enabled: true
+          http_gateway_url: http_gateway_url
+          is_tenant: true
+          connection_type: null
+          managed_by: null
+          config_mode: true
+          server_urls: server_urls
+          user_jwt_expires_in_secs: 7
+          jetstream_tiers:
+          - jetstream_tiers
+          - jetstream_tiers
+          name: name
+          id: id
+          state: null
+          jetstream_domain: jetstream_domain
+        app_user:
+          identifier: identifier
+          name: name
+          id: id
+          type: null
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        scope: null
+        team_app_user:
+          role_name: role_name
+          role_id: role_id
+          pending_invitation: true
+          id: id
+        resource_id: resource_id
+        team:
+          name: name
+          id: id
+        account:
+          user_jwt: user_jwt
+          auth_type: null
+          user_cred: user_cred
+          account_public_key: account_public_key
+          name: name
+          user_jwt_expires_in_secs: 0
+          id: id
+          is_platform_account: true
+          is_scp_account: true
+          is_system_account: true
+      properties:
+        account:
+          $ref: '#/components/schemas/AccountInfo'
+        app_user:
+          $ref: '#/components/schemas/AppUserInfo'
+        created:
+          format: date-time
+          type: string
+        nats_user:
+          $ref: '#/components/schemas/NatsUserInfo'
+        resource_id:
+          type: string
+        role_id:
+          type: string
+        role_name:
+          type: string
+        scope:
+          $ref: '#/components/schemas/AppRoleScope'
+        system:
+          $ref: '#/components/schemas/SystemInfo'
+        team:
+          $ref: '#/components/schemas/TeamInfo'
+        team_app_user:
+          $ref: '#/components/schemas/TeamAppUserInfo'
+      required:
+      - app_user
+      - created
+      - resource_id
+      - role_id
+      - role_name
+      - scope
+      - team_app_user
       type: object
     AlertListResponse:
       example:
@@ -788,29 +1355,107 @@ components:
       required:
       - items
       type: object
-    AppUserAssignRequest:
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
+      type: string
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    AppUserAccessTokenListResponse:
       example:
-        role_id: role_id
+        items:
+        - expires: expires
+          created: 2000-01-23 04:56:07+00:00
+          name: name
+          id: id
+          last_active: last_active
+        - expires: expires
+          created: 2000-01-23 04:56:07+00:00
+          name: name
+          id: id
+          last_active: last_active
       properties:
-        role_id:
-          type: string
+        items:
+          items:
+            $ref: '#/components/schemas/AppUserAccessTokenViewResponse'
+          type: array
       required:
-      - role_id
+      - items
       type: object
-    PromSampleValue:
+    AccountInfo:
       example:
-        value: 1.4658129805029452
-        timestamp: 6
+        user_jwt: user_jwt
+        auth_type: null
+        user_cred: user_cred
+        account_public_key: account_public_key
+        name: name
+        user_jwt_expires_in_secs: 0
+        id: id
+        is_platform_account: true
+        is_scp_account: true
+        is_system_account: true
       properties:
-        timestamp:
+        account_public_key:
+          type: string
+        auth_type:
+          $ref: '#/components/schemas/AccountAuthType'
+        id:
+          type: string
+        is_platform_account:
+          type: boolean
+        is_scp_account:
+          type: boolean
+        is_system_account:
+          type: boolean
+        name:
+          type: string
+        user_cred:
+          type: string
+        user_jwt:
+          type: string
+        user_jwt_expires_in_secs:
           format: int64
           type: integer
-        value:
-          format: double
-          type: number
       required:
-      - timestamp
-      - value
+      - auth_type
+      - id
+      - is_platform_account
+      - is_scp_account
+      - is_system_account
+      - name
+      - user_jwt_expires_in_secs
+      type: object
+    AppUserAccessTokenCreateResponse:
+      allOf:
+      - $ref: '#/components/schemas/AppUserAccessTokenViewResponse'
+      - required:
+        - token
+      example:
+        token: token
+      properties:
+        token:
+          type: string
+      type: object
+    AcceptTermsResponse:
+      example:
+        ip_address: ip_address
+        accepted_at: 2000-01-23 04:56:07+00:00
+      properties:
+        accepted_at:
+          format: date-time
+          type: string
+        ip_address:
+          type: string
+      required:
+      - accepted_at
+      - ip_address
       type: object
     AppUserAccessTokenViewResponse:
       example:
@@ -840,29 +1485,84 @@ components:
       - id
       - name
       type: object
-    AlertRuleSeverity:
+    AppUserType:
       enum:
-      - Info
-      - Warn
-      - Error
-      - Critical
+      - Person
+      - AppServiceAccount
+      - TeamServiceAccount
       type: string
-    SDKubeLimit:
+    TeamListResponse:
+      example:
+        items:
+        - created: 2000-01-23 04:56:07+00:00
+          name: name
+          id: id
+          limits:
+            num_sdkube: null
+            num_systems: 0
+            num_users: 6
+            disable_prometheus_federation: true
+        - created: 2000-01-23 04:56:07+00:00
+          name: name
+          id: id
+          limits:
+            num_sdkube: null
+            num_systems: 0
+            num_users: 6
+            disable_prometheus_federation: true
       properties:
-        five_node:
-          type: integer
-        three_node:
-          type: integer
+        items:
+          items:
+            $ref: '#/components/schemas/TeamViewResponse'
+          type: array
       required:
-      - five_node
-      - three_node
+      - items
       type: object
-    SystemConnectionType:
-      default: Agent
+    AppUserInfo:
+      example:
+        identifier: identifier
+        name: name
+        id: id
+        type: null
+      properties:
+        id:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - id
+      - name
+      - type
+      type: object
+    SystemManagedBy:
       enum:
-      - Agent
-      - Direct
+      - byon
+      - sdkube
       type: string
+    AppUserCreateResponse:
+      allOf:
+      - $ref: '#/components/schemas/AppUserViewResponse'
+      - required:
+        - invitation_link
+      example:
+        invitation_link: invitation_link
+      properties:
+        invitation_link:
+          type: string
+      type: object
+    AppUserAssignRequest:
+      example:
+        role_id: role_id
+      properties:
+        role_id:
+          type: string
+      required:
+      - role_id
+      type: object
     AppUserListResponse:
       example:
         items:
@@ -892,726 +1592,26 @@ components:
       required:
       - items
       type: object
-    AppUserInfo:
-      example:
-        identifier: identifier
-        name: name
-        id: id
-        type: null
-      properties:
-        id:
-          type: string
-        identifier:
-          type: string
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/AppUserType'
-      required:
-      - id
-      - name
-      - type
-      type: object
-    SystemState:
-      enum:
-      - Provisioning
-      - Connected
-      - Disconnected
-      type: string
-    ServiceAccountCreateRequest:
-      example:
-        role_id: role_id
-        name: name
-        resources:
-          key:
-            role_id: role_id
-      properties:
-        name:
-          type: string
-        resources:
-          additionalProperties:
-            $ref: '#/components/schemas/AppUserAssignRequest'
-          description: resource keys must be in format ServiceAccountResourceScope:resource_id
-          type: object
-        role_id:
-          type: string
-      required:
-      - name
-      - resources
-      - role_id
-      type: object
-    TeamCreateRequest:
-      example:
-        name: name
-      properties:
-        name:
-          type: string
-      required:
-      - name
-      type: object
-    TeamLimits_num_sdkube:
-      allOf:
-      - $ref: '#/components/schemas/SDKubeLimit'
-      type:
-      - object
-      - 'null'
-    TeamViewResponse:
-      example:
-        created: 2000-01-23 04:56:07+00:00
-        name: name
-        id: id
-        limits:
-          num_sdkube: null
-          num_systems: 0
-          num_users: 6
-          disable_prometheus_federation: true
-      properties:
-        created:
-          format: date-time
-          type: string
-        id:
-          type: string
-        limits:
-          $ref: '#/components/schemas/TeamLimits'
-        name:
-          type: string
-      required:
-      - created
-      - id
-      - name
-      type: object
-    VersionResponse:
-      example:
-        date: date
-        commit: commit
-        version: version
-      properties:
-        commit:
-          type: string
-        date:
-          type: string
-        version:
-          type: string
-      required:
-      - commit
-      - date
-      - version
-      type: object
-    AppUserAssignResponse:
+    TeamAppUserInfo:
       example:
         role_name: role_name
-        nats_user:
-          user_public_key: user_public_key
-          name: name
-          id: id
-        system:
-          jetstream_enabled: true
-          http_gateway_url: http_gateway_url
-          is_tenant: true
-          connection_type: null
-          managed_by: null
-          config_mode: true
-          server_urls: server_urls
-          user_jwt_expires_in_secs: 7
-          jetstream_tiers:
-          - jetstream_tiers
-          - jetstream_tiers
-          name: name
-          id: id
-          state: null
-          jetstream_domain: jetstream_domain
-        app_user:
-          identifier: identifier
-          name: name
-          id: id
-          type: null
         role_id: role_id
-        created: 2000-01-23 04:56:07+00:00
-        scope: null
-        team_app_user:
-          role_name: role_name
-          role_id: role_id
-          pending_invitation: true
-          id: id
-        resource_id: resource_id
-        team:
-          name: name
-          id: id
-        account:
-          user_jwt: user_jwt
-          auth_type: null
-          user_cred: user_cred
-          account_public_key: account_public_key
-          name: name
-          user_jwt_expires_in_secs: 0
-          id: id
-          is_platform_account: true
-          is_scp_account: true
-          is_system_account: true
+        pending_invitation: true
+        id: id
       properties:
-        account:
-          $ref: '#/components/schemas/AccountInfo'
-        app_user:
-          $ref: '#/components/schemas/AppUserInfo'
-        created:
-          format: date-time
+        id:
           type: string
-        nats_user:
-          $ref: '#/components/schemas/NatsUserInfo'
-        resource_id:
-          type: string
+        pending_invitation:
+          type: boolean
         role_id:
           type: string
         role_name:
           type: string
-        scope:
-          $ref: '#/components/schemas/AppRoleScope'
-        system:
-          $ref: '#/components/schemas/SystemInfo'
-        team:
-          $ref: '#/components/schemas/TeamInfo'
-        team_app_user:
-          $ref: '#/components/schemas/TeamAppUserInfo'
       required:
-      - app_user
-      - created
-      - resource_id
+      - id
+      - pending_invitation
       - role_id
       - role_name
-      - scope
-      - team_app_user
-      type: object
-    TeamLimits:
-      example:
-        num_sdkube: null
-        num_systems: 0
-        num_users: 6
-        disable_prometheus_federation: true
-      properties:
-        disable_prometheus_federation:
-          type: boolean
-        num_sdkube:
-          $ref: '#/components/schemas/TeamLimits_num_sdkube'
-        num_systems:
-          type:
-          - integer
-          - 'null'
-        num_users:
-          type:
-          - integer
-          - 'null'
-      required:
-      - disable_prometheus_federation
-      - num_sdkube
-      - num_systems
-      - num_users
-      type: object
-    ServiceAccountListResponse:
-      example:
-        items:
-        - role_id: role_id
-          created: 2000-01-23 04:56:07+00:00
-          scope: null
-          name: name
-          resources:
-            key:
-              role_name: role_name
-              nats_user:
-                user_public_key: user_public_key
-                name: name
-                id: id
-              system:
-                jetstream_enabled: true
-                http_gateway_url: http_gateway_url
-                is_tenant: true
-                connection_type: null
-                managed_by: null
-                config_mode: true
-                server_urls: server_urls
-                user_jwt_expires_in_secs: 7
-                jetstream_tiers:
-                - jetstream_tiers
-                - jetstream_tiers
-                name: name
-                id: id
-                state: null
-                jetstream_domain: jetstream_domain
-              app_user:
-                identifier: identifier
-                name: name
-                id: id
-                type: null
-              role_id: role_id
-              created: 2000-01-23 04:56:07+00:00
-              scope: null
-              team_app_user:
-                role_name: role_name
-                role_id: role_id
-                pending_invitation: true
-                id: id
-              resource_id: resource_id
-              team:
-                name: name
-                id: id
-              account:
-                user_jwt: user_jwt
-                auth_type: null
-                user_cred: user_cred
-                account_public_key: account_public_key
-                name: name
-                user_jwt_expires_in_secs: 0
-                id: id
-                is_platform_account: true
-                is_scp_account: true
-                is_system_account: true
-          id: id
-          last_active: last_active
-          team_id: team_id
-        - role_id: role_id
-          created: 2000-01-23 04:56:07+00:00
-          scope: null
-          name: name
-          resources:
-            key:
-              role_name: role_name
-              nats_user:
-                user_public_key: user_public_key
-                name: name
-                id: id
-              system:
-                jetstream_enabled: true
-                http_gateway_url: http_gateway_url
-                is_tenant: true
-                connection_type: null
-                managed_by: null
-                config_mode: true
-                server_urls: server_urls
-                user_jwt_expires_in_secs: 7
-                jetstream_tiers:
-                - jetstream_tiers
-                - jetstream_tiers
-                name: name
-                id: id
-                state: null
-                jetstream_domain: jetstream_domain
-              app_user:
-                identifier: identifier
-                name: name
-                id: id
-                type: null
-              role_id: role_id
-              created: 2000-01-23 04:56:07+00:00
-              scope: null
-              team_app_user:
-                role_name: role_name
-                role_id: role_id
-                pending_invitation: true
-                id: id
-              resource_id: resource_id
-              team:
-                name: name
-                id: id
-              account:
-                user_jwt: user_jwt
-                auth_type: null
-                user_cred: user_cred
-                account_public_key: account_public_key
-                name: name
-                user_jwt_expires_in_secs: 0
-                id: id
-                is_platform_account: true
-                is_scp_account: true
-                is_system_account: true
-          id: id
-          last_active: last_active
-          team_id: team_id
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/ServiceAccountViewResponse'
-          type: array
-      required:
-      - items
-      type: object
-    TeamListResponse:
-      example:
-        items:
-        - created: 2000-01-23 04:56:07+00:00
-          name: name
-          id: id
-          limits:
-            num_sdkube: null
-            num_systems: 0
-            num_users: 6
-            disable_prometheus_federation: true
-        - created: 2000-01-23 04:56:07+00:00
-          name: name
-          id: id
-          limits:
-            num_sdkube: null
-            num_systems: 0
-            num_users: 6
-            disable_prometheus_federation: true
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/TeamViewResponse'
-          type: array
-      required:
-      - items
-      type: object
-    AppUserType:
-      enum:
-      - Person
-      - AppServiceAccount
-      - TeamServiceAccount
-      type: string
-    ServiceAccountViewResponse:
-      example:
-        role_id: role_id
-        created: 2000-01-23 04:56:07+00:00
-        scope: null
-        name: name
-        resources:
-          key:
-            role_name: role_name
-            nats_user:
-              user_public_key: user_public_key
-              name: name
-              id: id
-            system:
-              jetstream_enabled: true
-              http_gateway_url: http_gateway_url
-              is_tenant: true
-              connection_type: null
-              managed_by: null
-              config_mode: true
-              server_urls: server_urls
-              user_jwt_expires_in_secs: 7
-              jetstream_tiers:
-              - jetstream_tiers
-              - jetstream_tiers
-              name: name
-              id: id
-              state: null
-              jetstream_domain: jetstream_domain
-            app_user:
-              identifier: identifier
-              name: name
-              id: id
-              type: null
-            role_id: role_id
-            created: 2000-01-23 04:56:07+00:00
-            scope: null
-            team_app_user:
-              role_name: role_name
-              role_id: role_id
-              pending_invitation: true
-              id: id
-            resource_id: resource_id
-            team:
-              name: name
-              id: id
-            account:
-              user_jwt: user_jwt
-              auth_type: null
-              user_cred: user_cred
-              account_public_key: account_public_key
-              name: name
-              user_jwt_expires_in_secs: 0
-              id: id
-              is_platform_account: true
-              is_scp_account: true
-              is_system_account: true
-        id: id
-        last_active: last_active
-        team_id: team_id
-      properties:
-        created:
-          format: date-time
-          type: string
-        id:
-          type: string
-        last_active:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        resources:
-          additionalProperties:
-            $ref: '#/components/schemas/AppUserAssignResponse'
-          description: resource keys must be in format ServiceAccountResourceScope:resource_id
-          type: object
-        role_id:
-          type: string
-        scope:
-          $ref: '#/components/schemas/ServiceAccountScope'
-        team_id:
-          type: string
-      required:
-      - created
-      - id
-      - last_active
-      - name
-      - resources
-      - role_id
-      - scope
-      type: object
-    AppUserAccessTokenListResponse:
-      example:
-        items:
-        - expires: expires
-          created: 2000-01-23 04:56:07+00:00
-          name: name
-          id: id
-          last_active: last_active
-        - expires: expires
-          created: 2000-01-23 04:56:07+00:00
-          name: name
-          id: id
-          last_active: last_active
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/AppUserAccessTokenViewResponse'
-          type: array
-      required:
-      - items
-      type: object
-    NatsUserInfo:
-      example:
-        user_public_key: user_public_key
-        name: name
-        id: id
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        user_public_key:
-          type: string
-      required:
-      - id
-      - name
-      - user_public_key
-      type: object
-    ServiceAccountScope:
-      enum:
-      - App
-      - Team
-      type: string
-    AlertRuleViewResponse:
-      example:
-        severity: null
-        created: 2000-01-23 04:56:07+00:00
-        system_id: system_id
-        duration_in_secs: 0
-        message: message
-        threshold_expression_metric: threshold_expression_metric
-        threshold_fixed_value: 1.4658129805029452
-        is_enabled: true
-        account_id: account_id
-        consumer_name: consumer_name
-        rule_type: null
-        stream_name: stream_name
-        metric: metric
-        threshold_operator: threshold_operator
-        id: id
-        threshold_expression_multiplier: 6.027456183070403
-      properties:
-        account_id:
-          type: string
-        consumer_name:
-          type: string
-        created:
-          format: date-time
-          type: string
-        duration_in_secs:
-          type: integer
-        id:
-          type: string
-        is_enabled:
-          type: boolean
-        message:
-          type: string
-        metric:
-          type: string
-        rule_type:
-          $ref: '#/components/schemas/AlertRuleType'
-        severity:
-          $ref: '#/components/schemas/AlertRuleSeverity'
-        stream_name:
-          type: string
-        system_id:
-          type: string
-        threshold_expression_metric:
-          type: string
-        threshold_expression_multiplier:
-          type: number
-        threshold_fixed_value:
-          type: number
-        threshold_operator:
-          type: string
-      required:
-      - created
-      - duration_in_secs
-      - id
-      - is_enabled
-      - message
-      - metric
-      - rule_type
-      - severity
-      - threshold_operator
-      type: object
-    AlertViewResponse:
-      example:
-        severity: null
-        closed_at: 2000-01-23 04:56:07+00:00
-        created: 2000-01-23 04:56:07+00:00
-        system_id: system_id
-        metric_value: 0.8008281904610115
-        message: message
-        alert_rule:
-          severity: null
-          created: 2000-01-23 04:56:07+00:00
-          system_id: system_id
-          duration_in_secs: 0
-          message: message
-          threshold_expression_metric: threshold_expression_metric
-          threshold_fixed_value: 1.4658129805029452
-          is_enabled: true
-          account_id: account_id
-          consumer_name: consumer_name
-          rule_type: null
-          stream_name: stream_name
-          metric: metric
-          threshold_operator: threshold_operator
-          id: id
-          threshold_expression_multiplier: 6.027456183070403
-        sample_values:
-        - value: 1.4658129805029452
-          timestamp: 6
-        - value: 1.4658129805029452
-          timestamp: 6
-        is_acknowledged: true
-        account_id: account_id
-        consumer_name: consumer_name
-        system:
-          jetstream_enabled: true
-          http_gateway_url: http_gateway_url
-          is_tenant: true
-          connection_type: null
-          managed_by: null
-          config_mode: true
-          server_urls: server_urls
-          user_jwt_expires_in_secs: 7
-          jetstream_tiers:
-          - jetstream_tiers
-          - jetstream_tiers
-          name: name
-          id: id
-          state: null
-          jetstream_domain: jetstream_domain
-        stream_name: stream_name
-        threshold_value: 5.962133916683182
-        AcknowledgedByAppUserID: AcknowledgedByAppUserID
-        id: id
-        is_firing: true
-        alert_rule_id: alert_rule_id
-        account:
-          user_jwt: user_jwt
-          auth_type: null
-          user_cred: user_cred
-          account_public_key: account_public_key
-          name: name
-          user_jwt_expires_in_secs: 0
-          id: id
-          is_platform_account: true
-          is_scp_account: true
-          is_system_account: true
-        acknowledged_at: 2000-01-23 04:56:07+00:00
-        is_closed: true
-      properties:
-        AcknowledgedByAppUserID:
-          type: string
-        account:
-          $ref: '#/components/schemas/AccountInfo'
-        account_id:
-          type: string
-        acknowledged_at:
-          format: date-time
-          type: string
-        alert_rule:
-          $ref: '#/components/schemas/AlertRuleViewResponse'
-        alert_rule_id:
-          type: string
-        closed_at:
-          format: date-time
-          type: string
-        consumer_name:
-          type: string
-        created:
-          format: date-time
-          type: string
-        id:
-          type: string
-        is_acknowledged:
-          type: boolean
-        is_closed:
-          type: boolean
-        is_firing:
-          type: boolean
-        message:
-          type: string
-        metric_value:
-          format: double
-          type: number
-        sample_values:
-          items:
-            $ref: '#/components/schemas/PromSampleValue'
-          type: array
-        severity:
-          $ref: '#/components/schemas/AlertRuleSeverity'
-        stream_name:
-          type: string
-        system:
-          $ref: '#/components/schemas/SystemInfo'
-        system_id:
-          type: string
-        threshold_value:
-          format: double
-          type: number
-      required:
-      - alert_rule
-      - alert_rule_id
-      - created
-      - id
-      - is_acknowledged
-      - is_closed
-      - is_firing
-      - message
-      - metric_value
-      - sample_values
-      - severity
-      - threshold_value
-      type: object
-    AppUserCreateRequest:
-      example:
-        identifier: identifier
-        role_id: role_id
-        name: name
-      properties:
-        identifier:
-          type: string
-        name:
-          type: string
-        role_id:
-          type: string
-      required:
-      - identifier
-      - name
-      - role_id
       type: object
   securitySchemes:
     bearerAuth:

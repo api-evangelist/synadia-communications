@@ -94,6 +94,172 @@ paths:
       - Authorization
 components:
   schemas:
+    AppPolicyGroup:
+      enum:
+      - Core
+      - Cloud
+      - Connectors
+      - Workloads
+      - SchemaRegistry
+      - Insights
+      type: string
+    AppRoleScope:
+      enum:
+      - App
+      - Team
+      - System
+      - Account
+      - NatsUser
+      type: string
+    AuthzRequest:
+      example:
+        service: service
+        resource_id: ''
+      properties:
+        resource_id:
+          default: ''
+          type: string
+        service:
+          type: string
+      required:
+      - resource_id
+      - service
+      type: object
+    AppRoleEffect:
+      enum:
+      - ALLOW
+      - DENY
+      type: string
+    AuthzResponse:
+      example:
+        operations:
+        - operations
+        - operations
+        service: service
+        resource_id: resource_id
+      properties:
+        operations:
+          items:
+            type: string
+          type: array
+        resource_id:
+          type: string
+        service:
+          type: string
+      required:
+      - operations
+      - resource_id
+      - service
+      type: object
+    RoleListResponse:
+      example:
+        items:
+        - scope: null
+          name: name
+          policies:
+          - policies
+          - policies
+          description: description
+          id: id
+          sort_order: 0.8008281904610115
+          enabled: true
+        - scope: null
+          name: name
+          policies:
+          - policies
+          - policies
+          description: description
+          id: id
+          sort_order: 0.8008281904610115
+          enabled: true
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/AppRole'
+          type: array
+      required:
+      - items
+      type: object
+    AppRole:
+      example:
+        scope: null
+        name: name
+        policies:
+        - policies
+        - policies
+        description: description
+        id: id
+        sort_order: 0.8008281904610115
+        enabled: true
+      properties:
+        description:
+          type: string
+        enabled:
+          type: boolean
+        id:
+          type: string
+        name:
+          type: string
+        policies:
+          items:
+            type: string
+          type: array
+        scope:
+          $ref: '#/components/schemas/AppRoleScope'
+        sort_order:
+          type: number
+      required:
+      - description
+      - enabled
+      - id
+      - name
+      - policies
+      - scope
+      - sort_order
+      type: object
+    AuthzViewRequest:
+      items:
+        $ref: '#/components/schemas/AuthzRequest'
+      type: array
+    AuthzViewResponse:
+      items:
+        $ref: '#/components/schemas/AuthzResponse'
+      type: array
+    AppPolicy:
+      example:
+        name: name
+        description: description
+        statements:
+          key:
+            resource:
+            - resource
+            - resource
+            service: service
+            effect:
+            - null
+            - null
+            name: name
+            action:
+            - action
+            - action
+            operation_id: operation_id
+        group: null
+      properties:
+        description:
+          type: string
+        group:
+          $ref: '#/components/schemas/AppPolicyGroup'
+        name:
+          type: string
+        statements:
+          additionalProperties:
+            $ref: '#/components/schemas/AppPolicyStatement'
+          type: object
+      required:
+      - group
+      - name
+      - statements
+      type: object
     PolicyListResponse:
       example:
         items:
@@ -139,86 +305,6 @@ components:
       required:
       - items
       type: object
-    AuthzResponse:
-      example:
-        operations:
-        - operations
-        - operations
-        service: service
-        resource_id: resource_id
-      properties:
-        operations:
-          items:
-            type: string
-          type: array
-        resource_id:
-          type: string
-        service:
-          type: string
-      required:
-      - operations
-      - resource_id
-      - service
-      type: object
-    AppRoleScope:
-      enum:
-      - App
-      - Team
-      - System
-      - Account
-      - NatsUser
-      type: string
-    AppPolicyGroup:
-      enum:
-      - Core
-      - Cloud
-      - Connectors
-      - Workloads
-      - SchemaRegistry
-      - Insights
-      type: string
-    AppRoleEffect:
-      enum:
-      - ALLOW
-      - DENY
-      type: string
-    RoleListResponse:
-      example:
-        items:
-        - scope: null
-          name: name
-          policies:
-          - policies
-          - policies
-          description: description
-          id: id
-          sort_order: 0.8008281904610115
-          enabled: true
-        - scope: null
-          name: name
-          policies:
-          - policies
-          - policies
-          description: description
-          id: id
-          sort_order: 0.8008281904610115
-          enabled: true
-      properties:
-        items:
-          items:
-            $ref: '#/components/schemas/AppRole'
-          type: array
-      required:
-      - items
-      type: object
-    AuthzViewResponse:
-      items:
-        $ref: '#/components/schemas/AuthzResponse'
-      type: array
-    AuthzViewRequest:
-      items:
-        $ref: '#/components/schemas/AuthzRequest'
-      type: array
     AppPolicyStatement:
       example:
         resource:
@@ -257,92 +343,6 @@ components:
       - effect
       - name
       - resource
-      type: object
-    AppPolicy:
-      example:
-        name: name
-        description: description
-        statements:
-          key:
-            resource:
-            - resource
-            - resource
-            service: service
-            effect:
-            - null
-            - null
-            name: name
-            action:
-            - action
-            - action
-            operation_id: operation_id
-        group: null
-      properties:
-        description:
-          type: string
-        group:
-          $ref: '#/components/schemas/AppPolicyGroup'
-        name:
-          type: string
-        statements:
-          additionalProperties:
-            $ref: '#/components/schemas/AppPolicyStatement'
-          type: object
-      required:
-      - group
-      - name
-      - statements
-      type: object
-    AppRole:
-      example:
-        scope: null
-        name: name
-        policies:
-        - policies
-        - policies
-        description: description
-        id: id
-        sort_order: 0.8008281904610115
-        enabled: true
-      properties:
-        description:
-          type: string
-        enabled:
-          type: boolean
-        id:
-          type: string
-        name:
-          type: string
-        policies:
-          items:
-            type: string
-          type: array
-        scope:
-          $ref: '#/components/schemas/AppRoleScope'
-        sort_order:
-          type: number
-      required:
-      - description
-      - enabled
-      - id
-      - name
-      - policies
-      - scope
-      - sort_order
-      type: object
-    AuthzRequest:
-      example:
-        service: service
-        resource_id: ''
-      properties:
-        resource_id:
-          default: ''
-          type: string
-        service:
-          type: string
-      required:
-      - resource_id
-      - service
       type: object
   securitySchemes:
     bearerAuth:
