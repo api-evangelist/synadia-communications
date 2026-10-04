@@ -110,6 +110,16 @@ paths:
       - Signing Key Groups
 components:
   schemas:
+    SigningKeyUpdateRequest:
+      example:
+        seed: seed
+        disabled: true
+      properties:
+        disabled:
+          type: boolean
+        seed:
+          type: string
+      type: object
     SigningKeyViewResponse:
       example:
         public_key: public_key
@@ -155,16 +165,6 @@ components:
       - missing_seed
       - public_key
       - rotated
-      type: object
-    SigningKeyUpdateRequest:
-      example:
-        seed: seed
-        disabled: true
-      properties:
-        disabled:
-          type: boolean
-        seed:
-          type: string
       type: object
   securitySchemes:
     bearerAuth:

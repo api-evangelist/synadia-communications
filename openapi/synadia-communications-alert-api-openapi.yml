@@ -75,81 +75,19 @@ paths:
       - Alerts
 components:
   schemas:
-    AlertRuleViewResponse:
-      example:
-        severity: null
-        created: 2000-01-23 04:56:07+00:00
-        system_id: system_id
-        duration_in_secs: 0
-        message: message
-        threshold_expression_metric: threshold_expression_metric
-        threshold_fixed_value: 1.4658129805029452
-        is_enabled: true
-        account_id: account_id
-        consumer_name: consumer_name
-        rule_type: null
-        stream_name: stream_name
-        metric: metric
-        threshold_operator: threshold_operator
-        id: id
-        threshold_expression_multiplier: 6.027456183070403
-      properties:
-        account_id:
-          type: string
-        consumer_name:
-          type: string
-        created:
-          format: date-time
-          type: string
-        duration_in_secs:
-          type: integer
-        id:
-          type: string
-        is_enabled:
-          type: boolean
-        message:
-          type: string
-        metric:
-          type: string
-        rule_type:
-          $ref: '#/components/schemas/AlertRuleType'
-        severity:
-          $ref: '#/components/schemas/AlertRuleSeverity'
-        stream_name:
-          type: string
-        system_id:
-          type: string
-        threshold_expression_metric:
-          type: string
-        threshold_expression_multiplier:
-          type: number
-        threshold_fixed_value:
-          type: number
-        threshold_operator:
-          type: string
-      required:
-      - created
-      - duration_in_secs
-      - id
-      - is_enabled
-      - message
-      - metric
-      - rule_type
-      - severity
-      - threshold_operator
-      type: object
-    SystemConnectionType:
-      default: Agent
-      enum:
-      - Agent
-      - Direct
-      type: string
     AlertRuleSeverity:
       enum:
       - Info
       - Warn
       - Error
       - Critical
+      type: string
+    AccountAuthType:
+      enum:
+      - jwt
+      - tls
+      - nkey
+      - username
       type: string
     AlertRuleType:
       enum:
@@ -159,81 +97,6 @@ components:
       - Account
       - Stream
       - Consumer
-      type: string
-    SystemManagedBy:
-      enum:
-      - byon
-      - sdkube
-      type: string
-    SystemInfo:
-      example:
-        jetstream_enabled: true
-        http_gateway_url: http_gateway_url
-        is_tenant: true
-        connection_type: null
-        managed_by: null
-        config_mode: true
-        server_urls: server_urls
-        user_jwt_expires_in_secs: 7
-        jetstream_tiers:
-        - jetstream_tiers
-        - jetstream_tiers
-        name: name
-        id: id
-        state: null
-        jetstream_domain: jetstream_domain
-      properties:
-        config_mode:
-          type: boolean
-        connection_type:
-          $ref: '#/components/schemas/SystemConnectionType'
-        http_gateway_url:
-          type: string
-        id:
-          type: string
-        is_tenant:
-          type: boolean
-        jetstream_domain:
-          type: string
-        jetstream_enabled:
-          type: boolean
-        jetstream_tiers:
-          items:
-            type: string
-          type: array
-        managed_by:
-          $ref: '#/components/schemas/SystemManagedBy'
-        name:
-          type: string
-        server_urls:
-          type: string
-        state:
-          $ref: '#/components/schemas/SystemState'
-        user_jwt_expires_in_secs:
-          format: int64
-          type: integer
-      required:
-      - config_mode
-      - connection_type
-      - id
-      - is_tenant
-      - jetstream_enabled
-      - name
-      - state
-      - user_jwt_expires_in_secs
-      type: object
-    AccountAuthType:
-      enum:
-      - jwt
-      - tls
-      - nkey
-      - username
-      type: string
-    SystemState:
-      enum:
-      - Provisioning
-      - Connected
-      - Disconnected
       type: string
     PromSampleValue:
       example:
@@ -382,6 +245,17 @@ components:
       - severity
       - threshold_value
       type: object
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    SystemManagedBy:
+      enum:
+      - byon
+      - sdkube
+      type: string
     AccountInfo:
       example:
         user_jwt: user_jwt
@@ -425,6 +299,132 @@ components:
       - name
       - user_jwt_expires_in_secs
       type: object
+    AlertRuleViewResponse:
+      example:
+        severity: null
+        created: 2000-01-23 04:56:07+00:00
+        system_id: system_id
+        duration_in_secs: 0
+        message: message
+        threshold_expression_metric: threshold_expression_metric
+        threshold_fixed_value: 1.4658129805029452
+        is_enabled: true
+        account_id: account_id
+        consumer_name: consumer_name
+        rule_type: null
+        stream_name: stream_name
+        metric: metric
+        threshold_operator: threshold_operator
+        id: id
+        threshold_expression_multiplier: 6.027456183070403
+      properties:
+        account_id:
+          type: string
+        consumer_name:
+          type: string
+        created:
+          format: date-time
+          type: string
+        duration_in_secs:
+          type: integer
+        id:
+          type: string
+        is_enabled:
+          type: boolean
+        message:
+          type: string
+        metric:
+          type: string
+        rule_type:
+          $ref: '#/components/schemas/AlertRuleType'
+        severity:
+          $ref: '#/components/schemas/AlertRuleSeverity'
+        stream_name:
+          type: string
+        system_id:
+          type: string
+        threshold_expression_metric:
+          type: string
+        threshold_expression_multiplier:
+          type: number
+        threshold_fixed_value:
+          type: number
+        threshold_operator:
+          type: string
+      required:
+      - created
+      - duration_in_secs
+      - id
+      - is_enabled
+      - message
+      - metric
+      - rule_type
+      - severity
+      - threshold_operator
+      type: object
+    SystemInfo:
+      example:
+        jetstream_enabled: true
+        http_gateway_url: http_gateway_url
+        is_tenant: true
+        connection_type: null
+        managed_by: null
+        config_mode: true
+        server_urls: server_urls
+        user_jwt_expires_in_secs: 7
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        name: name
+        id: id
+        state: null
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        http_gateway_url:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        name:
+          type: string
+        server_urls:
+          type: string
+        state:
+          $ref: '#/components/schemas/SystemState'
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - name
+      - state
+      - user_jwt_expires_in_secs
+      type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
   securitySchemes:
     bearerAuth:
       bearerFormat: Personal Access Token

@@ -112,12 +112,6 @@ paths:
       - JetStream
 components:
   schemas:
-    ClusterInfo_replicas_inner:
-      allOf:
-      - $ref: '#/components/schemas/PeerInfo'
-      type:
-      - object
-      - 'null'
     PriorityPolicy:
       description: PriorityPolicy determines how messages are selected from priority groups.
       enum:
@@ -125,15 +119,6 @@ components:
       - overflow
       - pinned_client
       - prioritized
-      type: string
-    DeliverPolicy:
-      enum:
-      - all
-      - last
-      - new
-      - by_start_sequence
-      - by_start_time
-      - last_per_subject
       type: string
     SequenceInfo:
       description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
@@ -157,6 +142,74 @@ components:
       required:
       - consumer_seq
       - stream_seq
+      type: object
+    JSPullConsumerConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
+      example:
+        max_waiting: 2
+        priority_timeout: 7
+        priority_groups:
+        - priority_groups
+        - priority_groups
+        priority_policy: null
+        max_expires: 5
+        max_bytes: 5
+        max_batch: 1
+      properties:
+        max_batch:
+          type: integer
+        max_bytes:
+          type: integer
+        max_expires:
+          format: int64
+          type: integer
+        max_waiting:
+          description: Pull based options.
+          type: integer
+        priority_groups:
+          items:
+            type: string
+          type: array
+        priority_policy:
+          $ref: '#/components/schemas/PriorityPolicy'
+        priority_timeout:
+          format: int64
+          type: integer
+      type: object
+    ClusterInfo:
+      description: 'ClusterInfo shows information about the underlying set of servers
+
+        that make up the stream or consumer.'
+      example:
+        leader: leader
+        system_account: true
+        replicas:
+        - null
+        - null
+        raft_group: raft_group
+        name: name
+        traffic_account: traffic_account
+        leader_since: leader_since
+      properties:
+        leader:
+          type: string
+        leader_since:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        raft_group:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
+          type: array
+        system_account:
+          type: boolean
+        traffic_account:
+          type: string
       type: object
     JSPullConsumerInfoResponse:
       example:
@@ -259,6 +312,46 @@ components:
       - stream_name
       - ts
       type: object
+    AckPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
+      enum:
+      - none
+      - all
+      - explicit
+      - flow_control
+      type: string
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
+    PeerInfo:
+      description: 'PeerInfo shows information about all the peers in the cluster that
+
+        are supporting the stream or consumer.'
+      properties:
+        active:
+          format: int64
+          type: integer
+        current:
+          type: boolean
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        offline:
+          type: boolean
+        peer:
+          type: string
+      required:
+      - active
+      - current
+      - name
+      - peer
+      type: object
     JSCommonConsumerConfigRequest:
       properties:
         ack_policy:
@@ -320,107 +413,36 @@ components:
       - num_replicas
       - replay_policy
       type: object
-    PeerInfo:
-      description: 'PeerInfo shows information about all the peers in the cluster that
-
-        are supporting the stream or consumer.'
+    ReplayPolicy:
+      enum:
+      - instant
+      - original
+      type: string
+    PriorityGroupState:
+      description: PriorityGroupState is the state of a consumer priority group.
+      example:
+        pinned_client_id: pinned_client_id
+        pinned_ts: 2000-01-23 04:56:07+00:00
+        group: group
       properties:
-        active:
-          format: int64
-          type: integer
-        current:
-          type: boolean
-        lag:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        name:
+        group:
           type: string
-        offline:
-          type: boolean
-        peer:
+        pinned_client_id:
+          type: string
+        pinned_ts:
+          format: date-time
           type: string
       required:
-      - active
-      - current
-      - name
-      - peer
+      - group
       type: object
-    ClusterInfo:
-      description: 'ClusterInfo shows information about the underlying set of servers
-
-        that make up the stream or consumer.'
-      example:
-        leader: leader
-        system_account: true
-        replicas:
-        - null
-        - null
-        raft_group: raft_group
-        name: name
-        traffic_account: traffic_account
-        leader_since: leader_since
-      properties:
-        leader:
-          type: string
-        leader_since:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        raft_group:
-          type: string
-        replicas:
-          items:
-            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
-          type: array
-        system_account:
-          type: boolean
-        traffic_account:
-          type: string
-      type: object
-    JSPullConsumerConfigRequest:
-      allOf:
-      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
-      example:
-        max_waiting: 2
-        priority_timeout: 7
-        priority_groups:
-        - priority_groups
-        - priority_groups
-        priority_policy: null
-        max_expires: 5
-        max_bytes: 5
-        max_batch: 1
-      properties:
-        max_batch:
-          type: integer
-        max_bytes:
-          type: integer
-        max_expires:
-          format: int64
-          type: integer
-        max_waiting:
-          description: Pull based options.
-          type: integer
-        priority_groups:
-          items:
-            type: string
-          type: array
-        priority_policy:
-          $ref: '#/components/schemas/PriorityPolicy'
-        priority_timeout:
-          format: int64
-          type: integer
-      type: object
-    AckPolicy:
-      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
+    DeliverPolicy:
       enum:
-      - none
       - all
-      - explicit
-      - flow_control
+      - last
+      - new
+      - by_start_sequence
+      - by_start_time
+      - last_per_subject
       type: string
     JSPullConsumerUpdateRequest:
       example:
@@ -494,28 +516,6 @@ components:
         sample_freq:
           type: string
       type: object
-    PriorityGroupState:
-      description: PriorityGroupState is the state of a consumer priority group.
-      example:
-        pinned_client_id: pinned_client_id
-        pinned_ts: 2000-01-23 04:56:07+00:00
-        group: group
-      properties:
-        group:
-          type: string
-        pinned_client_id:
-          type: string
-        pinned_ts:
-          format: date-time
-          type: string
-      required:
-      - group
-      type: object
-    ReplayPolicy:
-      enum:
-      - instant
-      - original
-      type: string
   securitySchemes:
     bearerAuth:
       bearerFormat: Personal Access Token

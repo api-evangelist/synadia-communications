@@ -129,16 +129,6 @@ components:
       required:
       - status
       type: object
-    LicenseUpdateRequest:
-      example:
-        license_key: license_key
-      properties:
-        license_key:
-          pattern: ^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$
-          type: string
-      required:
-      - license_key
-      type: object
     EntitlementsView:
       example:
         http_gateway: 5
@@ -175,6 +165,16 @@ components:
       - protect
       - schema_registry
       - workloads
+      type: object
+    LicenseUpdateRequest:
+      example:
+        license_key: license_key
+      properties:
+        license_key:
+          pattern: ^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$
+          type: string
+      required:
+      - license_key
       type: object
   securitySchemes:
     bearerAuth:

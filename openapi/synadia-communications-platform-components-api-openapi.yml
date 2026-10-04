@@ -54,23 +54,6 @@ paths:
       - Platform Components
 components:
   schemas:
-    PlatformComponentConnectConfig:
-      oneOf:
-      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
-      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
-      type:
-      - object
-      - 'null'
-    PlatformComponentConfigs:
-      oneOf:
-      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
-      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
-      - $ref: '#/components/schemas/WorkloadsPlatformComponentConfig'
-      - $ref: '#/components/schemas/ScraperComponentConfig'
-      - $ref: '#/components/schemas/CatalogPlatformComponentConfig'
-      type:
-      - object
-      - 'null'
     HttpGatewayPlatformComponentConfig:
       properties:
         account:
@@ -84,6 +67,38 @@ components:
       - token_bucket
       - url
       type: object
+    ScraperComponentConfig:
+      properties:
+        account:
+          type: string
+        interval:
+          default: 15
+          minimum: 0
+          type: integer
+        stream:
+          type: string
+      required:
+      - account
+      - interval
+      - stream
+      type: object
+    PlatformComponentConnectConfig:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      type:
+      - object
+      - 'null'
+    WorkloadsPlatformComponentConfig:
+      properties:
+        account:
+          type: string
+        nexus_name:
+          type: string
+      required:
+      - account
+      - nexus_name
+      type: object
     PlatformComponentsConnectRequest:
       example:
         data: null
@@ -95,6 +110,37 @@ components:
           type: string
       required:
       - nkey_public
+      type: object
+    CatalogPlatformComponentConfig:
+      properties:
+        account:
+          default: ''
+          type: string
+        catalog_id:
+          type: string
+      required:
+      - account
+      - catalog_id
+      type: object
+    PlatformComponentConfigs:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      - $ref: '#/components/schemas/WorkloadsPlatformComponentConfig'
+      - $ref: '#/components/schemas/ScraperComponentConfig'
+      - $ref: '#/components/schemas/CatalogPlatformComponentConfig'
+      type:
+      - object
+      - 'null'
+    AuthCalloutAuthenticatorComponentConfig:
+      properties:
+        account:
+          type: string
+        bucket:
+          type: string
+      required:
+      - account
+      - bucket
       type: object
     PlatformComponentsConnectViewResponse:
       example:
@@ -115,52 +161,6 @@ components:
       - account
       - jwt
       - server
-      type: object
-    ScraperComponentConfig:
-      properties:
-        account:
-          type: string
-        interval:
-          default: 15
-          minimum: 0
-          type: integer
-        stream:
-          type: string
-      required:
-      - account
-      - interval
-      - stream
-      type: object
-    CatalogPlatformComponentConfig:
-      properties:
-        account:
-          default: ''
-          type: string
-        catalog_id:
-          type: string
-      required:
-      - account
-      - catalog_id
-      type: object
-    AuthCalloutAuthenticatorComponentConfig:
-      properties:
-        account:
-          type: string
-        bucket:
-          type: string
-      required:
-      - account
-      - bucket
-      type: object
-    WorkloadsPlatformComponentConfig:
-      properties:
-        account:
-          type: string
-        nexus_name:
-          type: string
-      required:
-      - account
-      - nexus_name
       type: object
   securitySchemes:
     bearerAuth:

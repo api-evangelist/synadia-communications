@@ -185,14 +185,6 @@ paths:
       - App Users
 components:
   schemas:
-    AppRoleScope:
-      enum:
-      - App
-      - Team
-      - System
-      - Account
-      - NatsUser
-      type: string
     AppUserUpdateRequest:
       example:
         role_id: role_id
@@ -206,154 +198,31 @@ components:
         role_id:
           type: string
       type: object
-    AppUserType:
-      enum:
-      - Person
-      - AppServiceAccount
-      - TeamServiceAccount
-      type: string
-    TeamInfo:
+    AppUserAssignRequest:
       example:
-        name: name
-        id: id
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-      required:
-      - id
-      - name
-      type: object
-    SystemConnectionType:
-      default: Agent
-      enum:
-      - Agent
-      - Direct
-      type: string
-    AppUserInfo:
-      example:
-        identifier: identifier
-        name: name
-        id: id
-        type: null
-      properties:
-        id:
-          type: string
-        identifier:
-          type: string
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/AppUserType'
-      required:
-      - id
-      - name
-      - type
-      type: object
-    SystemManagedBy:
-      enum:
-      - byon
-      - sdkube
-      type: string
-    SystemInfo:
-      example:
-        jetstream_enabled: true
-        http_gateway_url: http_gateway_url
-        is_tenant: true
-        connection_type: null
-        managed_by: null
-        config_mode: true
-        server_urls: server_urls
-        user_jwt_expires_in_secs: 7
-        jetstream_tiers:
-        - jetstream_tiers
-        - jetstream_tiers
-        name: name
-        id: id
-        state: null
-        jetstream_domain: jetstream_domain
-      properties:
-        config_mode:
-          type: boolean
-        connection_type:
-          $ref: '#/components/schemas/SystemConnectionType'
-        http_gateway_url:
-          type: string
-        id:
-          type: string
-        is_tenant:
-          type: boolean
-        jetstream_domain:
-          type: string
-        jetstream_enabled:
-          type: boolean
-        jetstream_tiers:
-          items:
-            type: string
-          type: array
-        managed_by:
-          $ref: '#/components/schemas/SystemManagedBy'
-        name:
-          type: string
-        server_urls:
-          type: string
-        state:
-          $ref: '#/components/schemas/SystemState'
-        user_jwt_expires_in_secs:
-          format: int64
-          type: integer
-      required:
-      - config_mode
-      - connection_type
-      - id
-      - is_tenant
-      - jetstream_enabled
-      - name
-      - state
-      - user_jwt_expires_in_secs
-      type: object
-    AppUserViewResponse:
-      example:
-        role_name: role_name
-        identifier: identifier
         role_id: role_id
-        created: 2000-01-23 04:56:07+00:00
-        pending_creation: true
-        name: name
-        id: id
-        last_active: last_active
-        type: null
       properties:
-        created:
-          format: date-time
-          type: string
-        id:
-          type: string
-        identifier:
-          type: string
-        last_active:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        pending_creation:
-          type: boolean
         role_id:
           type: string
-        role_name:
-          type: string
-        type:
-          $ref: '#/components/schemas/AppUserType'
       required:
-      - created
+      - role_id
+      type: object
+    NatsUserInfo:
+      example:
+        user_public_key: user_public_key
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        user_public_key:
+          type: string
+      required:
       - id
       - name
-      - pending_creation
-      - role_id
-      - role_name
-      - type
+      - user_public_key
       type: object
     AppUserAssignResponse:
       example:
@@ -446,47 +315,6 @@ components:
       - nkey
       - username
       type: string
-    AppUserAssignRequest:
-      example:
-        role_id: role_id
-      properties:
-        role_id:
-          type: string
-      required:
-      - role_id
-      type: object
-    SystemState:
-      enum:
-      - Provisioning
-      - Connected
-      - Disconnected
-      type: string
-    AppUserUpdateResponse:
-      allOf:
-      - $ref: '#/components/schemas/AppUserViewResponse'
-      example:
-        reset_password_link: reset_password_link
-      properties:
-        reset_password_link:
-          type: string
-      type: object
-    NatsUserInfo:
-      example:
-        user_public_key: user_public_key
-        name: name
-        id: id
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        user_public_key:
-          type: string
-      required:
-      - id
-      - name
-      - user_public_key
-      type: object
     AppUserAssignListResponse:
       example:
         items:
@@ -596,6 +424,114 @@ components:
       required:
       - items
       type: object
+    SystemState:
+      enum:
+      - Provisioning
+      - Connected
+      - Disconnected
+      type: string
+    AppUserType:
+      enum:
+      - Person
+      - AppServiceAccount
+      - TeamServiceAccount
+      type: string
+    AppUserViewResponse:
+      example:
+        role_name: role_name
+        identifier: identifier
+        role_id: role_id
+        created: 2000-01-23 04:56:07+00:00
+        pending_creation: true
+        name: name
+        id: id
+        last_active: last_active
+        type: null
+      properties:
+        created:
+          format: date-time
+          type: string
+        id:
+          type: string
+        identifier:
+          type: string
+        last_active:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        pending_creation:
+          type: boolean
+        role_id:
+          type: string
+        role_name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - created
+      - id
+      - name
+      - pending_creation
+      - role_id
+      - role_name
+      - type
+      type: object
+    AppUserInfo:
+      example:
+        identifier: identifier
+        name: name
+        id: id
+        type: null
+      properties:
+        id:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - id
+      - name
+      - type
+      type: object
+    TeamAppUserInfo:
+      example:
+        role_name: role_name
+        role_id: role_id
+        pending_invitation: true
+        id: id
+      properties:
+        id:
+          type: string
+        pending_invitation:
+          type: boolean
+        role_id:
+          type: string
+        role_name:
+          type: string
+      required:
+      - id
+      - pending_invitation
+      - role_id
+      - role_name
+      type: object
+    AppRoleScope:
+      enum:
+      - App
+      - Team
+      - System
+      - Account
+      - NatsUser
+      type: string
+    SystemManagedBy:
+      enum:
+      - byon
+      - sdkube
+      type: string
     AccountInfo:
       example:
         user_jwt: user_jwt
@@ -639,27 +575,91 @@ components:
       - name
       - user_jwt_expires_in_secs
       type: object
-    TeamAppUserInfo:
+    AppUserUpdateResponse:
+      allOf:
+      - $ref: '#/components/schemas/AppUserViewResponse'
       example:
-        role_name: role_name
-        role_id: role_id
-        pending_invitation: true
+        reset_password_link: reset_password_link
+      properties:
+        reset_password_link:
+          type: string
+      type: object
+    SystemInfo:
+      example:
+        jetstream_enabled: true
+        http_gateway_url: http_gateway_url
+        is_tenant: true
+        connection_type: null
+        managed_by: null
+        config_mode: true
+        server_urls: server_urls
+        user_jwt_expires_in_secs: 7
+        jetstream_tiers:
+        - jetstream_tiers
+        - jetstream_tiers
+        name: name
+        id: id
+        state: null
+        jetstream_domain: jetstream_domain
+      properties:
+        config_mode:
+          type: boolean
+        connection_type:
+          $ref: '#/components/schemas/SystemConnectionType'
+        http_gateway_url:
+          type: string
+        id:
+          type: string
+        is_tenant:
+          type: boolean
+        jetstream_domain:
+          type: string
+        jetstream_enabled:
+          type: boolean
+        jetstream_tiers:
+          items:
+            type: string
+          type: array
+        managed_by:
+          $ref: '#/components/schemas/SystemManagedBy'
+        name:
+          type: string
+        server_urls:
+          type: string
+        state:
+          $ref: '#/components/schemas/SystemState'
+        user_jwt_expires_in_secs:
+          format: int64
+          type: integer
+      required:
+      - config_mode
+      - connection_type
+      - id
+      - is_tenant
+      - jetstream_enabled
+      - name
+      - state
+      - user_jwt_expires_in_secs
+      type: object
+    TeamInfo:
+      example:
+        name: name
         id: id
       properties:
         id:
           type: string
-        pending_invitation:
-          type: boolean
-        role_id:
-          type: string
-        role_name:
+        name:
           type: string
       required:
       - id
-      - pending_invitation
-      - role_id
-      - role_name
+      - name
       type: object
+    SystemConnectionType:
+      default: Agent
+      enum:
+      - Agent
+      - Direct
+      type: string
   securitySchemes:
     bearerAuth:
       bearerFormat: Personal Access Token

@@ -167,6 +167,61 @@ components:
         type:
           $ref: '#/components/schemas/ExportType'
       type: object
+    ExportType:
+      description: ExportType defines the type of import/export.
+      enum:
+      - stream
+      - service
+      type: string
+    ImportPatch:
+      example:
+        local_subject: local_subject
+        subject: subject
+        name: name
+        share: true
+        to: to
+        type: null
+        account: account
+        token: token
+      properties:
+        account:
+          type: string
+        local_subject:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        share:
+          type: boolean
+        subject:
+          type: string
+        to:
+          type:
+          - string
+          - 'null'
+        token:
+          type:
+          - string
+          - 'null'
+        type:
+          $ref: '#/components/schemas/ExportType'
+      type: object
+    SubjectImportUpdateRequest:
+      example:
+        jwt_settings:
+          local_subject: local_subject
+          subject: subject
+          name: name
+          share: true
+          to: to
+          type: null
+          account: account
+          token: token
+      properties:
+        jwt_settings:
+          $ref: '#/components/schemas/ImportPatch'
+      type: object
     SubjectImportViewResponse:
       description: '/
 
@@ -209,61 +264,6 @@ components:
       - name
       - remote_account_nkey_public
       - remote_subject
-      type: object
-    SubjectImportUpdateRequest:
-      example:
-        jwt_settings:
-          local_subject: local_subject
-          subject: subject
-          name: name
-          share: true
-          to: to
-          type: null
-          account: account
-          token: token
-      properties:
-        jwt_settings:
-          $ref: '#/components/schemas/ImportPatch'
-      type: object
-    ExportType:
-      description: ExportType defines the type of import/export.
-      enum:
-      - stream
-      - service
-      type: string
-    ImportPatch:
-      example:
-        local_subject: local_subject
-        subject: subject
-        name: name
-        share: true
-        to: to
-        type: null
-        account: account
-        token: token
-      properties:
-        account:
-          type: string
-        local_subject:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        share:
-          type: boolean
-        subject:
-          type: string
-        to:
-          type:
-          - string
-          - 'null'
-        token:
-          type:
-          - string
-          - 'null'
-        type:
-          $ref: '#/components/schemas/ExportType'
       type: object
   securitySchemes:
     bearerAuth:
