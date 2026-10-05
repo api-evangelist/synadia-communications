@@ -1,0 +1,12 @@
+{
+ "url": "https://api.ngs.global/docs/api.json",
+ "requested_url": "https://api.ngs.global/docs/api.json",
+ "status": 200,
+ "content_type": "application/json",
+ "bytes": 85567,
+ "sha256": "e8767ae79ab54774728dc226ffc0db0014c32c99b341e019cbbcf3d700def8a0",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
