@@ -31,7 +31,7 @@ accessModel:
   method: derived
 specificationVersion: '0.20'
 created: '2026-08-29'
-modified: '2026-08-29'
+modified: '2026-10-06'
 image: https://www.synadia.com/images/og-image-default.webp
 tags:
 - Company
@@ -932,6 +932,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- url: https://www.synadia.com/rss.xml
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/synadia-communications-capability-edges.yml
   name: Synadia Communications Business Capability Map
