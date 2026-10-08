@@ -114,3 +114,36 @@ other_products:
   note: >-
     Synadia Platform, Insights, Protect and Deploy for Kubernetes are sold via trials and sales
     contact rather than a published price. Only Synadia Cloud has a public price table.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - negotiated
+  - subscription
+  units: []
+  plans:
+  - name: Personal
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods: []
+  - name: Starter
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Pro
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods: []
+  - name: Enterprise
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
