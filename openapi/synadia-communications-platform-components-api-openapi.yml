@@ -67,38 +67,6 @@ components:
       - token_bucket
       - url
       type: object
-    ScraperComponentConfig:
-      properties:
-        account:
-          type: string
-        interval:
-          default: 15
-          minimum: 0
-          type: integer
-        stream:
-          type: string
-      required:
-      - account
-      - interval
-      - stream
-      type: object
-    PlatformComponentConnectConfig:
-      oneOf:
-      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
-      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
-      type:
-      - object
-      - 'null'
-    WorkloadsPlatformComponentConfig:
-      properties:
-        account:
-          type: string
-        nexus_name:
-          type: string
-      required:
-      - account
-      - nexus_name
-      type: object
     PlatformComponentsConnectRequest:
       example:
         data: null
@@ -111,16 +79,15 @@ components:
       required:
       - nkey_public
       type: object
-    CatalogPlatformComponentConfig:
+    AuthCalloutAuthenticatorComponentConfig:
       properties:
         account:
-          default: ''
           type: string
-        catalog_id:
+        bucket:
           type: string
       required:
       - account
-      - catalog_id
+      - bucket
       type: object
     PlatformComponentConfigs:
       oneOf:
@@ -132,16 +99,13 @@ components:
       type:
       - object
       - 'null'
-    AuthCalloutAuthenticatorComponentConfig:
-      properties:
-        account:
-          type: string
-        bucket:
-          type: string
-      required:
-      - account
-      - bucket
-      type: object
+    PlatformComponentConnectConfig:
+      oneOf:
+      - $ref: '#/components/schemas/HttpGatewayPlatformComponentConfig'
+      - $ref: '#/components/schemas/AuthCalloutAuthenticatorComponentConfig'
+      type:
+      - object
+      - 'null'
     PlatformComponentsConnectViewResponse:
       example:
         server: server
@@ -161,6 +125,42 @@ components:
       - account
       - jwt
       - server
+      type: object
+    ScraperComponentConfig:
+      properties:
+        account:
+          type: string
+        interval:
+          default: 15
+          minimum: 0
+          type: integer
+        stream:
+          type: string
+      required:
+      - account
+      - interval
+      - stream
+      type: object
+    CatalogPlatformComponentConfig:
+      properties:
+        account:
+          default: ''
+          type: string
+        catalog_id:
+          type: string
+      required:
+      - account
+      - catalog_id
+      type: object
+    WorkloadsPlatformComponentConfig:
+      properties:
+        account:
+          type: string
+        nexus_name:
+          type: string
+      required:
+      - account
+      - nexus_name
       type: object
   securitySchemes:
     bearerAuth:

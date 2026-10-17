@@ -94,6 +94,10 @@ components:
       - type
       - version
       type: object
+    AvailableChartVersions:
+      items:
+        $ref: '#/components/schemas/AvailableChartVersion'
+      type: array
     AvailableComponentVersionsRequest:
       example:
         deployment_type: deployment_type
@@ -116,10 +120,6 @@ components:
       - major
       - minor
       type: object
-    AvailableChartVersions:
-      items:
-        $ref: '#/components/schemas/AvailableChartVersion'
-      type: array
     AvailableComponentVersionsResponse:
       additionalProperties:
         $ref: '#/components/schemas/AvailableChartVersions'

@@ -112,6 +112,148 @@ paths:
       - JetStream
 components:
   schemas:
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
+    ReplayPolicy:
+      enum:
+      - instant
+      - original
+      type: string
+    ClusterInfo:
+      description: 'ClusterInfo shows information about the underlying set of servers
+
+        that make up the stream or consumer.'
+      example:
+        leader: leader
+        system_account: true
+        replicas:
+        - null
+        - null
+        raft_group: raft_group
+        name: name
+        traffic_account: traffic_account
+        leader_since: leader_since
+      properties:
+        leader:
+          type: string
+        leader_since:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        raft_group:
+          type: string
+        replicas:
+          items:
+            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
+          type: array
+        system_account:
+          type: boolean
+        traffic_account:
+          type: string
+      type: object
+    PriorityGroupState:
+      description: PriorityGroupState is the state of a consumer priority group.
+      example:
+        pinned_client_id: pinned_client_id
+        pinned_ts: 2000-01-23 04:56:07+00:00
+        group: group
+      properties:
+        group:
+          type: string
+        pinned_client_id:
+          type: string
+        pinned_ts:
+          format: date-time
+          type: string
+      required:
+      - group
+      type: object
+    JSPullConsumerUpdateRequest:
+      example:
+        metadata:
+          key: metadata
+        backoff:
+        - 6
+        - 6
+        priority_policy: null
+        ack_wait: 0
+        description: description
+        max_deliver: 7
+        max_bytes: 2
+        max_batch: 5
+        filter_subjects:
+        - filter_subjects
+        - filter_subjects
+        max_ack_pending: 5
+        sample_freq: sample_freq
+        priority_timeout: 2
+        priority_groups:
+        - priority_groups
+        - priority_groups
+        num_replicas: 3
+        max_expires: 9
+        inactive_threshold: 1
+      properties:
+        ack_wait:
+          format: int64
+          type: integer
+        backoff:
+          items:
+            format: int64
+            type: integer
+          type: array
+        description:
+          type: string
+        filter_subjects:
+          items:
+            type: string
+          type: array
+        inactive_threshold:
+          format: int64
+          type: integer
+        max_ack_pending:
+          type: integer
+        max_batch:
+          type: integer
+        max_bytes:
+          type: integer
+        max_deliver:
+          type: integer
+        max_expires:
+          format: int64
+          type: integer
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        num_replicas:
+          type: integer
+        priority_groups:
+          items:
+            type: string
+          type: array
+        priority_policy:
+          $ref: '#/components/schemas/PriorityPolicy'
+        priority_timeout:
+          format: int64
+          type: integer
+        sample_freq:
+          type: string
+      type: object
+    AckPolicy:
+      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
+      enum:
+      - none
+      - all
+      - explicit
+      - flow_control
+      type: string
     PriorityPolicy:
       description: PriorityPolicy determines how messages are selected from priority groups.
       enum:
@@ -120,28 +262,66 @@ components:
       - pinned_client
       - prioritized
       type: string
-    SequenceInfo:
-      description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
-      example:
-        consumer_seq: 2147483647
-        last_active: last_active
-        stream_seq: 2147483647
+    JSCommonConsumerConfigRequest:
       properties:
-        consumer_seq:
+        ack_policy:
+          $ref: '#/components/schemas/AckPolicy'
+        ack_wait:
+          format: int64
+          type: integer
+        backoff:
+          items:
+            format: int64
+            type: integer
+          type: array
+        deliver_policy:
+          $ref: '#/components/schemas/DeliverPolicy'
+        description:
+          type: string
+        direct:
+          type: boolean
+        durable_name:
+          type: string
+        filter_subjects:
+          items:
+            type: string
+          type: array
+        inactive_threshold:
+          format: int64
+          type: integer
+        max_ack_pending:
+          type: integer
+        max_deliver:
+          type: integer
+        mem_storage:
+          type: boolean
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        name:
+          type: string
+        num_replicas:
+          type: integer
+        opt_start_seq:
           maximum: 18446744073709551615
           minimum: 0
           type: integer
-        last_active:
-          type:
-          - string
-          - 'null'
-        stream_seq:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
+        opt_start_time:
+          format: date-time
+          type: string
+        pause_until:
+          format: date-time
+          type: string
+        replay_policy:
+          $ref: '#/components/schemas/ReplayPolicy'
+        sample_freq:
+          type: string
       required:
-      - consumer_seq
-      - stream_seq
+      - ack_policy
+      - deliver_policy
+      - num_replicas
+      - replay_policy
       type: object
     JSPullConsumerConfigRequest:
       allOf:
@@ -177,39 +357,31 @@ components:
           format: int64
           type: integer
       type: object
-    ClusterInfo:
-      description: 'ClusterInfo shows information about the underlying set of servers
+    PeerInfo:
+      description: 'PeerInfo shows information about all the peers in the cluster that
 
-        that make up the stream or consumer.'
-      example:
-        leader: leader
-        system_account: true
-        replicas:
-        - null
-        - null
-        raft_group: raft_group
-        name: name
-        traffic_account: traffic_account
-        leader_since: leader_since
+        are supporting the stream or consumer.'
       properties:
-        leader:
-          type: string
-        leader_since:
-          type:
-          - string
-          - 'null'
+        active:
+          format: int64
+          type: integer
+        current:
+          type: boolean
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
         name:
           type: string
-        raft_group:
-          type: string
-        replicas:
-          items:
-            $ref: '#/components/schemas/ClusterInfo_replicas_inner'
-          type: array
-        system_account:
+        offline:
           type: boolean
-        traffic_account:
+        peer:
           type: string
+      required:
+      - active
+      - current
+      - name
+      - peer
       type: object
     JSPullConsumerInfoResponse:
       example:
@@ -312,129 +484,6 @@ components:
       - stream_name
       - ts
       type: object
-    AckPolicy:
-      description: enums have been changed to match UnmarshalJSON in https://github.com/nats-io/jsm.go/blob/main/api/consumers.go
-      enum:
-      - none
-      - all
-      - explicit
-      - flow_control
-      type: string
-    ClusterInfo_replicas_inner:
-      allOf:
-      - $ref: '#/components/schemas/PeerInfo'
-      type:
-      - object
-      - 'null'
-    PeerInfo:
-      description: 'PeerInfo shows information about all the peers in the cluster that
-
-        are supporting the stream or consumer.'
-      properties:
-        active:
-          format: int64
-          type: integer
-        current:
-          type: boolean
-        lag:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        name:
-          type: string
-        offline:
-          type: boolean
-        peer:
-          type: string
-      required:
-      - active
-      - current
-      - name
-      - peer
-      type: object
-    JSCommonConsumerConfigRequest:
-      properties:
-        ack_policy:
-          $ref: '#/components/schemas/AckPolicy'
-        ack_wait:
-          format: int64
-          type: integer
-        backoff:
-          items:
-            format: int64
-            type: integer
-          type: array
-        deliver_policy:
-          $ref: '#/components/schemas/DeliverPolicy'
-        description:
-          type: string
-        direct:
-          type: boolean
-        durable_name:
-          type: string
-        filter_subjects:
-          items:
-            type: string
-          type: array
-        inactive_threshold:
-          format: int64
-          type: integer
-        max_ack_pending:
-          type: integer
-        max_deliver:
-          type: integer
-        mem_storage:
-          type: boolean
-        metadata:
-          additionalProperties:
-            type: string
-          type: object
-        name:
-          type: string
-        num_replicas:
-          type: integer
-        opt_start_seq:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        opt_start_time:
-          format: date-time
-          type: string
-        pause_until:
-          format: date-time
-          type: string
-        replay_policy:
-          $ref: '#/components/schemas/ReplayPolicy'
-        sample_freq:
-          type: string
-      required:
-      - ack_policy
-      - deliver_policy
-      - num_replicas
-      - replay_policy
-      type: object
-    ReplayPolicy:
-      enum:
-      - instant
-      - original
-      type: string
-    PriorityGroupState:
-      description: PriorityGroupState is the state of a consumer priority group.
-      example:
-        pinned_client_id: pinned_client_id
-        pinned_ts: 2000-01-23 04:56:07+00:00
-        group: group
-      properties:
-        group:
-          type: string
-        pinned_client_id:
-          type: string
-        pinned_ts:
-          format: date-time
-          type: string
-      required:
-      - group
-      type: object
     DeliverPolicy:
       enum:
       - all
@@ -444,77 +493,28 @@ components:
       - by_start_time
       - last_per_subject
       type: string
-    JSPullConsumerUpdateRequest:
+    SequenceInfo:
+      description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
       example:
-        metadata:
-          key: metadata
-        backoff:
-        - 6
-        - 6
-        priority_policy: null
-        ack_wait: 0
-        description: description
-        max_deliver: 7
-        max_bytes: 2
-        max_batch: 5
-        filter_subjects:
-        - filter_subjects
-        - filter_subjects
-        max_ack_pending: 5
-        sample_freq: sample_freq
-        priority_timeout: 2
-        priority_groups:
-        - priority_groups
-        - priority_groups
-        num_replicas: 3
-        max_expires: 9
-        inactive_threshold: 1
+        consumer_seq: 2147483647
+        last_active: last_active
+        stream_seq: 2147483647
       properties:
-        ack_wait:
-          format: int64
+        consumer_seq:
+          maximum: 18446744073709551615
+          minimum: 0
           type: integer
-        backoff:
-          items:
-            format: int64
-            type: integer
-          type: array
-        description:
-          type: string
-        filter_subjects:
-          items:
-            type: string
-          type: array
-        inactive_threshold:
-          format: int64
+        last_active:
+          type:
+          - string
+          - 'null'
+        stream_seq:
+          maximum: 18446744073709551615
+          minimum: 0
           type: integer
-        max_ack_pending:
-          type: integer
-        max_batch:
-          type: integer
-        max_bytes:
-          type: integer
-        max_deliver:
-          type: integer
-        max_expires:
-          format: int64
-          type: integer
-        metadata:
-          additionalProperties:
-            type: string
-          type: object
-        num_replicas:
-          type: integer
-        priority_groups:
-          items:
-            type: string
-          type: array
-        priority_policy:
-          $ref: '#/components/schemas/PriorityPolicy'
-        priority_timeout:
-          format: int64
-          type: integer
-        sample_freq:
-          type: string
+      required:
+      - consumer_seq
+      - stream_seq
       type: object
   securitySchemes:
     bearerAuth:

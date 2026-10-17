@@ -49,30 +49,39 @@ paths:
       - NATS User Issuances
 components:
   schemas:
-    NatsLimits:
-      properties:
-        data:
-          format: int64
-          type: integer
-        payload:
-          format: int64
-          type: integer
-        subs:
-          format: int64
-          type: integer
-      type: object
-    User:
-      allOf:
-      - $ref: '#/components/schemas/GenericFields'
-      - $ref: '#/components/schemas/UserPermissionLimits'
-      description: User defines the user specific data in a user JWT
+    AppUserInfo:
       example:
-        issuer_account: issuer_account
+        identifier: identifier
+        name: name
+        id: id
+        type: null
       properties:
-        issuer_account:
-          description: 'IssuerAccount stores the public key for the account the issuer represents.
-
-            When set, the claim was issued by a signing key.'
+        id:
+          type: string
+        identifier:
+          type: string
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/AppUserType'
+      required:
+      - id
+      - name
+      - type
+      type: object
+    NatsUserIssuanceEventType:
+      enum:
+      - Import
+      - Download
+      - BearerJwt
+      - HttpGwToken
+      type: string
+    TimeRange:
+      description: TimeRange is used to represent a start and end time
+      properties:
+        end:
+          type: string
+        start:
           type: string
       type: object
     Permissions:
@@ -103,6 +112,40 @@ components:
         sub:
           $ref: '#/components/schemas/Permission'
       type: object
+    NatsUserIssuanceEvent:
+      example:
+        app_user:
+          identifier: identifier
+          name: name
+          id: id
+          type: null
+        exp: 0
+        type: null
+        iat: 6
+        jti: jti
+        status: null
+      properties:
+        app_user:
+          $ref: '#/components/schemas/AppUserInfo'
+        exp:
+          format: int64
+          type: integer
+        iat:
+          format: int64
+          type: integer
+        jti:
+          type: string
+        status:
+          $ref: '#/components/schemas/NatsUserIssuanceStatus'
+        type:
+          $ref: '#/components/schemas/NatsUserIssuanceEventType'
+      required:
+      - app_user
+      - iat
+      - jti
+      - status
+      - type
+      type: object
     ResponsePermission:
       description: 'ResponsePermission can be used to allow responses to any reply subject
 
@@ -120,36 +163,80 @@ components:
       - max
       - ttl
       type: object
-    GenericFields:
+    UserLimits:
+      description: Src is a comma separated list of CIDR specifications
       properties:
-        tags:
+        src:
           items:
             type: string
           type: array
-        type:
-          description: ClaimType is used to indicate the type of JWT being stored in a Claim
+        times:
+          items:
+            $ref: '#/components/schemas/TimeRange'
+          type: array
+        times_location:
           type: string
-        version:
-          type: integer
       type: object
-    Permission:
-      description: Permission defines allow/deny subjects
+    AppUserType:
+      enum:
+      - Person
+      - AppServiceAccount
+      - TeamServiceAccount
+      type: string
+    UserPermissionLimits:
+      allOf:
+      - $ref: '#/components/schemas/Permissions'
+      - $ref: '#/components/schemas/UserLimits'
+      - $ref: '#/components/schemas/NatsLimits'
       example:
-        allow:
-        - allow
-        - allow
-        deny:
-        - deny
-        - deny
+        bearer_token: true
+        allowed_connection_types:
+        - allowed_connection_types
+        - allowed_connection_types
       properties:
-        allow:
+        allowed_connection_types:
           items:
             type: string
           type: array
-        deny:
-          items:
-            type: string
-          type: array
+        bearer_token:
+          type: boolean
+      type: object
+    User:
+      allOf:
+      - $ref: '#/components/schemas/GenericFields'
+      - $ref: '#/components/schemas/UserPermissionLimits'
+      description: User defines the user specific data in a user JWT
+      example:
+        issuer_account: issuer_account
+      properties:
+        issuer_account:
+          description: 'IssuerAccount stores the public key for the account the issuer represents.
+
+            When set, the claim was issued by a signing key.'
+          type: string
+      type: object
+    NatsUserIssuanceStatus:
+      description: "NatsUserIssuanceStatus indicates status of an issuance relative to its signing key\nIn context of issuance, status indicates following:\n  Active - Signing key exists, and no revocations\n  Revoked - Signing key exists, and has revocation entry with RevokedBefore > IatMax\n  Partially Revoked - Signing key exists, and has revocation entry with IssMax > RevokedBefore > IatMin\n  SK Disabled - Signing key is disabled\n  SK Group Disabled - Signing key group is disabled\n  SK Removed - Signing key no longer exists\n  Expired - All issuances are expired\nIn context of an issuance event, status indicates following:\n  Active - Signing key exists, and no revocations\n  Revoked - Signing key exists, and has revocation entry with RevokedBefore > Iat\n  SK Disabled - Signing key is disabled\n  SK Group Disabled - Signing key group is disabled\n  SK Removed - Signing key no longer exists\n  Expired - Expired time set on credential has passed"
+      enum:
+      - Active
+      - Revoked
+      - Partially Revoked
+      - SK Disabled
+      - SK Group Disabled
+      - SK Removed
+      - Expired
+      type: string
+    NatsLimits:
+      properties:
+        data:
+          format: int64
+          type: integer
+        payload:
+          format: int64
+          type: integer
+        subs:
+          format: int64
+          type: integer
       type: object
     NatsUserIssuanceViewResponse:
       example:
@@ -241,123 +328,36 @@ components:
       - status
       - sub
       type: object
-    TimeRange:
-      description: TimeRange is used to represent a start and end time
+    GenericFields:
       properties:
-        end:
-          type: string
-        start:
-          type: string
-      type: object
-    NatsUserIssuanceEvent:
-      example:
-        app_user:
-          identifier: identifier
-          name: name
-          id: id
-          type: null
-        exp: 0
-        type: null
-        iat: 6
-        jti: jti
-        status: null
-      properties:
-        app_user:
-          $ref: '#/components/schemas/AppUserInfo'
-        exp:
-          format: int64
-          type: integer
-        iat:
-          format: int64
-          type: integer
-        jti:
-          type: string
-        status:
-          $ref: '#/components/schemas/NatsUserIssuanceStatus'
-        type:
-          $ref: '#/components/schemas/NatsUserIssuanceEventType'
-      required:
-      - app_user
-      - iat
-      - jti
-      - status
-      - type
-      type: object
-    NatsUserIssuanceStatus:
-      description: "NatsUserIssuanceStatus indicates status of an issuance relative to its signing key\nIn context of issuance, status indicates following:\n  Active - Signing key exists, and no revocations\n  Revoked - Signing key exists, and has revocation entry with RevokedBefore > IatMax\n  Partially Revoked - Signing key exists, and has revocation entry with IssMax > RevokedBefore > IatMin\n  SK Disabled - Signing key is disabled\n  SK Group Disabled - Signing key group is disabled\n  SK Removed - Signing key no longer exists\n  Expired - All issuances are expired\nIn context of an issuance event, status indicates following:\n  Active - Signing key exists, and no revocations\n  Revoked - Signing key exists, and has revocation entry with RevokedBefore > Iat\n  SK Disabled - Signing key is disabled\n  SK Group Disabled - Signing key group is disabled\n  SK Removed - Signing key no longer exists\n  Expired - Expired time set on credential has passed"
-      enum:
-      - Active
-      - Revoked
-      - Partially Revoked
-      - SK Disabled
-      - SK Group Disabled
-      - SK Removed
-      - Expired
-      type: string
-    AppUserType:
-      enum:
-      - Person
-      - AppServiceAccount
-      - TeamServiceAccount
-      type: string
-    NatsUserIssuanceEventType:
-      enum:
-      - Import
-      - Download
-      - BearerJwt
-      - HttpGwToken
-      type: string
-    AppUserInfo:
-      example:
-        identifier: identifier
-        name: name
-        id: id
-        type: null
-      properties:
-        id:
-          type: string
-        identifier:
-          type: string
-        name:
-          type: string
-        type:
-          $ref: '#/components/schemas/AppUserType'
-      required:
-      - id
-      - name
-      - type
-      type: object
-    UserLimits:
-      description: Src is a comma separated list of CIDR specifications
-      properties:
-        src:
+        tags:
           items:
             type: string
           type: array
-        times:
-          items:
-            $ref: '#/components/schemas/TimeRange'
-          type: array
-        times_location:
+        type:
+          description: ClaimType is used to indicate the type of JWT being stored in a Claim
           type: string
+        version:
+          type: integer
       type: object
-    UserPermissionLimits:
-      allOf:
-      - $ref: '#/components/schemas/Permissions'
-      - $ref: '#/components/schemas/UserLimits'
-      - $ref: '#/components/schemas/NatsLimits'
+    Permission:
+      description: Permission defines allow/deny subjects
       example:
-        bearer_token: true
-        allowed_connection_types:
-        - allowed_connection_types
-        - allowed_connection_types
+        allow:
+        - allow
+        - allow
+        deny:
+        - deny
+        - deny
       properties:
-        allowed_connection_types:
+        allow:
           items:
             type: string
           type: array
-        bearer_token:
-          type: boolean
+        deny:
+          items:
+            type: string
+          type: array
       type: object
   securitySchemes:
     bearerAuth:

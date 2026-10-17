@@ -178,20 +178,6 @@ paths:
       - Sharing
 components:
   schemas:
-    StreamShareCreateRequest:
-      description: '/
-
-        Stream Share
-
-        /'
-      example:
-        target_account_nkey_public: target_account_nkey_public
-      properties:
-        target_account_nkey_public:
-          type: string
-      required:
-      - target_account_nkey_public
-      type: object
     StreamExportViewResponse:
       description: '/
 
@@ -231,7 +217,12 @@ components:
       - js_subject_prefix
       - stream_name
       type: object
-    StreamShareViewResponse:
+    StreamShareCreateRequest:
+      description: '/
+
+        Stream Share
+
+        /'
       example:
         target_account_nkey_public: target_account_nkey_public
       properties:
@@ -252,6 +243,15 @@ components:
           type: array
       required:
       - items
+      type: object
+    StreamShareViewResponse:
+      example:
+        target_account_nkey_public: target_account_nkey_public
+      properties:
+        target_account_nkey_public:
+          type: string
+      required:
+      - target_account_nkey_public
       type: object
   securitySchemes:
     bearerAuth:

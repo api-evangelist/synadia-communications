@@ -110,29 +110,45 @@ paths:
       - JetStream
 components:
   schemas:
-    SequenceInfo:
-      description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
+    ClusterInfo_replicas_inner:
+      allOf:
+      - $ref: '#/components/schemas/PeerInfo'
+      type:
+      - object
+      - 'null'
+    JSPushConsumerConfigRequest:
+      allOf:
+      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
       example:
-        consumer_seq: 2147483647
-        last_active: last_active
-        stream_seq: 2147483647
+        deliver_group: deliver_group
+        deliver_subject: deliver_subject
+        rate_limit_bps: 2147483647
+        headers_only: true
+        flow_control: true
+        idle_heartbeat: 0
       properties:
-        consumer_seq:
+        deliver_group:
+          type: string
+        deliver_subject:
+          description: Push based options.
+          type: string
+        flow_control:
+          type: boolean
+        headers_only:
+          type: boolean
+        idle_heartbeat:
+          format: int64
+          type: integer
+        rate_limit_bps:
           maximum: 18446744073709551615
           minimum: 0
           type: integer
-        last_active:
-          type:
-          - string
-          - 'null'
-        stream_seq:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-      required:
-      - consumer_seq
-      - stream_seq
       type: object
+    ReplayPolicy:
+      enum:
+      - instant
+      - original
+      type: string
     ClusterInfo:
       description: 'ClusterInfo shows information about the underlying set of servers
 
@@ -175,34 +191,6 @@ components:
       - explicit
       - flow_control
       type: string
-    JSPushConsumerConfigRequest:
-      allOf:
-      - $ref: '#/components/schemas/JSCommonConsumerConfigRequest'
-      example:
-        deliver_group: deliver_group
-        deliver_subject: deliver_subject
-        rate_limit_bps: 2147483647
-        headers_only: true
-        flow_control: true
-        idle_heartbeat: 0
-      properties:
-        deliver_group:
-          type: string
-        deliver_subject:
-          description: Push based options.
-          type: string
-        flow_control:
-          type: boolean
-        headers_only:
-          type: boolean
-        idle_heartbeat:
-          format: int64
-          type: integer
-        rate_limit_bps:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-      type: object
     JSPushConsumerUpdateRequest:
       example:
         metadata:
@@ -262,113 +250,6 @@ components:
         sample_freq:
           type: string
       type: object
-    ClusterInfo_replicas_inner:
-      allOf:
-      - $ref: '#/components/schemas/PeerInfo'
-      type:
-      - object
-      - 'null'
-    PeerInfo:
-      description: 'PeerInfo shows information about all the peers in the cluster that
-
-        are supporting the stream or consumer.'
-      properties:
-        active:
-          format: int64
-          type: integer
-        current:
-          type: boolean
-        lag:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        name:
-          type: string
-        offline:
-          type: boolean
-        peer:
-          type: string
-      required:
-      - active
-      - current
-      - name
-      - peer
-      type: object
-    JSCommonConsumerConfigRequest:
-      properties:
-        ack_policy:
-          $ref: '#/components/schemas/AckPolicy'
-        ack_wait:
-          format: int64
-          type: integer
-        backoff:
-          items:
-            format: int64
-            type: integer
-          type: array
-        deliver_policy:
-          $ref: '#/components/schemas/DeliverPolicy'
-        description:
-          type: string
-        direct:
-          type: boolean
-        durable_name:
-          type: string
-        filter_subjects:
-          items:
-            type: string
-          type: array
-        inactive_threshold:
-          format: int64
-          type: integer
-        max_ack_pending:
-          type: integer
-        max_deliver:
-          type: integer
-        mem_storage:
-          type: boolean
-        metadata:
-          additionalProperties:
-            type: string
-          type: object
-        name:
-          type: string
-        num_replicas:
-          type: integer
-        opt_start_seq:
-          maximum: 18446744073709551615
-          minimum: 0
-          type: integer
-        opt_start_time:
-          format: date-time
-          type: string
-        pause_until:
-          format: date-time
-          type: string
-        replay_policy:
-          $ref: '#/components/schemas/ReplayPolicy'
-        sample_freq:
-          type: string
-      required:
-      - ack_policy
-      - deliver_policy
-      - num_replicas
-      - replay_policy
-      type: object
-    ReplayPolicy:
-      enum:
-      - instant
-      - original
-      type: string
-    DeliverPolicy:
-      enum:
-      - all
-      - last
-      - new
-      - by_start_sequence
-      - by_start_time
-      - last_per_subject
-      type: string
     JSPushConsumerInfoResponse:
       example:
         cluster:
@@ -454,6 +335,125 @@ components:
       - num_redelivered
       - stream_name
       - ts
+      type: object
+    JSCommonConsumerConfigRequest:
+      properties:
+        ack_policy:
+          $ref: '#/components/schemas/AckPolicy'
+        ack_wait:
+          format: int64
+          type: integer
+        backoff:
+          items:
+            format: int64
+            type: integer
+          type: array
+        deliver_policy:
+          $ref: '#/components/schemas/DeliverPolicy'
+        description:
+          type: string
+        direct:
+          type: boolean
+        durable_name:
+          type: string
+        filter_subjects:
+          items:
+            type: string
+          type: array
+        inactive_threshold:
+          format: int64
+          type: integer
+        max_ack_pending:
+          type: integer
+        max_deliver:
+          type: integer
+        mem_storage:
+          type: boolean
+        metadata:
+          additionalProperties:
+            type: string
+          type: object
+        name:
+          type: string
+        num_replicas:
+          type: integer
+        opt_start_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        opt_start_time:
+          format: date-time
+          type: string
+        pause_until:
+          format: date-time
+          type: string
+        replay_policy:
+          $ref: '#/components/schemas/ReplayPolicy'
+        sample_freq:
+          type: string
+      required:
+      - ack_policy
+      - deliver_policy
+      - num_replicas
+      - replay_policy
+      type: object
+    PeerInfo:
+      description: 'PeerInfo shows information about all the peers in the cluster that
+
+        are supporting the stream or consumer.'
+      properties:
+        active:
+          format: int64
+          type: integer
+        current:
+          type: boolean
+        lag:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        name:
+          type: string
+        offline:
+          type: boolean
+        peer:
+          type: string
+      required:
+      - active
+      - current
+      - name
+      - peer
+      type: object
+    DeliverPolicy:
+      enum:
+      - all
+      - last
+      - new
+      - by_start_sequence
+      - by_start_time
+      - last_per_subject
+      type: string
+    SequenceInfo:
+      description: SequenceInfo is the consumer and stream sequence that uniquely identify a message
+      example:
+        consumer_seq: 2147483647
+        last_active: last_active
+        stream_seq: 2147483647
+      properties:
+        consumer_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+        last_active:
+          type:
+          - string
+          - 'null'
+        stream_seq:
+          maximum: 18446744073709551615
+          minimum: 0
+          type: integer
+      required:
+      - consumer_seq
+      - stream_seq
       type: object
   securitySchemes:
     bearerAuth:
