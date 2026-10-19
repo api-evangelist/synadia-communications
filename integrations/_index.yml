@@ -63,3 +63,60 @@
     builder: provider (package published from the provider's own domain)
   status: not-a-workflow
   arazzo: null
+- slug: synadia-communications-go-module-proxy
+  label: Go module proxy
+  partner_name: Go module proxy
+  category: official SDK (Go)
+  type: register
+  channel: package-registry
+  evidence: https://pkg.go.dev/github.com/synadia-io/connect
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/synadia-io/connect
+      version: v1.0.8
+      released: '2025-10-09'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/synadia-io/connect
+      repo_leg: github-org:synadia-io
+      publisher_leg: org:synadia-io
+      matched_by: github-org
+    - name: github.com/synadia-io/control-plane-sdk-go
+      version: v0.9.0
+      released: '2026-07-24'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/synadia-io/control-plane-sdk-go
+      repo_leg: github-org:synadia-io
+      publisher_leg: org:synadia-io
+      matched_by: github-org
+    - name: github.com/synadia-io/nex
+      version: v0.0.0-20260903120456-12609378dbb5
+      released: '2026-09-03'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/synadia-io/nex
+      repo_leg: github-org:synadia-io
+      publisher_leg: org:synadia-io
+      matched_by: github-org
+    - name: github.com/synadia-io/orbit.go
+      version: v0.0.0-20261013113800-3e89fd107078
+      released: '2026-10-13'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/synadia-io/orbit.go
+      repo_leg: github-org:synadia-io
+      publisher_leg: org:synadia-io
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
