@@ -525,3 +525,9 @@ components:
       in: cookie
       name: control_plane_session
       type: apiKey
+x-provenance:
+  method: harvested
+  publisher: Synadia Communications
+  source: https://cloud.synadia.com/openapi.yaml
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
