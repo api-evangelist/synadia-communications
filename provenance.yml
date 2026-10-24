@@ -9,6 +9,9 @@ artifacts:
   authentication/synadia-communications-authentication.yml:
     method: derived
     evidence: declared in the artifact
+  capabilities/synadia-communications-capability-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/synadia-communications-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -30,94 +33,13 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
+  integrations/_index.yml:
     method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+    evidence: carries an API Evangelist house phrase
+  integrations/synadia-communications-integration-edges.yml:
+    method: unknown
+    evidence: no authorship recorded
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -201,6 +123,21 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/synadia-communications-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -212,16 +149,11 @@ artifacts:
     evidence: declared in the artifact
   openapi/_original/synadia-communications-control-plane-openapi.yaml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://cloud.synadia.com/openapi.yaml (sha256 70d3bd275b6b, fetched
+      2026-10-04)
   openapi/_original/synadia-communications-http-gateway-openapi.json:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
-  openapi/_original/synadia-communications-http-gateway-openapi.json.archived.txt:
-    method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: byte-identical to https://api.ngs.global/docs/api.json (sha256 e8767ae79ab5, fetched 2026-10-04)
   openapi/synadia-communications-account-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
@@ -345,10 +277,133 @@ artifacts:
   openapi/synadia-communications-workloads-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/synadia-communications-account-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-admin-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-agent-token-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-alert-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-app-service-account-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-app-service-account-tokens-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-app-user-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-auth-callout-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-authz-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-component-versions-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/synadia-communications-control-plane-overlay.yaml:
     method: generated
     evidence: declared in the artifact
+  overlays/synadia-communications-extended-kv-entry-operations-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/synadia-communications-http-gateway-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-issuance-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-kv-api-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-kv-bucket-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-kv-management-api-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-license-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-mirror-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-nats-core-messaging-experimental-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-nats-user-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-object-bucket-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-objectstore-api-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-objectstore-entry-operations-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-objectstore-management-api-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-oidc-provider-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-personal-access-token-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-platform-components-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-pull-consumer-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-push-consumer-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-session-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-sig-key-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-sig-key-group-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-stream-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-stream-export-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-stream-import-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-subject-export-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-subject-import-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-system-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-team-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-team-service-account-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-team-service-account-tokens-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/synadia-communications-workloads-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   packages/synadia-communications-packages.yml:
